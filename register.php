@@ -3,6 +3,16 @@
     include_once(__DIR__ . "/classes/DB.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
+    function userExists($email){
+      $conn = DB::getInstance();
+      $statement = $conn->prepare("select * from users where email = :email");
+      $statement->bindValue(':email', $email);
+      $statement->execute();
+      $res = $statement->fetch();
+      // var_dump($res);
+      return $res;
+    }
+
     if(!empty($_POST)){
       $email = $_POST["email"];
       $username = $_POST["username"];
@@ -10,14 +20,28 @@
       $password_conf = $_POST["password_conf"];
 
       if(CheckEmpty::isNotEmpty($email) && CheckEmpty::isNotEmpty($username) && CheckEmpty::isNotEmpty($password) && CheckEmpty::isNotEmpty($password_conf)){
-        echo "NOT EMPTTYYYYYY";
+        if(strlen($password) >= 6 && $password === $password_conf){
+          if(userExists($email) === false){
+            // echo "TRUUEEEEEEEEEEEEEEE";
+            $conn = DB::getInstance();
+            $options = [
+              'cost' => 15
+            ];
+            $password = password_hash($password, PASSWORD_DEFAULT, $options);
+            $statement = $conn->prepare("insert into users (username, email, password) values (:username, :email, :password);");
+            $statement->bindValue(':username', $username);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':password', $password);
+            $statement->execute();
+          } else{
+            echo "USEER EXISTS";
+          }
+        } else{
+          echo "PASSWORDS DON'T MATCH";
+        }
+      } else{
+        echo "PLEASE FILL IN ALL FIELDS";
       }
-
-      if(strlen($password) >= 6 && $password === $password_conf){
-        echo "TRUUEEEEEEEEEEEEEEE";
-        // $conn = DB::getInstance();
-      }
-
     }
 
 ?><!DOCTYPE html>
@@ -37,7 +61,7 @@
     <div class="alert alert-danger"><?php echo $error; ?></div>
 <?php endif; ?>
 
-<form method="post" action="">
+<form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
