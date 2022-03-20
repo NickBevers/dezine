@@ -1,5 +1,25 @@
 <?php 
     
+    include_once(__DIR__ . "/classes/DB.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+
+    if(!empty($_POST)){
+      $email = $_POST["email"];
+      $username = $_POST["username"];
+      $password = $_POST["password"];
+      $password_conf = $_POST["password_conf"];
+
+      if(CheckEmpty::isNotEmpty($email) && CheckEmpty::isNotEmpty($username) && CheckEmpty::isNotEmpty($password) && CheckEmpty::isNotEmpty($password_conf)){
+        echo "NOT EMPTTYYYYYY";
+      }
+
+      if(strlen($password) >= 6 && $password === $password_conf){
+        echo "TRUUEEEEEEEEEEEEEEE";
+        // $conn = DB::getInstance();
+      }
+
+    }
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +42,22 @@
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
   </div>
+
+  <div class="mb-3">
+    <label for="exampleInputUsername1" class="form-label">Username</label>
+    <input type="text" name="username" class="form-control" id="exampleInputUsername1">
+  </div>
+
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
     <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-    <div id="passwordHelp" class="form-text">Passwords must be at least 5 characters long</div>
+    <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password_conf" class="form-label">Password confirmation</label>
+    <input type="password" name="password_conf" class="form-control" id="password_conf">
+    <div id="passwordHelp" class="form-text">Passwords must match password above</div>
   </div>
   
   <button type="submit" class="btn btn-primary">Sign me up</button>
