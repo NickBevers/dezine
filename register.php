@@ -2,48 +2,36 @@
     
     include_once(__DIR__ . "/classes/DB.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-
-    function userExists($email){
-      $conn = DB::getInstance();
-      $statement = $conn->prepare("select * from users where email = :email");
-      $statement->bindValue(':email', $email);
-      $statement->execute();
-      $res = $statement->fetch();
-      // var_dump($res);
-      return $res;
-    }
+    include_once(__DIR__ . "/classes/User.php");
 
     if(!empty($_POST)){
       $email = $_POST["email"];
       $username = $_POST["username"];
       $password = $_POST["password"];
       $password_conf = $_POST["password_conf"];
-
+      
       if(CheckEmpty::isNotEmpty($email) && CheckEmpty::isNotEmpty($username) && CheckEmpty::isNotEmpty($password) && CheckEmpty::isNotEmpty($password_conf)){
-        if(strlen($password) >= 6 && $password === $password_conf){
-          if(userExists($email) === false){
-            // echo "TRUUEEEEEEEEEEEEEEE";
-            $conn = DB::getInstance();
-            $options = [
-              'cost' => 15
-            ];
-            $password = password_hash($password, PASSWORD_DEFAULT, $options);
-            $statement = $conn->prepare("insert into users (username, email, password) values (:username, :email, :password);");
-            $statement->bindValue(':username', $username);
-            $statement->bindValue(':email', $email);
-            $statement->bindValue(':password', $password);
-            $statement->execute();
-          } else{
-            echo "USEER EXISTS";
-          }
-        } else{
-          echo "PASSWORDS DON'T MATCH";
+        try {
+          $user = new User();
+          
+          // use setters to fill in data for this user
+          $user->setUsername($username);
+          $user->setEmail($email);
+          $user->setPassword($password);
+          $user->register();
+          session_start();
+          $_SESSION['user'] = $user->getEmail();
+          header("Location: home.php");
+        }
+        catch(Throwable $error) {
+          // if any errors are thrown in the class, they can be caught here
+          $error = $error->getMessage();
         }
       } else{
-        echo "PLEASE FILL IN ALL FIELDS";
+        $error = "PLease fill in all fields of the form";
       }
     }
-
+      
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
