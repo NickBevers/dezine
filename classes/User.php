@@ -1,5 +1,7 @@
 <?php
     include_once(__DIR__ . "/DB.php");
+    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+
 
     class User {
         private $username;
@@ -11,6 +13,7 @@
 
         public function setUsername($username)
         {
+            $username = Cleaner::cleanInput($username);
             $this->username = $username;
             return $this;
         }
@@ -19,6 +22,7 @@
         
         public function setEmail($email)
         {
+            $email = Cleaner::cleanInput($email);
             $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
             if(preg_match_all($regex, $email)){
                 $this->email = $email;
@@ -32,10 +36,10 @@
 
         public function setPassword( $password )
         {
+            $password = Cleaner::cleanInput($password);
             if(strlen($password) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             }
-
             $this->password = $password;
             return $this;
         }

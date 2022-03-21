@@ -4,10 +4,10 @@
 	if( !empty($_POST) ) {
         try {
             $user = new User;
-            $user->setEmail($_POST['email']);
-            if( $user->canLogin($_POST['password']) ) {
+            $user->setEmail($email);
+            if( $user->canLogin($password)) {
                 session_start();
-                $_SESSION['email'] = $email; 
+                $_SESSION['email'] = $user->getEmail();
 
                 header("Location: home.php");
             }

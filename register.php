@@ -1,16 +1,11 @@
 <?php 
     
     include_once(__DIR__ . "/classes/DB.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
     include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    include_once(__DIR__ . "/helpers/Cleaner.help.php");
 
     if(!empty($_POST)){
-      $email = $_POST["email"];
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-      $password_conf = $_POST["password_conf"];
-      
-      if(CheckEmpty::isNotEmpty($email) && CheckEmpty::isNotEmpty($username) && CheckEmpty::isNotEmpty($password) && CheckEmpty::isNotEmpty($password_conf)){
         if($password === $password_conf){
           try {
             $user = new User();
@@ -21,7 +16,7 @@
             $user->setPassword($password);
             $user->register();
             session_start();
-            $_SESSION['user'] = $user->getEmail();
+            $_SESSION['email'] = $user->getEmail();
             header("Location: home.php");
           }
           catch(Throwable $error) {
@@ -31,9 +26,6 @@
         } else{
         $error = "The passwords don't match";
         }
-      } else{
-        $error = "Please fill in all fields of the form";
-      }
     }
       
 ?><!DOCTYPE html>
@@ -56,23 +48,23 @@
 <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
   </div>
 
   <div class="mb-3">
     <label for="exampleInputUsername1" class="form-label">Username</label>
-    <input type="text" name="username" class="form-control" id="exampleInputUsername1">
+    <input type="text" name="username" class="form-control" id="exampleInputUsername1" required>
   </div>
 
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
     <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
   </div>
 
   <div class="mb-3">
     <label for="password_conf" class="form-label">Password confirmation</label>
-    <input type="password" name="password_conf" class="form-control" id="password_conf">
+    <input type="password" name="password_conf" class="form-control" id="password_conf" required>
     <div id="passwordHelp" class="form-text">Passwords must match password above</div>
   </div>
   
