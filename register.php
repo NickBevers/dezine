@@ -11,24 +11,28 @@
       $password_conf = $_POST["password_conf"];
       
       if(CheckEmpty::isNotEmpty($email) && CheckEmpty::isNotEmpty($username) && CheckEmpty::isNotEmpty($password) && CheckEmpty::isNotEmpty($password_conf)){
-        try {
-          $user = new User();
-          
-          // use setters to fill in data for this user
-          $user->setUsername($username);
-          $user->setEmail($email);
-          $user->setPassword($password);
-          $user->register();
-          session_start();
-          $_SESSION['user'] = $user->getEmail();
-          header("Location: home.php");
-        }
-        catch(Throwable $error) {
-          // if any errors are thrown in the class, they can be caught here
-          $error = $error->getMessage();
+        if($password === $password_conf){
+          try {
+            $user = new User();
+            
+            // use setters to fill in data for this user
+            $user->setUsername($username);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $user->register();
+            session_start();
+            $_SESSION['user'] = $user->getEmail();
+            header("Location: home.php");
+          }
+          catch(Throwable $error) {
+            // if any errors are thrown in the class, they can be caught here
+            $error = $error->getMessage();
+          }
+        } else{
+        $error = "The passwords don't match";
         }
       } else{
-        $error = "PLease fill in all fields of the form";
+        $error = "Please fill in all fields of the form";
       }
     }
       
