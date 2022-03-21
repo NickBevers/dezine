@@ -5,6 +5,7 @@
         private $username;
         private $email;
         private $password;
+        const PASSWORD_MIN_LENGTH = 6;
 
         public function getUsername(){return $this->username;}
 
@@ -23,7 +24,7 @@
                 $this->email = $email;
                 return $this;
             } else{
-                throw new Exception("Please use your thomasmore account to register");
+                throw new Exception("Please use your Thomas More account to register");
             }
         }
 
@@ -31,8 +32,8 @@
 
         public function setPassword( $password )
         {
-            if(strlen($password) < 6){
-                throw new Exception("Passwords must be 6 characters or longer.");
+            if(strlen($password) < self::PASSWORD_MIN_LENGTH){
+                throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             }
 
             $this->password = $password;
@@ -45,7 +46,16 @@
             $statement->bindValue(':email', $this -> email);
             $statement->execute();
             $res = $statement->fetch(PDO::FETCH_ASSOC);
-            return password_verify($password, $res["password"]);
+
+            if(!$res){
+                throw new Exception("No user was found with this email");
+            }
+
+            if(password_verify($password, $res["password"])){
+                return true;
+            }
+
+            throw new Exception("This password does not match the given email");
         }
 
         public function register() {
