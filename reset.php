@@ -7,7 +7,8 @@
         $emailId = $_POST['email'];
 
         $reset = new Reset();
-        $reset->resetMail($emailId);
+        $reset->setEmail($emailId);
+        $reset->resetMail();
     }
   }
 
