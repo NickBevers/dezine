@@ -6,7 +6,32 @@
         $email = $_GET['key'];
         $token = $_GET['token'];
 
-        Reset::resetLink($email, $token);
+        $reset = new Reset();
+        $reset->setEmail($email);
+        $reset->setToken($token);
+        $reset->resetLink();
+
+        if (!empty($_POST)) {
+          $new_password = $_POST["new_password"];
+          $password_conf = $_POST["password_conf"];
+          $email = $em;
+ 
+          if(CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
+             if($new_password === $password_conf){
+                try {
+                    Reset::resetPassword($email, $new_password);
+                    $success = "Your password was successfully updated";
+                } catch (Throwable $error) {
+                    // if any errors are thrown in the class, they can be caught here
+                    $error = $error->getMessage();
+                }
+             } else{
+             $error = "The passwords don't match";
+             }
+           } else{
+             $error = "Please fill in all fields of the form";
+           }
+      }
     }
 ?>
 <!doctype html>
@@ -27,19 +52,23 @@
             </div>
             <div class="card-body">
             <?php if (isset($em, $tok)): ?>
-              <form action="update-forget-password.php" method="post">
+              <form action="" method="post">
                 <input type="hidden" name="email" value="<?php echo $em;?>">
                 <input type="hidden" name="reset_link_token" value="<?php echo $tok;?>">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Password</label>
-                  <input type="password" name='password' class="form-control">
-                </div>                
 
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Confirm Password</label>
-                  <input type="password" name='cpassword' class="form-control">
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">New Password</label>
+                    <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
+                    <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
                 </div>
-                <input type="submit" name="new-password" class="btn btn-primary">
+
+                <div class="mb-3">
+                    <label for="password_conf" class="form-label">Password confirmation</label>
+                    <input type="password" name="password_conf" class="form-control" id="password_conf">
+                    <div id="passwordHelp" class="form-text">Passwords must match password above</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Reset password</button>
               </form>
               <?php elseif(isset($message)): ?>
                 <h3><?php echo $message; ?></h3>
