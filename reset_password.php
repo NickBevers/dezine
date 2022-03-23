@@ -1,6 +1,7 @@
 <?php
 
     include_once(__DIR__ . "/classes/Reset.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
     if($_GET['key'] && $_GET['token']){    
         $email = $_GET['key'];
@@ -9,12 +10,13 @@
         $reset = new Reset();
         $reset->setEmail($email);
         $reset->setToken($token);
-        $reset->resetLink();
+        $returned = $reset->resetLink();
+        // var_dump($returned);
 
         if (!empty($_POST)) {
           $new_password = $_POST["new_password"];
           $password_conf = $_POST["password_conf"];
-          $email = $em;
+          $email = $returned;
  
           if(CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
              if($new_password === $password_conf){
@@ -50,11 +52,20 @@
             <div class="card-header text-center">
               Reset Password
             </div>
+            
+            <?php if(isset($error)): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <?php if(isset($success)): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
+
             <div class="card-body">
-            <?php if (isset($em, $tok)): ?>
+            <?php if ($returned): ?>
               <form action="" method="post">
-                <input type="hidden" name="email" value="<?php echo $em;?>">
-                <input type="hidden" name="reset_link_token" value="<?php echo $tok;?>">
+                <input type="hidden" name="email" value="<?php echo $returned;?>">
+                <!-- <input type="hidden" name="reset_link_token" value="<//?php echo $tok;?>"> -->
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">New Password</label>
