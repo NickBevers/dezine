@@ -6,9 +6,10 @@
     if(CheckEmpty::isNotEmpty($_POST['email'])){          
         $emailId = $_POST['email'];
 
+        // echo $emailId;
         $reset = new Reset();
         $reset->setEmail($emailId);
-        $reset->resetMail();
+        $message = $reset->resetMail();
     }
   }
 
@@ -28,6 +29,11 @@
             <div class="card-header text-center">
               Reset password
             </div>
+            
+            <?php if(!empty($message)): ?>
+                <div class="alert alert-success"><?php echo $message; ?></div>
+            <?php endif; ?>
+
             <div class="card-body">
               <form action="" method="post">
                 <div class="form-group">
