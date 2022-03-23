@@ -1,7 +1,13 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
-include_once(__DIR__ . "/DB.php");
-include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    require 'vendor/autoload.php';
+
+    include_once(__DIR__ . "/DB.php");
+    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+
 
     class Reset{
         private $email;
@@ -33,9 +39,11 @@ include_once(__DIR__ . "/../helpers/Cleaner.help.php");
             $email = $this->email;
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
-            $statement->bindValue("email", $email);
+            $statement->bindValue(":email", $email);
             $statement->execute();
             $result = $statement->fetch();
+
+            // var_dump($result , "result");
 
             if ($result) {
                 $token = md5($email).rand(10, 9999);
@@ -51,19 +59,82 @@ include_once(__DIR__ . "/../helpers/Cleaner.help.php");
                 $expDate = date("Y-m-d H:i:s", $expFormat);
 
                 $state = $conn->prepare("update users set reset_token = :reset_token, exp_token = :exp_token where email = :email");
-                $state->bindValue("reset_token", $token);
-                $state->bindValue("exp_token", $expDate);
-                $state->bindValue("email", $email);
-        
+                $state->bindValue(":reset_token", $token);
+                $state->bindValue(":exp_token", $expDate);
+                $state->bindValue(":email", $email);
+                $state->execute();
+                
+                // var_dump($state, " state");
                 //link nog aanpassen
-                $link = "<a href='www.yourwebsite.com/reset-password.php?key=".$email."&token=".$token."'>Click To Reset password</a>";
+                $link = "<a href='localhost/dezine/reset_password.php?key=".$email."&token=".$token."'>Click To Reset password</a>";
 
-                $to = $email;
-                $subject = `Reset your Dezine Password!`;
-                $message = `It seems like you forgot your password, be sure to log back in again! \n Click here $link`;
+                // $mail = new PHPMailer();
+                // try{
+                //     //SERVER SETTINGS
+                //     $mail->SMTPDebug = 2;                      
+                //     //Enable verbose debug output
+                //     $mail->isSMTP();                                            
+                //     //Send using SMTP
+                //     $mail->Host = 'smtp.mailtrap.io';                    
+                //     //Set the SMTP server to send through
+                //     $mail->SMTPAuth = true;                                   
+                //     //Enable SMTP authentication
+                //     $mail->Username = '97938d8e151717';
+                //     //SMTP username
+                //     $mail->Password = 'bfc9fd61e3c82e';                  
+                //     //SMTP password
+                //     $mail->SMTPSecure = "tls";            
+                //     //Enable implicit TLS encryption
+                //     $mail->Port = 2525;                                    
+                //     //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                
+                //     //Recipient
+                //     $mail->setFrom('from@smtp.mailtrap.io', 'Mailer'); //nog aanpassen
+                //     $mail->addAddress($email);  //moet er een naam bij?
 
-                $resetMail = mail($to, $subject, $message);
-                return $resetMail;
+                //     //Content
+                //     $mail->isHTML(true);                                  //Set email format to HTML
+                //     $mail->Subject = 'Reset your Dezine Password!';
+                //     $mail->Body    = `<h1>It seems like you forgot your password, be sure to log back in again!</h1> \n <a href="$link">Click here</a>`;
+
+                //     $mail->send();
+
+                //     var_dump($mail, " mail");
+                //     $message = "Mail has been send";
+                //     return $message;
+                // } catch(Exception $e){
+                //     $error = $mail->ErrorInfo;
+                //     return $error;
+                // }
+                $mail = new PHPMailer(true);
+
+                try {
+                    //Server settings
+                    $mail->SMTPDebug = 0;                      //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = '97938d8e151717';                     //SMTP username
+                    $mail->Password   = 'bfc9fd61e3c82e';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+                    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                    //Recipients
+                    $mail->setFrom('from@example.com', 'Mailer');
+                    $mail->addAddress($email, 'Joe User');     //Add a recipient
+                    
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'Here is the subject';
+                    $mail->Body    = $link;
+
+                    $mail->send();
+                    $message = 'Message has been sent';
+                    return $message;
+                } catch (Exception $e) {
+                    $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    return $message;
+                }
             }
         }
 
@@ -72,20 +143,32 @@ include_once(__DIR__ . "/../helpers/Cleaner.help.php");
             $tok = $this->token;
             $conn = DB::getInstance();
             $query = $conn->prepare("select * from users where reset_token = :reset_token and email = :email");
-            $query->bindValue("reset_token", $tok);
-            $query->bindValue("email", $em);
+            $query->bindValue(":reset_token", $tok);
+            $query->bindValue(":email", $em);
             $query->execute();
+            // var_dump($query->fetch());
 
-            $curDate = date("Y-m-d H:i:s");
+            $curDate = date("Y-m-d H:i:s");            
+            // var_dump($curDate);
+
+            // echo "yes";
 
             if ($query->rowCount() > 0) {
+                // echo "help";
                 $row = $query->fetch();
-                if ($row['exp_date'] >= $curDate){
-                    return $em && $tok;
+                // var_dump($row);
+                $expDate = $row['exp_token'];
+                // var_dump($expDate, "exp");
+                if ($expDate >= $curDate){
+                    // echo "no";
+                    // var_dump($em);              
+                    return $em;
                 }
-            } else{
-                $message = "This forget password link has been expired";
-                return $message;
+                else{                    
+                    // echo "ok";
+                    $message = "This forget password link has been expired";
+                    return $message;
+                }
             }
         }
 
