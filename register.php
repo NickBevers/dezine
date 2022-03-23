@@ -6,6 +6,11 @@
     include_once(__DIR__ . "/helpers/Cleaner.help.php");
 
     if(!empty($_POST)){
+      $email = $_POST["email"];
+      $username = $_POST["username"];
+      $password = $_POST["password"];
+      $password_conf = $_POST["password_conf"];
+      
         if($password === $password_conf){
           try {
             $user = new User();
