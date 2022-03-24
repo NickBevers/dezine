@@ -39,8 +39,7 @@
             return $this;
         }
 
-        public function canLogin($password) {
-            $password = Cleaner::cleanInput($password);
+        public function canLogin() {
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
             $statement->bindValue(':email', $this -> email);
@@ -51,7 +50,7 @@
                 throw new Exception("No user was found with this email");
             }
 
-            if(password_verify($password, $res["password"])){
+            if(password_verify($this->password, $res["password"])){
                 return true;
             }
 

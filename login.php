@@ -2,10 +2,13 @@
     include_once("./classes/User.php");
 
 	if( !empty($_POST) ) {
+		$email = $_POST["email"];
+		$password = $_POST["password"];
         try {
             $user = new User;
             $user->setEmail($email);
-            if( $user->canLogin($password)) {
+			$user->setPassword($password);
+            if( $user->canLogin()) {
                 session_start();
                 $_SESSION['email'] = $user->getEmail();
 
