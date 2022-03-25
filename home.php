@@ -16,5 +16,8 @@
 </head>
 <body>
     HOME
+    <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
+    <p>*inserts very pretty design of very clean homepage with epic IMD themed styling and more posts than this:*</p>
+    <img width="50%" src="assets\faker_post.jpg" alt="empty post">
 </body>
 </html>
