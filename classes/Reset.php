@@ -74,10 +74,10 @@
                     //Server settings
                     $mail->SMTPDebug = 0;                      //Enable verbose debug output
                     $mail->isSMTP();                                            //Send using SMTP
-                    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = '97938d8e151717';                     //SMTP username
-                    $mail->Password   = 'bfc9fd61e3c82e';                               //SMTP password
+                    $mail->Username   = 'dezine.php@gmail.com';                     //SMTP username
+                    $mail->Password   = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';                               //SMTP password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
                     $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
