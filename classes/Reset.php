@@ -68,44 +68,6 @@
                 //link nog aanpassen
                 $link = "<a href='localhost/dezine/reset_password.php?key=".$email."&token=".$token."'>Click To Reset password</a>";
 
-                // $mail = new PHPMailer();
-                // try{
-                //     //SERVER SETTINGS
-                //     $mail->SMTPDebug = 2;                      
-                //     //Enable verbose debug output
-                //     $mail->isSMTP();                                            
-                //     //Send using SMTP
-                //     $mail->Host = 'smtp.mailtrap.io';                    
-                //     //Set the SMTP server to send through
-                //     $mail->SMTPAuth = true;                                   
-                //     //Enable SMTP authentication
-                //     $mail->Username = '97938d8e151717';
-                //     //SMTP username
-                //     $mail->Password = 'bfc9fd61e3c82e';                  
-                //     //SMTP password
-                //     $mail->SMTPSecure = "tls";            
-                //     //Enable implicit TLS encryption
-                //     $mail->Port = 2525;                                    
-                //     //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-                
-                //     //Recipient
-                //     $mail->setFrom('from@smtp.mailtrap.io', 'Mailer'); //nog aanpassen
-                //     $mail->addAddress($email);  //moet er een naam bij?
-
-                //     //Content
-                //     $mail->isHTML(true);                                  //Set email format to HTML
-                //     $mail->Subject = 'Reset your Dezine Password!';
-                //     $mail->Body    = `<h1>It seems like you forgot your password, be sure to log back in again!</h1> \n <a href="$link">Click here</a>`;
-
-                //     $mail->send();
-
-                //     var_dump($mail, " mail");
-                //     $message = "Mail has been send";
-                //     return $message;
-                // } catch(Exception $e){
-                //     $error = $mail->ErrorInfo;
-                //     return $error;
-                // }
                 $mail = new PHPMailer(true);
 
                 try {
@@ -181,10 +143,13 @@
                 ];
                 $n_password = password_hash($new_password, PASSWORD_DEFAULT, $options);
                 $conn = DB::getInstance();
-                $statement = $conn->prepare("update users set password= :password where email= :email");
+                $statement = $conn->prepare("update users set password= :password, reset_token= :reset_token, exp_token= :exp_token where email= :email");
                 $statement->bindValue(':password', $n_password);
+                $statement->bindValue(":reset_token", NULL);
+                $statement->bindValue(":exp_token", NULL);
                 $statement->bindValue(':email', $email);
                 $statement->execute();
+
                 // $result = $statement->fetch();
                 // var_dump($result);
             }
