@@ -4,14 +4,14 @@
     use PHPMailer\PHPMailer\Exception;
 
     require 'vendor/autoload.php';
-
     include_once(__DIR__ . "/DB.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
 
-
+    
     class Reset{
         private $email;
         private $token;
+        const PASSWORD_MIN_LENGTH = 6;
 
         public function setEmail($email){
             $email = Cleaner::cleanInput($email);
@@ -33,20 +33,18 @@
             return $this->token;
         }
 
-        const PASSWORD_MIN_LENGTH = 6;
 
         public function resetMail(){
-            $email = $this->email;
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
-            $statement->bindValue(":email", $email);
+            $statement->bindValue(":email", $this->email);
             $statement->execute();
             $result = $statement->fetch();
 
             // var_dump($result , "result");
 
             if ($result) {
-                $token = md5($email).rand(10, 9999);
+                $token = md5($this->email).rand(10, 9999);
                 $expFormat = mktime(
                     date("H"),
                     date("i"),
@@ -61,34 +59,34 @@
                 $state = $conn->prepare("update users set reset_token = :reset_token, exp_token = :exp_token where email = :email");
                 $state->bindValue(":reset_token", $token);
                 $state->bindValue(":exp_token", $expDate);
-                $state->bindValue(":email", $email);
+                $state->bindValue(":email", $this->email);
                 $state->execute();
                 
-                // var_dump($state, " state");
                 //link nog aanpassen
-                $link = "<a href='localhost/dezine/reset_password.php?key=".$email."&token=".$token."'>Click To Reset password</a>";
+
+                $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
 
                 $mail = new PHPMailer(true);
 
                 try {
                     //Server settings
-                    $mail->SMTPDebug = 0;                      //Enable verbose debug output
-                    $mail->isSMTP();                                            //Send using SMTP
-                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = 'dezine.php@gmail.com';                     //SMTP username
-                    $mail->Password   = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';                               //SMTP password
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-                    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                    $mail->SMTPDebug = 0;
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'dezine.php@gmail.com';
+                    $mail->Password = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
 
                     //Recipients
-                    $mail->setFrom('from@example.com', 'Mailer');
-                    $mail->addAddress($email, 'Joe User');     //Add a recipient
+                    $mail->setFrom('reset@dezine.be', 'Dezine');
+                    $mail->addAddress($this->email, '');
                     
                     //Content
-                    $mail->isHTML(true);                                  //Set email format to HTML
-                    $mail->Subject = 'Here is the subject';
-                    $mail->Body    = $link;
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Password reset link';
+                    $mail->Body = $link;
 
                     $mail->send();
                     $message = 'Message has been sent';
@@ -101,33 +99,20 @@
         }
 
         public function resetLink(){
-            $em = $this->email;
-            $tok = $this->token;
             $conn = DB::getInstance();
             $query = $conn->prepare("select * from users where reset_token = :reset_token and email = :email");
-            $query->bindValue(":reset_token", $tok);
-            $query->bindValue(":email", $em);
+            $query->bindValue(":reset_token", $this->token);
+            $query->bindValue(":email", $this->email);
             $query->execute();
-            // var_dump($query->fetch());
-
-            $curDate = date("Y-m-d H:i:s");            
-            // var_dump($curDate);
-
-            // echo "yes";
+            $curDate = date("Y-m-d H:i:s");
 
             if ($query->rowCount() > 0) {
-                // echo "help";
                 $row = $query->fetch();
-                // var_dump($row);
                 $expDate = $row['exp_token'];
-                // var_dump($expDate, "exp");
-                if ($expDate >= $curDate){
-                    // echo "no";
-                    // var_dump($em);              
-                    return $em;
+                if ($expDate >= $curDate){            
+                    return $this->email;
                 }
-                else{                    
-                    // echo "ok";
+                else{
                     $message = "This forget password link has been expired";
                     return $message;
                 }
@@ -151,7 +136,6 @@
                 $statement->execute();
 
                 // $result = $statement->fetch();
-                // var_dump($result);
             }
         }
     }

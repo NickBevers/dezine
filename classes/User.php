@@ -23,13 +23,8 @@
         public function setEmail($email)
         {
             $email = Cleaner::cleanInput($email);
-            $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
-            if(preg_match_all($regex, $email)){
-                $this->email = $email;
-                return $this;
-            } else{
-                throw new Exception("Please use your Thomas More account to register");
-            }
+            $this->email = $email;
+            return $this;
         }
 
         public function getPassword(){return $this->password;}
@@ -44,7 +39,7 @@
             return $this;
         }
 
-        public function canLogin($password) {
+        public function canLogin() {
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
             $statement->bindValue(':email', $this -> email);
@@ -55,7 +50,7 @@
                 throw new Exception("No user was found with this email");
             }
 
-            if(password_verify($password, $res["password"])){
+            if(password_verify($this->password, $res["password"])){
                 return true;
             }
 
@@ -64,6 +59,8 @@
 
         public function register() {
             if(!$this->userExists()){
+                $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
+                if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
                 $options = [
                 'cost' => 15
                 ];
