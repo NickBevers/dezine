@@ -63,7 +63,9 @@
                 $state->execute();
                 
                 //link nog aanpassen
+
                 $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
+
                 $mail = new PHPMailer(true);
 
                 try {
@@ -126,10 +128,13 @@
                 ];
                 $n_password = password_hash($new_password, PASSWORD_DEFAULT, $options);
                 $conn = DB::getInstance();
-                $statement = $conn->prepare("update users set password= :password where email= :email");
+                $statement = $conn->prepare("update users set password= :password, reset_token= :reset_token, exp_token= :exp_token where email= :email");
                 $statement->bindValue(':password', $n_password);
+                $statement->bindValue(":reset_token", NULL);
+                $statement->bindValue(":exp_token", NULL);
                 $statement->bindValue(':email', $email);
                 $statement->execute();
+
                 // $result = $statement->fetch();
             }
         }
