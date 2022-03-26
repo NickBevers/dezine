@@ -16,9 +16,10 @@
             $user->setUsername($username);
             $user->setEmail($email);
             $user->setPassword($password);
-            $user->register();
+            $id = $user->register();
             session_start();
             $_SESSION['email'] = $user->getEmail();
+            $_SESSION['id'] = $id;
             header("Location: home.php");
           }
           catch(Throwable $error) {
