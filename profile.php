@@ -1,21 +1,19 @@
 <?php
-     include_once(__DIR__ . "/classes/DB.php");
-     include_once(__DIR__ . "/helpers/Security.help.php");
-     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-     include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/DB.php");
+    include_once(__DIR__ . "/helpers/Security.help.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    include_once(__DIR__ . "/classes/User.php");
 
 
-     Security::onlyLoggedInUsers();
+    Security::onlyLoggedInUsers();
 
-     if (!empty($_POST)) {
-         $c_password = $_POST["c_password"];
-         $new_password = $_POST["new_password"];
-         $password_conf = $_POST["password_conf"];
-         $email = $_SESSION['email'];
+    if (!empty($_POST)) {
+        $c_password = $_POST["c_password"];
+        $new_password = $_POST["new_password"];
+        $password_conf = $_POST["password_conf"];
+        $email = $_SESSION['email'];
 
-        //  var_dump($_SESSION);
-
-         if(CheckEmpty::isNotEmpty($c_password) && CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
+        if(CheckEmpty::isNotEmpty($c_password) && CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
             if($new_password === $password_conf){
                 if ($c_password === $new_password) {
                     $error = "New password cannot be the same as the old password";
@@ -29,11 +27,11 @@
                     }
                 }
             } else{
-            $error = "The passwords don't match";
+                $error = "The passwords don't match";
             }
-          } else{
+        } else{
             $error = "Please fill in all fields of the form";
-          }
+        }
      }
 ?>
 <!DOCTYPE html>

@@ -75,6 +75,8 @@
                 $statement->bindValue(':email', $this->email);
                 $statement->bindValue(':password', $password);
                 $statement->execute();
+                $res = $conn->lastInsertId();
+                return $res;
             } else{
                 throw new Exception("This email address is already in use");
             }
