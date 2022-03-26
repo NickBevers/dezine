@@ -1,20 +1,30 @@
 <?php 
-    // include_once(__DIR__ . "/autoloader/bootstrap.php");
-    include_once(__DIR__ . "/classes/Post.php");
-
+    include_once(__DIR__ . "/autoloader.php");
+    // include_once(__DIR__ . "/classes/Post.php");
+    session_start();
+    
     if(!empty($_POST)){
         $title = $_POST["title"];
         $description = $_POST["description"];
         $tags = $_POST["tags"];
-        $image = $_POST["image"];
+        $user_id = $_SESSION["id"];
 
         try {
-            $project = new Post();
-            $project->setTitle($title);
-            $project->setDescription($description);
-            $project->setTags($tags);
-            $project->setImage($image);
-            $project->addPost();
+          $fileName = basename($_FILES["image"]["name"]);
+          $targetFilePath = "uploads/" . $fileName . $user_id;
+          $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+          $allowedFileTypes = array('jpg','png','jpeg','gif');
+
+          if(!empty($_FILES["image"]["name"]) && in_array($fileType, $allowedFileTypes)){
+              if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
+                $project = new Post();
+                $project->setTitle($title);
+                $project->setDescription($description);
+                $project->setTags($tags);
+                $project->setImage($targetFilePath);
+                $project->addPost($user_id);
+              }
+          }
         } catch (\Throwable $error) {
             $error = $error->getMessage();
         }
@@ -39,7 +49,7 @@
     <div class="alert alert-danger"><?php echo $error; ?></div>
 <?php endif; ?>
 
-<form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
+<form method="post" enctype='multipart/form-data'>
   <div class="mb-3">
     <label for="title" class="form-label">Tile</label>
     <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" required>
@@ -47,7 +57,7 @@
 
   <div class="mb-3">
     <label for="description" class="form-label">Description</label>
-    <input type="text" name="description" class="form-control" id="description" required>
+    <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required style="resize: none;"></textarea>
   </div>
 
   <div class="mb-3">

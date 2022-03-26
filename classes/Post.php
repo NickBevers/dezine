@@ -32,7 +32,9 @@
         public function setTags($tags)
         {
             $tags = Cleaner::cleanInput($tags);
-            $this->tags = $tags;
+            $tags = str_replace(' ', '', $tags);
+            $tags = explode(",", $tags);
+            $this->tags = json_encode($tags);
             return $this;
         }
 
@@ -45,8 +47,15 @@
             return $this;
         }
 
-        public function addPost(){
+        public function addPost($user_id){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("insert into posts (user_id, image, description, tags) values (':user_id', ':image', ':description', ':tags')");
+            $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
+            // $statement = $conn->prepare("INSERT INTO posts ('title', 'user_id', 'image', 'description', 'tags') VALUES (':title', ':user_id', ':image', ':description', ':tags')");
+            $statement->bindValue(":title", $this->title);
+            $statement->bindValue(":user_id", $user_id);
+            $statement->bindValue(":image", $this->image);
+            $statement->bindValue(":description", $this->description);
+            $statement->bindValue(":tags", $this->tags);
+            $statement->execute();
         }
     }
