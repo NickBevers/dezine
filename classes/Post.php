@@ -87,9 +87,18 @@
             return $dateTime;
         }
 
-        public static function getAllPosts(){
+        public static function getPostsCount(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts order by creation_date");
+            $statement->execute();
+            // $res = $statement->fetchAll();
+            $res = $statement->rowCount();
+            return $res;
+        }
+
+        public static function getSomePosts($start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts order by creation_date limit $start, $amount");
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
