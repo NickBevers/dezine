@@ -87,4 +87,12 @@
             return $dateTime;
         }
 
+        public static function getAllPosts(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts order by creation_date");
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+
     }
