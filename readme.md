@@ -17,4 +17,5 @@ COLOR FILTER GUIDE:
 - composer require --dev phpunit/phpunit
 - composer require league/color-extractor:0.3.*
 - !important! -> go to \vendor\league\color-extractor\src\League\ColorExtractor\Palette.php and change line 71 to "if (!($image instanceof \GdImage) && (!is_resource($image) || get_resource_type($image) != 'gd')) {"
+- uncomment line 925 in php.ini in xampp or mamp directory
 - Questions => ask Nick ;)
