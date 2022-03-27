@@ -1,6 +1,11 @@
 <?php 
-    include_once(__DIR__ . "/DB.php");
+    include_once(__DIR__ . "/../autoloader.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+
+    require 'vendor/autoload.php';
+    use League\ColorExtractor\Color;
+    use League\ColorExtractor\ColorExtractor;
+    use League\ColorExtractor\Palette;
 
 
     class Post {
@@ -8,6 +13,7 @@
         private $description;
         private $tags;
         private $image;
+        private $colors;
 
         public function getTitle(){return $this->title;}
 
@@ -46,16 +52,31 @@
             $this->image = $image;
             return $this;
         }
+        
+        public function getColors(){return $this->colors;}
+
+        public function setColors(){
+            $colorArray = [];
+            $palette = Palette::fromFilename($this->image);
+            $topFive = $palette->getMostUsedColors(5);
+            foreach($topFive as $color) {
+                array_push($colorArray, Color::fromIntToHex($color));
+            }
+            $this->colors = json_encode($colorArray);
+            return $this;
+        }
 
         public function addPost($user_id){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
-            // $statement = $conn->prepare("INSERT INTO posts ('title', 'user_id', 'image', 'description', 'tags') VALUES (':title', ':user_id', ':image', ':description', ':tags')");
+            $statement = $conn->prepare("insert into posts (title, user_id, image, colors, description, tags) values (:title, :user_id, :image, :colors, :description, :tags);");
+            // $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
             $statement->bindValue(":title", $this->title);
             $statement->bindValue(":user_id", $user_id);
             $statement->bindValue(":image", $this->image);
+            $statement->bindValue(":colors", $this->colors);
             $statement->bindValue(":description", $this->description);
             $statement->bindValue(":tags", $this->tags);
             $statement->execute();
         }
+
     }
