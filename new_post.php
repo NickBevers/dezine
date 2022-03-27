@@ -13,6 +13,7 @@
 
         try {
           $fileName = basename($_FILES["image"]["name"]);
+          $fileName = str_replace(" ", "_", $fileName);
           $targetFilePath = "uploads/" . $user_id . $fileName;
           $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
           $allowedFileTypes = array('jpg','png','jpeg','gif');
