@@ -16,7 +16,6 @@
           $targetFilePath = "uploads/" . $user_id . $fileName;
           $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
           $allowedFileTypes = array('jpg','png','jpeg','gif');
-          // var_dump($_FILES["image"]["name"]);
 
           if(!empty($_FILES["image"]["name"]) && in_array($fileType, $allowedFileTypes)){
             if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
@@ -26,14 +25,18 @@
               $project->setTags($tags);
               $project->setImage($targetFilePath);
               $project->setColors();
-              var_dump($project->getColors());
-              exit();
-              $project->addPost($user_id);
+              // var_dump($project->getColors());
+              // exit();
+              if($project->addPost($user_id)){
+                header("Location: home.php");
+              } else{
+                $error = "Something has gone wrong, please try again.";
+              }
             } else{
               $error = "The image could not be saved, please try again";
             }
           } else{
-            $error = "The image has the wrong filetype, pleas upload only png, jpg, jpeg or gif images";
+            $error = "Please choose an image for the project.";
           }
         } catch (\Throwable $error) {
             $error = $error->getMessage();
