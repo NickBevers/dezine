@@ -1,6 +1,6 @@
 <?php
     abstract class Security {
-        public static function onlyLoggedInUsers() {
+       /* public static function onlyLoggedInUsers() {
             session_start();
             if(!isset($_SESSION['email'])){
                 header("Location: login.php");
@@ -12,5 +12,13 @@
             if(isset($_SESSION['email'])){
                 header("Location: home.php");
             }
+        }*/
+
+        public static function isLoggedIn(){
+            session_start();
+            if(isset($_SESSION['email'])){
+                return true;
+            }
+            return false;
         }
     }

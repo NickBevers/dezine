@@ -1,10 +1,6 @@
 <?php 
-
+	include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/helpers/Security.help.php");
-    Security::onlyLoggedInUsers();
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">

@@ -1,5 +1,5 @@
 <?php 
-    
+	  include_once("./includes/loginRegisterSessionCheck.inc.php");
     include_once(__DIR__ . "/classes/User.php");
 
     if(!empty($_POST)){
