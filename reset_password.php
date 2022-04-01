@@ -1,6 +1,5 @@
 <?php
-    // TODO: Check if this is accesible when the user is logged in or not
-	  //include_once("./includes/loggedInCheck.inc.php");
+	  include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/classes/Reset.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
