@@ -122,4 +122,12 @@
                 }
             }
         }
+
+        public static function deleteUserByEmail($userEmail) {
+            $conn = DB::getInstance();
+
+            $statement = $conn->prepare("DELETE FROM users WHERE email = :email;");
+            $statement->bindValue(':email', $userEmail);
+            $statement->execute();
+        }
     }
