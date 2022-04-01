@@ -11,19 +11,31 @@
 
         try {
           $fileName = basename($_FILES["image"]["name"]);
-          $targetFilePath = "uploads/" . $fileName . $user_id;
-          $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+          $fileName = str_replace(" ", "_", $fileName);
+          $targetFilePath = "uploads/" . $user_id . $fileName;
+          $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
           $allowedFileTypes = array('jpg','png','jpeg','gif');
 
           if(!empty($_FILES["image"]["name"]) && in_array($fileType, $allowedFileTypes)){
-              if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
-                $project = new Post();
-                $project->setTitle($title);
-                $project->setDescription($description);
-                $project->setTags($tags);
-                $project->setImage($targetFilePath);
-                $project->addPost($user_id);
+            if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
+              $project = new Post();
+              $project->setTitle($title);
+              $project->setDescription($description);
+              $project->setTags($tags);
+              $project->setImage($targetFilePath);
+              $project->setColors();
+              // var_dump($project->getColors());
+              // exit();
+              if($project->addPost($user_id)){
+                header("Location: home.php");
+              } else{
+                $error = "Something has gone wrong, please try again.";
               }
+            } else{
+              $error = "The image could not be saved, please try again";
+            }
+          } else{
+            $error = "Please choose an image for the project.";
           }
         } catch (\Throwable $error) {
             $error = $error->getMessage();

@@ -51,7 +51,9 @@
             }
 
             if(password_verify($this->password, $res["password"])){
-                return true;
+                return $res;
+            } else {
+                return false;
             }
 
             throw new Exception("This password does not match the given email");

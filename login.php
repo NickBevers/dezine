@@ -9,10 +9,11 @@
             $user = new User;
             $user->setEmail($email);
 			$user->setPassword($password);
-            if( $user->canLogin()) {
+			$usr = $user->canLogin();
+            if($usr) {
                 session_start();
                 $_SESSION['email'] = $user->getEmail();
-
+				$_SESSION['id'] = $usr["id"];
                 header("Location: home.php");
             }
         } catch (Exception $e) {
