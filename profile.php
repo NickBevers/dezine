@@ -1,11 +1,9 @@
 <?php
+	include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/classes/DB.php");
     include_once(__DIR__ . "/helpers/Security.help.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
     include_once(__DIR__ . "/classes/User.php");
-
-
-    Security::onlyLoggedInUsers();
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];

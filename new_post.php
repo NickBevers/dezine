@@ -1,10 +1,8 @@
-<?php 
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    Security::onlyLoggedInUsers();
-
-
+<?php
+	  include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/autoloader.php");
-    
+    // include_once(__DIR__ . "/classes/Post.php");
+        
     if(!empty($_POST)){
         $title = $_POST["title"];
         $description = $_POST["description"];

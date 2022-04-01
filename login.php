@@ -1,6 +1,7 @@
 <?php
+	include_once("./includes/loginRegisterSessionCheck.inc.php");
     include_once("./classes/User.php");
-
+	
 	if( !empty($_POST) ) {
 		$email = $_POST["email"];
 		$password = $_POST["password"];

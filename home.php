@@ -1,6 +1,7 @@
 <?php 
+	include_once("./includes/loggedInCheck.inc.php");
+    include_once(__DIR__ . "/helpers/Security.help.php");
 
-    
     include_once(__DIR__ . "/autoloader.php");
 
     $postsPerPage = 18;
