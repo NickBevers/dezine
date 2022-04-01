@@ -126,6 +126,6 @@
 
             $statement = $conn->prepare("DELETE FROM users WHERE email = :email;");
             $statement->bindValue(':email', $userEmail);
-            $result = $statement->execute();
+            $statement->execute();
         }
     }
