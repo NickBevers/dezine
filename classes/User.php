@@ -130,4 +130,46 @@
             $statement->bindValue(':email', $userEmail);
             $statement->execute();
         }
+
+
+
+        public static function updateUser($email, $username, $education, $bio,){
+
+            $conn = DB::getInstance();
+
+            $sql1 = "UPDATE `users` SET `username`=:username,`education`=:education,`bio`=:bio WHERE `email`=:email";
+            $statement = $conn->prepare($sql1);
+            $statement->bindValue(':username', $username);
+            $statement->bindValue(':education', $education);
+            $statement->bindValue(':bio', $bio);
+            $statement->bindValue(':email', $email);
+    
+            $statement->execute();
+            echo "<script>alert('User UPDATED');document.location = 'index.php';</script>";
+
+        }
+
+        public static function getUser(){
+
+            $email = $_SESSION['email'];
+
+
+
+
+
+            $conn = DB::getInstance();
+            $sql2 = 'SELECT username, education, bio FROM users WHERE email = :email';
+            $statement = $conn->prepare($sql2);
+            $statement->bindValue(':email', $email, PDO::PARAM_STR);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result;
+
+           
+        }
+    
+
+    
+
+
     }
