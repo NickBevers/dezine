@@ -7,7 +7,8 @@
 
     $email = $_SESSION['email'];
     $user = new User();
-    $users = $user->getUser($email);
+    $user->setEmail($email);
+    $users = $user->getUser();
 
     if (!empty($_POST)) {
 

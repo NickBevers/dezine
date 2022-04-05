@@ -154,11 +154,11 @@
 
 
 
-        public static function updateUser(){
+        public function updateUser(){
 
             $conn = DB::getInstance();
 
-            $sql = "update 'users' set 'username'=:username,'education'=:education,'bio'=:bio where 'email'=:email";
+            $sql = "update users set username=:username,education=:education,bio=:bio where email=:email";
             $statement = $conn->prepare($sql);
             $statement->bindValue(':username',$this->username);
             $statement->bindValue(':education', $this->education);
@@ -170,13 +170,13 @@
 
         }
 
-        public static function getUser($email){
+        public function getUser(){
 
 
             $conn = DB::getInstance();
             $sql = 'SELECT username, education, bio FROM users WHERE email = :email';
             $statement = $conn->prepare($sql);
-            $statement->bindValue(':email', $email);
+            $statement->bindValue(':email', $this->email);
             $statement->execute();
             $result = $statement->fetch();
             return $result;
