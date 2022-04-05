@@ -10,7 +10,7 @@
           <a class="nav-link active" aria-current="page" href="feed.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="logout.php">New Post</a>
+          <a class="nav-link" href="new_post.php">New Post</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="profile.php">Profile</a>
