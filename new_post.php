@@ -14,7 +14,7 @@
           $fileName = str_replace(" ", "_", $fileName);
           $targetFilePath = "uploads/" . $user_id . $fileName;
           $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-          $allowedFileTypes = array('jpg','png','jpeg','gif');
+          $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');
 
           if(!empty($_FILES["image"]["name"]) && in_array($fileType, $allowedFileTypes)){
             if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
