@@ -7,6 +7,9 @@
         private $username;
         private $email;
         private $password;
+        private $bio;
+        private $education;
+
         const PASSWORD_MIN_LENGTH = 6;
 
         public function getUsername(){return $this->username;}
@@ -36,6 +39,24 @@
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             }
             $this->password = $password;
+            return $this;
+        }
+
+        public function getBio(){return $this->bio;}
+
+        public function setBio($bio)
+        {
+            $bio = Cleaner::cleanInput($bio);
+            $this->bio = $bio;
+            return $this;
+        }
+
+        public function getEducation(){return $this->education;}
+
+        public function setEducation($education)
+        {
+            $education = Cleaner::cleanInput($education);
+            $this->education = $education;
             return $this;
         }
 
@@ -133,34 +154,29 @@
 
 
 
-        public static function updateUser($email, $username, $education, $bio,){
+        public static function updateUser(){
 
             $conn = DB::getInstance();
 
-            $sql1 = "UPDATE `users` SET `username`=:username,`education`=:education,`bio`=:bio WHERE `email`=:email";
-            $statement = $conn->prepare($sql1);
-            $statement->bindValue(':username', $username);
-            $statement->bindValue(':education', $education);
-            $statement->bindValue(':bio', $bio);
-            $statement->bindValue(':email', $email);
-    
-            $statement->execute();
-            echo "<script>alert('User UPDATED');document.location = 'index.php';</script>";
+            $sql = "update 'users' set 'username'=:username,'education'=:education,'bio'=:bio where 'email'=:email";
+            $statement = $conn->prepare($sql);
+            $statement->bindValue(':username',$this->username);
+            $statement->bindValue(':education', $this->education);
+            $statement->bindValue(':bio', $this->bio);
+            $statement->bindValue(':email', $this->email);
+           
+            return $statement->execute();
+         
 
         }
 
-        public static function getUser(){
-
-            $email = $_SESSION['email'];
-
-
-
+        public static function getUser($email){
 
 
             $conn = DB::getInstance();
-            $sql2 = 'SELECT username, education, bio FROM users WHERE email = :email';
-            $statement = $conn->prepare($sql2);
-            $statement->bindValue(':email', $email, PDO::PARAM_STR);
+            $sql = 'SELECT username, education, bio FROM users WHERE email = :email';
+            $statement = $conn->prepare($sql);
+            $statement->bindValue(':email', $email);
             $statement->execute();
             $result = $statement->fetch();
             return $result;
