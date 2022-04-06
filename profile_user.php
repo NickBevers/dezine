@@ -15,33 +15,19 @@
         $username = $_POST['username'];
         $education = $_POST['education'];
         $bio = $_POST['bio'];
-       
 
-    
-        
         try{
-           
             $user->setEmail($email);
             $user->setUsername($username);
             $user->setBio($bio);
             $user->setEducation($education);
-
             $user->updateUser();
-            
-            $success = "Your password was successfully updated";
-
-
+            $success = "Your profile was successfully updated";
         }
         catch (Throwable $error) {
-            // if any errors are thrown in the class, they can be caught here
             $error = $error->getMessage();
         }
-
-    
     }
-
-    
-   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +43,6 @@
 
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-
     <main>
         <?php if(isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -70,12 +55,7 @@
         <h4>Update Profile</h4>
         <br>
 
-
-
         <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
-
-
-
             <div class="mb-3">
                 <label for="username" class="form-label">username</label>
                 <input type="username" name="username" class="form-control" id="username"
@@ -93,12 +73,8 @@
                 <textarea type="bio" name="bio" class="form-control" id="bio" cols="60"
                     row="30"><?php echo $users["bio"]; ?></textarea>
             </div>
-
-
             <button type="submit" class="btn btn-primary">Update</button>
-
         </form>
-
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
