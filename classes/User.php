@@ -145,15 +145,14 @@
 
         public static function deleteUserByEmail($userEmail) {
             $conn = DB::getInstance();
-            $statement = $conn->prepare("DELETE FROM users WHERE email = :email;");
+            $statement = $conn->prepare("delete from users where email = :email");
             $statement->bindValue(':email', $userEmail);
             $statement->execute();
         }
 
         public function updateUser(){
             $conn = DB::getInstance();
-            $sql = "update users set username = :username, education = :education, bio = :bio where email = :email";
-            $statement = $conn->prepare($sql);
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio where email = :email");
             $statement->bindValue(':username',$this->username);
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
