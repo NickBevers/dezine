@@ -9,6 +9,7 @@
     $user = new User();
     $user->setEmail($email);
     $users = $user->getUser();
+    
 
     if (!empty($_POST)) {
 
@@ -16,12 +17,42 @@
         $education = $_POST['education'];
         $bio = $_POST['bio'];
 
+        $linkedin = $_POST['linkedin'];
+        $website = $_POST['website'];
+        $instagram = $_POST['instagram'];
+        $github = $_POST['github'];
+
+        $second_email = $_POST['second_email'];
+
+
+
+
+
         try{
             $user->setEmail($email);
             $user->setUsername($username);
             $user->setBio($bio);
             $user->setEducation($education);
+
+            $user->setLinkedin($linkedin);
+            $user->setWebsite($website);
+            $user->setInstagram($instagram);
+            $user->setGithub($github);
+
+            $user->setSecondEmail($second_email);
+
+
             $user->updateUser();
+
+
+           
+         
+
+
+
+
+
+
             $success = "Your profile was successfully updated";
         }
         catch (Throwable $error) {
@@ -53,7 +84,7 @@
         <?php endif; ?>
 
         <h4>Update Profile</h4>
-        <br>
+      
 
         <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
             <div class="mb-3">
@@ -73,7 +104,50 @@
                 <textarea type="bio" name="bio" class="form-control" id="bio" cols="60"
                     row="30"><?php echo $users["bio"]; ?></textarea>
             </div>
+           
+
+
+            <h4>Update Socials</h4>
+           
+
+            <div class="mb-3">
+                <label for="linkedin" class="form-label">linkedin</label>
+                <input type="linkedin" name="linkedin" class="form-control" id="linkedin"
+                    value="<?php echo $users["linkedin"]; ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="website" class="form-label">website</label>
+                <input type="website" name="website" class="form-control" id="website"
+                    value="<?php echo $users["website"]; ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="instagram" class="form-label">instagram</label>
+                <input type="instagram" name="instagram" class="form-control" id="instagram"
+                    value="<?php echo $users["instagram"]; ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="github" class="form-label">github</label>
+                <input type="github" name="github" class="form-control" id="github"
+                    value="<?php echo $users["github"]; ?>">
+            </div>
+
+            <h4>Update Add Second Email</h4>
+
+            <div class="mb-3">
+                <label for="second_email" class="form-label">second_email</label>
+                <input type="second_email" name="second_email" class="form-control" id="second_email"
+                    value="<?php echo $users["second_email"]; ?>">
+            </div>
+           
+
+
+
             <button type="submit" class="btn btn-primary">Update</button>
+
+
         </form>
     </main>
 

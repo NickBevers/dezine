@@ -9,6 +9,19 @@
         private $password;
         private $bio;
         private $education;
+
+
+        //social links
+        private $linkedin;
+        private $website;
+        private $instagram;
+        private $github;
+
+        //second email
+        private $second_email;
+
+
+
         const PASSWORD_MIN_LENGTH = 6;
 
         public function getUsername(){return $this->username;}
@@ -19,6 +32,8 @@
             $this->username = $username;
             return $this;
         }
+
+        //emails setters and getters
         
         public function getEmail(){return $this->email;}
         
@@ -28,6 +43,19 @@
             $this->email = $email;
             return $this;
         }
+
+        public function getSecondEmail(){return $this->second_email;}
+        
+        public function setSecondEmail($second_email)
+        {
+            $second_email = Cleaner::cleanInput($second_email);
+            $this->second_email = $second_email;
+            return $this;
+        }
+
+
+
+        //password
 
         public function getPassword(){return $this->password;}
 
@@ -40,6 +68,8 @@
             $this->password = $password;
             return $this;
         }
+
+        //about getters and setters
 
         public function getBio(){return $this->bio;}
 
@@ -58,6 +88,48 @@
             $this->education = $education;
             return $this;
         }
+
+        //socials getters and setters
+
+        public function getLinkedin(){return $this->linkedin;}
+
+        public function setLinkedin($linkedin)
+        {
+            $linkedin = Cleaner::cleanInput($linkedin);
+            $this->linkedin = $linkedin;
+            return $this;
+        }
+
+        public function getWebsite(){return $this->website;}
+
+        public function setWebsite($website)
+        {
+            $website = Cleaner::cleanInput($website);
+            $this->website = $website;
+            return $this;
+        }
+
+        public function getInstagram(){return $this->instagram;}
+
+        public function setInstagram($instagram)
+        {
+            $instagram = Cleaner::cleanInput($instagram);
+            $this->instagram = $instagram;
+            return $this;
+        }
+
+        public function getGithub(){return $this->github;}
+
+        public function setGithub($github)
+        {
+            $github = Cleaner::cleanInput($github);
+            $this->github = $github;
+            return $this;
+        }
+
+
+
+
 
         public function canLogin() {
             $conn = DB::getInstance();
@@ -151,21 +223,54 @@
         }
 
         public function updateUser(){
+
+
+            //social links gekopieerd from https://github.com/lorey/social-media-profiles-regexs
+
+            //link of linkedin
+            $regexa = '/^$|(?:https?:)?\/\/(?:[\w]+\.)?linkedin\.com\/in\/(?P<permalink>[\w\-\_À-ÿ%]+)\/?/';
+            if(!preg_match($regexa, $this->linkedin)){throw new Exception("Your linkedin link is not valid");}
+            //link of website weet ik niet
+            $regexb = '/^$/';
+            if(!preg_match($regexb, $this->website)){throw new Exception("Your website link is not valid");}
+            //link of instagram
+            $regexc = '/^$|(?:https?:)?\/\/(?:www\.)?(?:instagram\.com|instagr\.am)\/(?P<username>[A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)/';
+            if(!preg_match($regexc, $this->instagram)){throw new Exception("Your instagram link is not valid");}
+            //link of github
+            $regexd = '/^$|(?:https?:)?\/\/(?:www\.)?github\.com\/(?P<login>[A-z0-9_-]+)\/?/';
+            if(!preg_match($regexd, $this->github)){throw new Exception("Your github link is not valid");}
+
+            //regex for second email checking
+            //does only work for domain names with 2 or 3 letters
+            $regexe = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+            if(!preg_match($regexe, $this->second_email)){throw new Exception("Your email link is not valid");}
+
+
             $conn = DB::getInstance();
-            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio where email = :email");
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email where email = :email");
             $statement->bindValue(':username',$this->username);
+            //
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
+            //
+            $statement->bindValue(':linkedin',$this->linkedin);
+            $statement->bindValue(':website', $this->website);
+            $statement->bindValue(':instagram', $this->instagram);
+            $statement->bindValue(':github', $this->github);
+            //
+            $statement->bindValue(':second_email', $this->second_email);
+            //
             $statement->bindValue(':email', $this->email);
             return $statement->execute();
         }
 
         public function getUser(){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select username, education, bio from users where email = :email");
+            $statement = $conn->prepare("select username, education, bio, linkedin, website, instagram, github, second_email from users where email = :email");
             $statement->bindValue(':email', $this->email);
             $statement->execute();
             $result = $statement->fetch();
             return $result;
         }
+
     }
