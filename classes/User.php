@@ -9,13 +9,13 @@
         private $password;
         private $bio;
         private $education;
-
+        //profile image
+        private $profile_image;
         //social links
         private $linkedin;
         private $website;
         private $instagram;
         private $github;
-
         //second email
         private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
@@ -45,6 +45,16 @@
         {
             $second_email = Cleaner::cleanInput($second_email);
             $this->second_email = $second_email;
+            return $this;
+        }
+
+        //profile_image
+        public function getProfileImage(){return $this->profile_image;}
+
+        public function setProfileImage($profile_image)
+        {
+            $profile_image = Cleaner::cleanInput($profile_image);
+            $this->profile_image = $profile_image;
             return $this;
         }
 
@@ -230,8 +240,9 @@
             if(!preg_match($regexe, $this->second_email)){throw new Exception("Your email link is not valid");}
 
             $conn = DB::getInstance();
-            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email where email = :email");
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
             $statement->bindValue(':username',$this->username);
+            $statement->bindValue(':profile_image', $this->profile_image);
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
             $statement->bindValue(':linkedin',$this->linkedin);
@@ -245,11 +256,10 @@
 
         public function getUser(){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select username, education, bio, linkedin, website, instagram, github, second_email from users where email = :email");
+            $statement = $conn->prepare("select username, education, bio, linkedin, website, instagram, github, second_email, profile_image from users where email = :email");
             $statement->bindValue(':email', $this->email);
             $statement->execute();
             $result = $statement->fetch();
             return $result;
         }
-
     }

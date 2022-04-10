@@ -10,57 +10,55 @@
     $user->setEmail($email);
     $users = $user->getUser();
     
-
     if (!empty($_POST)) {
 
         $username = $_POST['username'];
         $education = $_POST['education'];
         $bio = $_POST['bio'];
-
         $linkedin = $_POST['linkedin'];
         $website = $_POST['website'];
         $instagram = $_POST['instagram'];
         $github = $_POST['github'];
-
         $second_email = $_POST['second_email'];
-
-
-
-
 
         try{
             $user->setEmail($email);
             $user->setUsername($username);
             $user->setBio($bio);
             $user->setEducation($education);
-
             $user->setLinkedin($linkedin);
             $user->setWebsite($website);
             $user->setInstagram($instagram);
             $user->setGithub($github);
-
             $user->setSecondEmail($second_email);
 
+            $fileName = basename($_FILES["profile_image"]["name"]);
+            $fileName = str_replace(" ", "_", $fileName);
+            $targetFilePath = "uploads/profile/" . $fileName;
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');    
 
-            $user->updateUser();
-
-
-           
-         
-
-
-
-
-
-
-            $success = "Your profile was successfully updated";
+            if(in_array($fileType, $allowedFileTypes)){
+                if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
+                  $user->setProfileImage($targetFilePath);
+                  if($user->updateUser()){
+                    header("Location: home.php");
+                    $success = "Your profile was successfully updated";
+                  } else{
+                    $error = "Something has gone wrong, please try again.";
+                  }
+                } else{
+                  $error = "The image could not be saved, please try again";
+                }
+              } else{
+                $error = "Only this jpg','png','jpeg','gif', 'jfif', 'webp images allowed";
+              }
         }
         catch (Throwable $error) {
             $error = $error->getMessage();
         }
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -84,7 +82,17 @@
         <?php endif; ?>
 
         <h4>Update Profile</h4>
-        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
+
+        <form 
+        method="post" 
+        action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> 
+        enctype='multipart/form-data'>
+
+            <div class="mb-3">
+                 <label for="profile_image" class="form-label">profile_image</label>
+                 <input type="file" name="profile_image" class="form-control" id="profile_image" required>
+             </div>
+
             <div class="mb-3">
                 <label for="username" class="form-label">username</label>
                 <input type="username" name="username" class="form-control" id="username"
