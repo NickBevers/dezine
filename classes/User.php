@@ -10,7 +10,6 @@
         private $bio;
         private $education;
 
-
         //social links
         private $linkedin;
         private $website;
@@ -19,9 +18,6 @@
 
         //second email
         private $second_email;
-
-
-
         const PASSWORD_MIN_LENGTH = 6;
 
         public function getUsername(){return $this->username;}
@@ -34,7 +30,6 @@
         }
 
         //emails setters and getters
-        
         public function getEmail(){return $this->email;}
         
         public function setEmail($email)
@@ -53,10 +48,7 @@
             return $this;
         }
 
-
-
         //password
-
         public function getPassword(){return $this->password;}
 
         public function setPassword( $password )
@@ -70,7 +62,6 @@
         }
 
         //about getters and setters
-
         public function getBio(){return $this->bio;}
 
         public function setBio($bio)
@@ -90,7 +81,6 @@
         }
 
         //socials getters and setters
-
         public function getLinkedin(){return $this->linkedin;}
 
         public function setLinkedin($linkedin)
@@ -126,10 +116,6 @@
             $this->github = $github;
             return $this;
         }
-
-
-
-
 
         public function canLogin() {
             $conn = DB::getInstance();
@@ -223,8 +209,6 @@
         }
 
         public function updateUser(){
-
-
             //social links gekopieerd from https://github.com/lorey/social-media-profiles-regexs
 
             //link of linkedin
@@ -245,21 +229,16 @@
             $regexe = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
             if(!preg_match($regexe, $this->second_email)){throw new Exception("Your email link is not valid");}
 
-
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email where email = :email");
             $statement->bindValue(':username',$this->username);
-            //
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
-            //
             $statement->bindValue(':linkedin',$this->linkedin);
             $statement->bindValue(':website', $this->website);
             $statement->bindValue(':instagram', $this->instagram);
             $statement->bindValue(':github', $this->github);
-            //
             $statement->bindValue(':second_email', $this->second_email);
-            //
             $statement->bindValue(':email', $this->email);
             return $statement->execute();
         }

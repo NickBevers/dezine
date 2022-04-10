@@ -1,7 +1,6 @@
 <?php 
 	include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/helpers/Security.help.php");
-
     include_once(__DIR__ . "/autoloader.php");
 
     $postsPerPage = 18;
@@ -15,8 +14,6 @@
         $pageNum  = 1;
         $posts = Post::getSomePosts(0, $postsPerPage);
     };
-    //temporary getAllPosts
-    // $posts = Post::getAllPosts();
 
 ?><!DOCTYPE html>
 <html lang="en">

@@ -84,8 +84,6 @@
         <?php endif; ?>
 
         <h4>Update Profile</h4>
-      
-
         <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
             <div class="mb-3">
                 <label for="username" class="form-label">username</label>
@@ -104,12 +102,8 @@
                 <textarea type="bio" name="bio" class="form-control" id="bio" cols="60"
                     row="30"><?php echo $users["bio"]; ?></textarea>
             </div>
-           
-
 
             <h4>Update Socials</h4>
-           
-
             <div class="mb-3">
                 <label for="linkedin" class="form-label">linkedin</label>
                 <input type="linkedin" name="linkedin" class="form-control" id="linkedin"
@@ -135,19 +129,12 @@
             </div>
 
             <h4>Update Add Second Email</h4>
-
             <div class="mb-3">
                 <label for="second_email" class="form-label">second_email</label>
                 <input type="second_email" name="second_email" class="form-control" id="second_email"
                     value="<?php echo $users["second_email"]; ?>">
             </div>
-           
-
-
-
             <button type="submit" class="btn btn-primary">Update</button>
-
-
         </form>
     </main>
 
