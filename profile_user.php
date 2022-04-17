@@ -90,7 +90,7 @@
 
             <div class="mb-3">
                  <label for="profile_image" class="form-label">profile_image</label>
-                 <input type="file" name="profile_image" class="form-control" id="profile_image" required>
+                 <input type="file" name="profile_image" class="form-control" id="profile_image">
              </div>
 
             <div class="mb-3">
