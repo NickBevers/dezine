@@ -1,5 +1,8 @@
 <?php
-	  include_once("./includes/loggedInCheck.inc.php");
+    include_once("./helpers/Security.help.php");
+	  if(!Security::isLoggedIn()) {
+      header('Location: login.php');
+  }
     include_once(__DIR__ . "/autoloader.php");
     // include_once(__DIR__ . "/classes/Post.php");
         

@@ -72,8 +72,6 @@
 
             if(password_verify($this->password, $res["password"])){
                 return $res;
-            } else {
-                return false;
             }
 
             throw new Exception("This password does not match the given email");
@@ -141,6 +139,21 @@
                     throw new Exception("The given password does not match the password");
                 }
             }
+        }
+
+        public static function deleteUserContentByEmail($id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("delete from comments where user_id = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+
+            $statement2 = $conn->prepare("delete from posts where user_id = :id");
+            $statement2->bindValue(':id', $id);
+            $statement2->execute();
+
+            $statement3 = $conn->prepare("delete from comments where user_id = :id");
+            $statement3->bindValue(':id', $id);
+            $statement3->execute();
         }
 
         public static function deleteUserByEmail($userEmail) {
