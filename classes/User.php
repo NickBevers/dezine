@@ -141,6 +141,21 @@
             }
         }
 
+        public static function deleteUserContentByEmail($id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("delete from comments where user_id = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+
+            $statement2 = $conn->prepare("delete from posts where user_id = :id");
+            $statement2->bindValue(':id', $id);
+            $statement2->execute();
+
+            $statement3 = $conn->prepare("delete from comments where user_id = :id");
+            $statement3->bindValue(':id', $id);
+            $statement3->execute();
+        }
+
         public static function deleteUserByEmail($userEmail) {
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from users where email = :email");

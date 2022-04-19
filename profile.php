@@ -1,9 +1,14 @@
 <?php
-	include_once("./includes/loggedInCheck.inc.php");
+    include_once("./helpers/Security.help.php");
+	if(!Security::isLoggedIn()) {
+        header('Location: login.php');
+    }
     include_once(__DIR__ . "/classes/DB.php");
     include_once(__DIR__ . "/helpers/Security.help.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
     include_once(__DIR__ . "/classes/User.php");
+
+    var_dump($_SESSION);
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];

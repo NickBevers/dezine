@@ -1,5 +1,8 @@
 <?php 
-	  include_once("./includes/loginRegisterSessionCheck.inc.php");
+  include_once("./helpers/Security.help.php");
+	  if(Security::isLoggedIn()) {
+      header('Location: home.php');
+  }
     include_once(__DIR__ . "/classes/User.php");
 
     if(!empty($_POST)){
