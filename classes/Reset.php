@@ -92,9 +92,13 @@
                     $message = 'Message has been sent';
                     return $message;
                 } catch (Exception $e) {
-                    $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                    return $message;
+                    $error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    return $error;
                 }
+            }
+            else{
+                $error = 'This mail does not exist';
+                throw new Exception($error);
             }
         }
 

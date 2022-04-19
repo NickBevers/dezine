@@ -1,5 +1,4 @@
 <?php
-  include_once("./includes/loggedInCheck.inc.php");
   include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
   include_once(__DIR__ . "/classes/Reset.php");
 
@@ -8,9 +7,14 @@
         $emailId = $_POST['email'];
 
         // echo $emailId;
-        $reset = new Reset();
-        $reset->setEmail($emailId);
-        $message = $reset->resetMail();
+        try{
+          $reset = new Reset();
+          $reset->setEmail($emailId);
+          $message = $reset->resetMail();
+        } catch(Throwable $e){
+          $error = $e->getMessage();
+        }
+        
     }
   }
 
@@ -33,6 +37,10 @@
             
             <?php if(!empty($message)): ?>
                 <div class="alert alert-success"><?php echo $message; ?></div>
+            <?php endif; ?>
+
+            <?php if(!empty($error)): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
             <?php endif; ?>
 
             <div class="card-body">
