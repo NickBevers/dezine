@@ -1,0 +1,131 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root{
+    --primary: #FCD7F7;
+    --secondary: #BFFD00;
+    --accent: #120CFF;
+    --white: #FFFFFF;
+    --black: #000000;
+
+     
+    --font-primary: ;
+    --font-secondary: ;
+}
+
+body{
+    background-color: var(--white);
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2rem 1rem;
+}
+
+nav div{
+    width: 33%;
+}
+
+nav a{
+    text-decoration: none;
+    color: var(--black);
+}
+
+nav a:hover{    
+    color: var(--accent);
+}
+
+.nav__info{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.nav__info a{
+    margin: 0 2rem;
+}
+
+.nav__logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav__logo img{
+    max-height: 4rem;
+}
+
+.nav__link{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.nav__link a{
+    border: 3px solid var(--black);
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav__link a:hover{
+    border: 3px solid var(--accent);
+}
+
+.bkg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.bkg img{
+    width: 50rem;
+}
+
+footer{
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+.footer__info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer__info img{
+    width: 6rem;
+    margin: 0.5rem 1rem 0.5rem 0.5rem;
+}
+
+.footer__socials{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin-right: 2rem; 
+}
+
+.footer__socials a{    
+    margin: 0 0.5rem;
+}
+
+.footer__socials img{
+    width: 2rem;
+}
