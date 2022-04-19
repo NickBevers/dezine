@@ -1,5 +1,4 @@
 <?php
-	  include_once("./includes/loggedInCheck.inc.php");
     include_once(__DIR__ . "/classes/Reset.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
