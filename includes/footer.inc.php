@@ -1,7 +1,7 @@
 <footer>
     <div class="footer__info">
         <img src="./assets/TM.svg" alt="Thomas More logo">
-        <p>Het platform d-zine is gemaakt door tweedejaars studenten van de opleiding Informatiemanagement en multimedia.</p>
+        <p>The platform d-zine was made by second year Interactive and Multimedia Design students at Thomas More University of Applied Sciences.</p>
     </div>
     <div class="footer__socials">
         <a href="mailto:" target="_blank">
