@@ -15,20 +15,68 @@
     
     if (!empty($_POST)) {
 
+        if (!empty($_POST['username'])) {
         $username = $_POST['username'];
-        $education = $_POST['education'];
-        $bio = $_POST['bio'];
-        $linkedin = $_POST['linkedin'];
-        $website = $_POST['website'];
-        $instagram = $_POST['instagram'];
-        $github = $_POST['github'];
-        $second_email = $_POST['second_email'];
+        }
+        else{
+        $username = $users["username"];
+        }
 
+        if (!empty($_POST['education'])) {
+        $education = $_POST['education'];
+        }
+        else{
+        $education = $users["education"];
+        }
+
+        if (!empty($_POST['bio'])) {
+        $bio = $_POST['bio'];
+        }
+        else{
+        $bio = $users["bio"];
+        }
+
+        if (!empty($_POST['linkedin'])) {
+        $linkedin = $_POST['linkedin'];
+        }
+        else{
+        $linkedin = $users["linkedin"];
+        }
+
+        if (!empty($_POST['website'])) {
+        $website = $_POST['website'];
+        }
+        else{
+        $website = $users["website"];
+        }
+
+        if (!empty($_POST['instagram'])) {
+        $instagram = $_POST['instagram'];
+        }
+        else{
+        $instagram = $users["instagram"];
+        }
+
+        if (!empty($_POST['github'])) {
+        $github = $_POST['github'];
+        }
+        else{
+        $github = $users["github"];
+        }
+
+        if (!empty($_POST['second_email'])) {
+        $second_email = $_POST['second_email'];
+        }
+        else{
+        $second_email = $users["second_email"];
+        }
+       
         try{
+
             $user->setEmail($email);
             $user->setUsername($username);
-            $user->setBio($bio);
             $user->setEducation($education);
+            $user->setBio($bio);
             $user->setLinkedin($linkedin);
             $user->setWebsite($website);
             $user->setInstagram($instagram);
@@ -41,22 +89,30 @@
             $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
             $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');    
 
-            if(in_array($fileType, $allowedFileTypes)){
-                if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
+            if (!empty($_POST['profile_image'])) {
+                
+               
+                if(in_array($fileType, $allowedFileTypes)){
+                    if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
                   $user->setProfileImage($targetFilePath);
-                  if($user->updateUser()){
-                    header("Location: home.php");
-                    $success = "Your profile was successfully updated";
-                  } else{
-                    $error = "Something has gone wrong, please try again.";
-                  }
-                } else{
+                    } else{
                   $error = "The image could not be saved, please try again";
-                }
-              } else{
+                    }
+                 } else{
                 $error = "Only this jpg','png','jpeg','gif', 'jfif', 'webp images allowed";
-              }
-        }
+                }
+
+            }
+            else{
+            $profile_image = $users["profile_image"];
+            }
+
+            if($user->updateUser()){
+            header("Refresh:0");
+            $success = "Your profile was successfully updated";} else{
+                    $error = "Something has gone wrong, please try again.";
+            }
+    }
         catch (Throwable $error) {
             $error = $error->getMessage();
         }
@@ -99,13 +155,13 @@
             <div class="mb-3">
                 <label for="username" class="form-label">username</label>
                 <input type="username" name="username" class="form-control" id="username"
-                    value="<?php echo $users["username"]; ?>">
+                    placeholder="<?php echo $users["username"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="education" class="form-label">education</label>
                 <input type="education" name="education" class="form-control" id="education"
-                    value="<?php echo $users["education"]; ?>">
+                    placeholder="<?php echo $users["education"]; ?>">
             </div>
 
             <div class="mb-3">
@@ -118,25 +174,25 @@
             <div class="mb-3">
                 <label for="linkedin" class="form-label">linkedin</label>
                 <input type="linkedin" name="linkedin" class="form-control" id="linkedin"
-                    value="<?php echo $users["linkedin"]; ?>">
+                    placeholder="<?php echo $users["linkedin"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="website" class="form-label">website</label>
                 <input type="website" name="website" class="form-control" id="website"
-                    value="<?php echo $users["website"]; ?>">
+                    placeholder="<?php echo $users["website"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="instagram" class="form-label">instagram</label>
                 <input type="instagram" name="instagram" class="form-control" id="instagram"
-                    value="<?php echo $users["instagram"]; ?>">
+                    placeholder="<?php echo $users["instagram"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="github" class="form-label">github</label>
                 <input type="github" name="github" class="form-control" id="github"
-                    value="<?php echo $users["github"]; ?>">
+                    placeholder="<?php echo $users["github"]; ?>">
             </div>
 
             <h4>Update Add Second Email</h4>

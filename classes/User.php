@@ -232,26 +232,7 @@
         }
 
         public function updateUser(){
-            //social links gekopieerd from https://github.com/lorey/social-media-profiles-regexs
-
-            //link of linkedin
-            $regexa = '/^$|(?:https?:)?\/\/(?:[\w]+\.)?linkedin\.com\/in\/(?P<permalink>[\w\-\_À-ÿ%]+)\/?/';
-            if(!preg_match($regexa, $this->linkedin)){throw new Exception("Your linkedin link is not valid");}
-            //link of website weet ik niet
-            $regexb = '/^$/';
-            if(!preg_match($regexb, $this->website)){throw new Exception("Your website link is not valid");}
-            //link of instagram
-            $regexc = '/^$|(?:https?:)?\/\/(?:www\.)?(?:instagram\.com|instagr\.am)\/(?P<username>[A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)/';
-            if(!preg_match($regexc, $this->instagram)){throw new Exception("Your instagram link is not valid");}
-            //link of github
-            $regexd = '/^$|(?:https?:)?\/\/(?:www\.)?github\.com\/(?P<login>[A-z0-9_-]+)\/?/';
-            if(!preg_match($regexd, $this->github)){throw new Exception("Your github link is not valid");}
-
-            //regex for second email checking
-            //does only work for domain names with 2 or 3 letters
-            $regexe = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
-            if(!preg_match($regexe, $this->second_email)){throw new Exception("Your email link is not valid");}
-
+            
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
             $statement->bindValue(':username',$this->username);
