@@ -15,62 +15,15 @@
     
     if (!empty($_POST)) {
 
-        if (!empty($_POST['username'])) {
         $username = $_POST['username'];
-        }
-        else{
-        $username = $users["username"];
-        }
-
-        if (!empty($_POST['education'])) {
         $education = $_POST['education'];
-        }
-        else{
-        $education = $users["education"];
-        }
-
-        if (!empty($_POST['bio'])) {
         $bio = $_POST['bio'];
-        }
-        else{
-        $bio = $users["bio"];
-        }
-
-        if (!empty($_POST['linkedin'])) {
         $linkedin = $_POST['linkedin'];
-        }
-        else{
-        $linkedin = $users["linkedin"];
-        }
-
-        if (!empty($_POST['website'])) {
         $website = $_POST['website'];
-        }
-        else{
-        $website = $users["website"];
-        }
-
-        if (!empty($_POST['instagram'])) {
         $instagram = $_POST['instagram'];
-        }
-        else{
-        $instagram = $users["instagram"];
-        }
-
-        if (!empty($_POST['github'])) {
         $github = $_POST['github'];
-        }
-        else{
-        $github = $users["github"];
-        }
-
-        if (!empty($_POST['second_email'])) {
         $second_email = $_POST['second_email'];
-        }
-        else{
-        $second_email = $users["second_email"];
-        }
-       
+        
         try{
 
             $user->setEmail($email);
@@ -83,33 +36,54 @@
             $user->setGithub($github);
             $user->setSecondEmail($second_email);
 
+            $default_image = "assets/default_profile_image.png";
+
             $fileName = basename($_FILES["profile_image"]["name"]);
             $fileName = str_replace(" ", "_", $fileName);
             $targetFilePath = "uploads/profile/" . $fileName;
             $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
             $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');    
-
-            if (!empty($_POST['profile_image'])) {
+           
+           if (isset($_POST['checkbox_name'])) 
+           {
+            $user->setProfileImage($default_image);
+            }
+            else
+            {
+            if ($_FILES['profile_image']['size'] == 0 && $_FILES['cover_image']['error'] == 0)
+            {
+                // cover_image is empty (and not an error)
+                $profile_image = $users["profile_image"];
+                $user->setProfileImage($profile_image);
                 
-               
-                if(in_array($fileType, $allowedFileTypes)){
-                    if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
+            }
+            else
+            {
+                if(in_array($fileType, $allowedFileTypes))
+                {
+                    if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath))
+                    {
                   $user->setProfileImage($targetFilePath);
-                    } else{
-                  $error = "The image could not be saved, please try again";
                     }
-                 } else{
-                $error = "Only this jpg','png','jpeg','gif', 'jfif', 'webp images allowed";
+                    else
+                    {
+                        throw new Exception("The image could not be saved, please try again");
+                    }
+                 } 
+                 else
+                 {
+                    throw new Exception("Only this jpg','png','jpeg','gif', 'jfif', 'webp images allowed");
                 }
-
             }
-            else{
-            $profile_image = $users["profile_image"];
             }
-
-            if($user->updateUser()){
+            
+            if($user->updateUser())
+            {
             header("Refresh:0");
-            $success = "Your profile was successfully updated";} else{
+            $success = "Your profile was successfully updated";
+            } 
+            else
+            {
                     $error = "Something has gone wrong, please try again.";
             }
     }
@@ -126,7 +100,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dezine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
 
 <body class="container">
@@ -148,20 +124,29 @@
         enctype='multipart/form-data'>
 
             <div class="mb-3">
+                 <img src=<?php echo $users["profile_image"] ?>>
+                 <ul>
+                     <li>
                  <label for="profile_image" class="form-label">profile_image</label>
                  <input type="file" name="profile_image" class="form-control" id="profile_image">
+                    </li>
+                    <li>
+                 <input type="checkbox" name="checkbox_name" value="checkbox_value" id="cb">
+                 <label for="cb"><img src="assets/default_profile_image.png" /></label>
+                 </li>
+                </ul>
              </div>
 
             <div class="mb-3">
                 <label for="username" class="form-label">username</label>
-                <input type="username" name="username" class="form-control" id="username"
-                    placeholder="<?php echo $users["username"]; ?>">
+                <input type="username" name="username" class="form-control" id="username" required
+                    value="<?php echo $users["username"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="education" class="form-label">education</label>
                 <input type="education" name="education" class="form-control" id="education"
-                    placeholder="<?php echo $users["education"]; ?>">
+                    value="<?php echo $users["education"]; ?>">
             </div>
 
             <div class="mb-3">
@@ -174,25 +159,25 @@
             <div class="mb-3">
                 <label for="linkedin" class="form-label">linkedin</label>
                 <input type="linkedin" name="linkedin" class="form-control" id="linkedin"
-                    placeholder="<?php echo $users["linkedin"]; ?>">
+                    value="<?php echo $users["linkedin"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="website" class="form-label">website</label>
                 <input type="website" name="website" class="form-control" id="website"
-                    placeholder="<?php echo $users["website"]; ?>">
+                    value="<?php echo $users["website"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="instagram" class="form-label">instagram</label>
                 <input type="instagram" name="instagram" class="form-control" id="instagram"
-                    placeholder="<?php echo $users["instagram"]; ?>">
+                    value="<?php echo $users["instagram"]; ?>">
             </div>
 
             <div class="mb-3">
                 <label for="github" class="form-label">github</label>
                 <input type="github" name="github" class="form-control" id="github"
-                    placeholder="<?php echo $users["github"]; ?>">
+                    value="<?php echo $users["github"]; ?>">
             </div>
 
             <h4>Update Add Second Email</h4>
@@ -201,6 +186,7 @@
                 <input type="second_email" name="second_email" class="form-control" id="second_email"
                     value="<?php echo $users["second_email"]; ?>">
             </div>
+
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </main>
@@ -208,6 +194,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
+
 </body>
 
 </html>
