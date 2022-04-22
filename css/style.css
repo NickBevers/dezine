@@ -36,8 +36,8 @@ li {
 input[type="checkbox"][id^="cb"] {
     display: none;
 }
-
-label {
+  
+#label_cb {
     border: 1px solid #fff;
     padding: 10px;
     display: block;
@@ -52,7 +52,7 @@ label {
     user-select: none;
 }
 
-label::before {
+#label_cb::before {
     background-color: white;
     color: white;
     content: " ";
@@ -70,29 +70,28 @@ label::before {
     transform: scale(0);
 }
 
-label img {
+#label_cb img {
     height: 100px;
     width: 100px;
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
 }
 
-:checked+label {
+#cb:checked+label {
     border-color: #ddd;
-}
-
-:checked+label::before {
+  }
+  
+#cb:checked+label::before {
     content: "✓";
     background-color: grey;
     transform: scale(1);
-}
-
-:checked+label img {
+  }
+  
+#cb:checked+label img {
     transform: scale(0.9);
     box-shadow: 0 0 5px #333;
     z-index: -1;
 }
-
 
 /* index page */
 .nav__full {
@@ -209,6 +208,7 @@ footer {
     width: 2rem;
 }
 
+
 /*profile user*/
 .profile__info {
     display: grid;
@@ -303,6 +303,42 @@ footer {
     border-radius: 50%;
 }
 
+main{
+    width: 100vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo--register{
+    background-image: url("./../assets/logo2.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 220px;
+    height: 110px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form--register{
+    width: min(80vw, 600px);
+    height: min(60vh, 400px);
+    background-color: rgb(122, 37, 37);
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form__field{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
 
 @media (max-width: 992px) and (min-width: 768px) {
 
