@@ -50,14 +50,27 @@
         </div>    
     </section>
     
-    <section>
+    <section class="posts">
     <?php foreach($posts as $post): ?>
-            <div><?php echo $post["title"] ?></div>
+        <div class="post">
             <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-            <?php if(isset($_SESSION["id"])): ?>
-                <div><?php echo $post["description"] ?></div>
-                <div><?php echo $post["tags"] ?></div>
-            <?php endif; ?>   
+            <div class="post__info">
+                <h3><?php echo $post["title"] ?></h3>
+                <?php if(isset($_SESSION["id"])): ?>
+                    <p><?php echo $post["description"] ?></p>
+                    <?php $tags = $post["tags"]; 
+                    $tags = json_decode($tags);
+                    $i=0;
+                    ?>
+                    <div class="post__info__tags">
+                        <?php foreach($tags as $t): ?>
+                            <p><?php echo "#"; echo $tags[$i]; echo "&nbsp"; $i++; ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?> 
+            </div>
+            
+        </div>              
     <?php endforeach; ?>
 
     <?php if($postCount > $postsPerPage): ?>
