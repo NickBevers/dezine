@@ -169,6 +169,8 @@
 
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
+
+        <a href="profile_password.php">Reset password</a>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

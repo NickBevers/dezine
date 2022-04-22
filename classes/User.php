@@ -257,4 +257,14 @@
             $result = $statement->fetch();
             return $result;
         }
+
+        public static function getUserbyId($id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users where id = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result);
+            return $result;
+        }
     }

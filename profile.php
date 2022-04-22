@@ -1,41 +1,27 @@
 <?php
+    include_once(__DIR__ . "/autoloader.php");
+
     include_once("./helpers/Security.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    include_once(__DIR__ . "/classes/DB.php");
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-    include_once(__DIR__ . "/classes/User.php");
 
-    //var_dump($_SESSION);
+    $profileUser = $_GET["id"];
+    $user = User::getUserbyId($profileUser);
 
-    if (!empty($_POST)) {
-        $c_password = $_POST["c_password"];
-        $new_password = $_POST["new_password"];
-        $password_conf = $_POST["password_conf"];
-        $email = $_SESSION['email'];
+    $postsPerPage = 18;
+    $postCount = Post::getPostsCount();
+    $post = new Post();
+    
+    if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+        $pageNum  = $_GET["page"];
+        $posts = $post->getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
 
-        if(CheckEmpty::isNotEmpty($c_password) && CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
-            if($new_password === $password_conf){
-                if ($c_password === $new_password) {
-                    $error = "New password cannot be the same as the old password";
-                } else{
-                    try {
-                        User::resetPassword($email, $c_password, $new_password);
-                        $success = "Your password was successfully updated";
-                    } catch (Throwable $error) {
-                        // if any errors are thrown in the class, they can be caught here
-                        $error = $error->getMessage();
-                    }
-                }
-            } else{
-                $error = "The passwords don't match";
-            }
-        } else{
-            $error = "Please fill in all fields of the form";
-        }
-     }
+    } else {
+        $pageNum  = 1;
+        $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
+    };
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,47 +29,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dezine</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Profile</title>
 </head>
-    <body class="container">
-        <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-        
-        <main>
-            <?php if(isset($error)): ?>
-                <div class="alert alert-danger"><?php echo $error; ?></div>
-            <?php endif; ?>
+<body>
+    <section class="profile__info">
+        <div class="profile__info__img">
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        </div>
+        <div class="profile__info__details">
+            <h1><?php echo $user["username"]; ?></h1>
+            <h4><?php echo $user["education"]; ?></h4>
+            <p><?php echo $user["bio"]; ?></p>
+            <div>
+                <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
+                <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
+                <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
+                <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+            </div>
+        </div>    
+    </section>
+    
+    <section class="posts">
+    <?php foreach($posts as $post): ?>
+        <div class="post">
+            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            <div class="post__info">
+                <h3><?php echo $post["title"] ?></h3>
+                <?php if(isset($_SESSION["id"])): ?>
+                    <p><?php echo $post["description"] ?></p>
+                    <?php $tags = $post["tags"]; 
+                    $tags = json_decode($tags);
+                    $i=0;
+                    ?>
+                    <div class="post__info__tags">
+                        <?php foreach($tags as $t): ?>
+                            <p><?php echo "#"; echo $tags[$i]; echo "&nbsp"; $i++; ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?> 
+            </div>
+            
+        </div>              
+    <?php endforeach; ?>
 
-            <?php if(isset($success)): ?>
-                <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php endif; ?>
-
-
-
-            <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
-                <div class="mb-3">
-                    <label for="exampleInputUsername1" class="form-label">Current Password</label>
-                    <input type="password" name="c_password" class="form-control" id="exampleInputUsername1">
-                </div>
-
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">New Password</label>
-                    <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
-                    <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="password_conf" class="form-label">Password confirmation</label>
-                    <input type="password" name="password_conf" class="form-control" id="password_conf">
-                    <div id="passwordHelp" class="form-text">Passwords must match password above</div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Reset password</button>
-            </form>
-
-            <a href="./userDelete.php" class="btn btn-danger mt-3">Delete account</a>
-        </main>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    </body>
+    <?php if($postCount > $postsPerPage): ?>
+        <?php if($pageNum > 1): ?>
+            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+        <?php endif; ?>
+        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+    <?php endif; ?>
+    </section>
+</body>
 </html>
