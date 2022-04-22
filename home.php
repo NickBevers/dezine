@@ -57,11 +57,10 @@
                             <p><?php echo $post["description"] ?></p>
                             <?php $tags = $post["tags"]; 
                             $tags = json_decode($tags);
-                            $i=0;
                             ?>
                             <div class="post__info__tags">
                                 <?php foreach($tags as $t): ?>
-                                    <p><?php echo "#"; echo $tags[$i]; echo "&nbsp"; $i++; ?></p>
+                                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>  
