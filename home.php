@@ -55,9 +55,7 @@
                         <h3><?php echo $post["title"] ?></h3>
                         <?php if(isset($_SESSION["id"])): ?>
                             <p><?php echo $post["description"] ?></p>
-                            <?php $tags = $post["tags"]; 
-                            $tags = json_decode($tags);
-                            ?>
+                            <?php $tags = json_decode($post["tags"]); ?>
                             <div class="post__info__tags">
                                 <?php foreach($tags as $t): ?>
                                     <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
