@@ -9,6 +9,15 @@
         private $password;
         private $bio;
         private $education;
+        //profile image
+        private $profile_image;
+        //social links
+        private $linkedin;
+        private $website;
+        private $instagram;
+        private $github;
+        //second email
+        private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
 
         public function getUsername(){return $this->username;}
@@ -19,7 +28,8 @@
             $this->username = $username;
             return $this;
         }
-        
+
+        //emails setters and getters
         public function getEmail(){return $this->email;}
         
         public function setEmail($email)
@@ -29,6 +39,26 @@
             return $this;
         }
 
+        public function getSecondEmail(){return $this->second_email;}
+        
+        public function setSecondEmail($second_email)
+        {
+            $second_email = Cleaner::cleanInput($second_email);
+            $this->second_email = $second_email;
+            return $this;
+        }
+
+        //profile_image
+        public function getProfileImage(){return $this->profile_image;}
+
+        public function setProfileImage($profile_image)
+        {
+            $profile_image = Cleaner::cleanInput($profile_image);
+            $this->profile_image = $profile_image;
+            return $this;
+        }
+
+        //password
         public function getPassword(){return $this->password;}
 
         public function setPassword( $password )
@@ -41,6 +71,7 @@
             return $this;
         }
 
+        //about getters and setters
         public function getBio(){return $this->bio;}
 
         public function setBio($bio)
@@ -56,6 +87,43 @@
         {
             $education = Cleaner::cleanInput($education);
             $this->education = $education;
+            return $this;
+        }
+
+        //socials getters and setters
+        public function getLinkedin(){return $this->linkedin;}
+
+        public function setLinkedin($linkedin)
+        {
+            $linkedin = Cleaner::cleanInput($linkedin);
+            $this->linkedin = $linkedin;
+            return $this;
+        }
+
+        public function getWebsite(){return $this->website;}
+
+        public function setWebsite($website)
+        {
+            $website = Cleaner::cleanInput($website);
+            $this->website = $website;
+            return $this;
+        }
+
+        public function getInstagram(){return $this->instagram;}
+
+        public function setInstagram($instagram)
+        {
+            $instagram = Cleaner::cleanInput($instagram);
+            $this->instagram = $instagram;
+            return $this;
+        }
+
+        public function getGithub(){return $this->github;}
+
+        public function setGithub($github)
+        {
+            $github = Cleaner::cleanInput($github);
+            $this->github = $github;
             return $this;
         }
 
@@ -164,18 +232,26 @@
         }
 
         public function updateUser(){
+            
             $conn = DB::getInstance();
-            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio where email = :email");
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
             $statement->bindValue(':username',$this->username);
+            $statement->bindValue(':profile_image', $this->profile_image);
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
+            $statement->bindValue(':linkedin',$this->linkedin);
+            $statement->bindValue(':website', $this->website);
+            $statement->bindValue(':instagram', $this->instagram);
+            $statement->bindValue(':github', $this->github);
+            $statement->bindValue(':second_email', $this->second_email);
             $statement->bindValue(':email', $this->email);
-            return $statement->execute();
+            $statement->execute();
+            return $this->getUser();
         }
 
         public function getUser(){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select username, education, bio from users where email = :email");
+            $statement = $conn->prepare("select username, education, bio, linkedin, website, instagram, github, second_email, profile_image from users where email = :email");
             $statement->bindValue(':email', $this->email);
             $statement->execute();
             $result = $statement->fetch();

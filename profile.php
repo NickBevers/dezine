@@ -8,7 +8,7 @@
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
     include_once(__DIR__ . "/classes/User.php");
 
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];
