@@ -29,21 +29,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Profile</title>
 </head>
 <body>
-    <section>
-        <div>
+    <section class="profile__info">
+        <div class="profile__info__img">
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
         </div>
-        <div>
+        <div class="profile__info__details">
             <h1><?php echo $user["username"]; ?></h1>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
-            <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
-            <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
-            <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
-            <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+            <div>
+                <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
+                <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
+                <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
+                <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+            </div>
         </div>    
     </section>
     
