@@ -7,6 +7,7 @@
     }
 
     $profileUser = $_GET["id"];
+    $user = User::getUserbyId($profileUser);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +18,20 @@
     <title>Profile</title>
 </head>
 <body>
-    <h1><?php echo $profileUser; ?></h1>
+    <section>
+        <div>
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        </div>
+        <div>
+            <h1><?php echo $user["username"]; ?></h1>
+            <h4><?php echo $user["education"]; ?></h4>
+            <p><?php echo $user["bio"]; ?></p>
+            <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
+            <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
+            <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
+            <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+        </div>    
+    </section>
+    
 </body>
 </html>
