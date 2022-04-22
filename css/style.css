@@ -136,6 +136,43 @@ footer{
     width: 2rem;
 }
 
+main{
+    width: 100vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo--register{
+    background-image: url("./../assets/logo2.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 220px;
+    height: 110px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form--register{
+    width: min(80vw, 600px);
+    height: min(60vh, 400px);
+    background-color: rgb(122, 37, 37);
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form__field{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
 @media (max-width: 992px) and (min-width: 768px) {
     /* index page */
     .nav__full{
