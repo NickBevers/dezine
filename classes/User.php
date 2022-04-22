@@ -245,7 +245,8 @@
             $statement->bindValue(':github', $this->github);
             $statement->bindValue(':second_email', $this->second_email);
             $statement->bindValue(':email', $this->email);
-            return $statement->execute();
+            $statement->execute();
+            return $this->getUser();
         }
 
         public function getUser(){
