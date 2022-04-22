@@ -25,15 +25,15 @@ ul {
     list-style-type: none;
   }
   
-  li {
+li {
     display: inline-block;
   }
   
-  input[type="checkbox"][id^="cb"] {
+input[type="checkbox"][id^="cb"] {
     display: none;
   }
   
-label {
+#label_cb {
     border: 1px solid #fff;
     padding: 10px;
     display: block;
@@ -48,7 +48,7 @@ label {
     user-select: none;
   }
   
-  label::before {
+#label_cb::before {
     background-color: white;
     color: white;
     content: " ";
@@ -66,24 +66,24 @@ label {
     transform: scale(0);
   }
   
-  label img {
+#label_cb img {
     height: 100px;
     width: 100px;
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
   }
   
-  :checked+label {
+#cb:checked+label {
     border-color: #ddd;
   }
   
-  :checked+label::before {
+#cb:checked+label::before {
     content: "✓";
     background-color: grey;
     transform: scale(1);
   }
   
-  :checked+label img {
+#cb:checked+label img {
     transform: scale(0.9);
     box-shadow: 0 0 5px #333;
     z-index: -1;
