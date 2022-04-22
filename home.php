@@ -19,6 +19,8 @@
         $posts = Post::getSomePosts(0, $postsPerPage);
     };
 
+    
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,15 +34,18 @@
     <?php if(isset($_SESSION['email'])): ?>
         <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
     <?php endif; ?>
-    <p>*inserts very pretty design of very clean homepage with epic IMD themed styling and more posts than this:*</p>
     <!-- <img width="50%" src="assets\faker_post.jpg" alt="empty post"> -->
     <?php foreach($posts as $post): ?>
-        <div><?php echo $post["title"] ?></div>
-        <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-        <?php if(isset($_SESSION["id"])): ?>
-            <div><?php echo $post["description"] ?></div>
-            <div><?php echo $post["tags"] ?></div>
-        <?php endif; ?>
+        <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
+            <?php $user = User::getUserbyId($post["user_id"]); ?>
+            <div><?php echo $user["username"] ?></div>                 
+        </a>
+            <div><?php echo $post["title"] ?></div>
+            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            <?php if(isset($_SESSION["id"])): ?>
+                <div><?php echo $post["description"] ?></div>
+                <div><?php echo $post["tags"] ?></div>
+            <?php endif; ?>   
     <?php endforeach; ?>
 
     <?php if($postCount > $postsPerPage): ?>
