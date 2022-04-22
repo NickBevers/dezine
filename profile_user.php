@@ -43,9 +43,9 @@
             $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');    
            
             if (isset($_POST['checkbox_name'])){
-               $user->setProfileImage($default_image);
+                $user->setProfileImage($default_image);
             } else {
-                if (isset($_FILES['profile_image']['size'])){
+                if ($_FILES['profile_image']['size'] == 0 && $_FILES['cover_image']['error'] == 0){
                     // cover_image is empty (and not an error)
                     $profile_image = $users["profile_image"];
                     $user->setProfileImage($profile_image);
