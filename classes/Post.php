@@ -104,4 +104,13 @@
             return $res;
         }
 
+        public function getPostbyId($id, $start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date limit $start, $amount");
+            $statement->bindValue("user_id", $id);
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+
     }
