@@ -6,7 +6,7 @@
         header('Location: login.php');
     }
 
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
     
