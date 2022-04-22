@@ -8,6 +8,20 @@
 
     $profileUser = $_GET["id"];
     $user = User::getUserbyId($profileUser);
+
+    $postsPerPage = 18;
+    $postCount = Post::getPostsCount();
+    $post = new Post();
+    
+    if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+        $pageNum  = $_GET["page"];
+        $posts = $post->getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
+
+    } else {
+        $pageNum  = 1;
+        $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
+    };
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,5 +47,22 @@
         </div>    
     </section>
     
+    <section>
+    <?php foreach($posts as $post): ?>
+            <div><?php echo $post["title"] ?></div>
+            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            <?php if(isset($_SESSION["id"])): ?>
+                <div><?php echo $post["description"] ?></div>
+                <div><?php echo $post["tags"] ?></div>
+            <?php endif; ?>   
+    <?php endforeach; ?>
+
+    <?php if($postCount > $postsPerPage): ?>
+        <?php if($pageNum > 1): ?>
+            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+        <?php endif; ?>
+        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+    <?php endif; ?>
+    </section>
 </body>
 </html>
