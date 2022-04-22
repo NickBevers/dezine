@@ -45,7 +45,7 @@
             if (isset($_POST['checkbox_name'])){
                 $user->setProfileImage($default_image);
             } else {
-                if ($_FILES['profile_image']['size'] == 0 && $_FILES['cover_image']['error'] == 0){
+                if ($_FILES['profile_image']['size'] == 0){
                     // cover_image is empty (and not an error)
                     $profile_image = $users["profile_image"];
                     $user->setProfileImage($profile_image);
@@ -112,7 +112,7 @@
                     </li>
                     <li>
                         <input type="checkbox" name="checkbox_name" value="checkbox_value" id="cb">
-                        <label for="cb"><img src="assets/default_profile_image.png"/></label>
+                        <label for="cb" id="label_cb"><img src="assets/default_profile_image.png"/></label>
                     </li>
                 </ul>
             </div>
