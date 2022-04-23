@@ -10,7 +10,10 @@
         if(empty($_SESSION["id"])){
             header('Location: home.php');
         }else{
+            $id = $_SESSION["id"];
+            // var_dump($id);
             $profileUser = Cleaner::cleanInput($_SESSION["id"]);
+            header("Location: profile.php?id=$id");
         }        
     } else{
         $profileUser = Cleaner::cleanInput($_GET["id"]);
