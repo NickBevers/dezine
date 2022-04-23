@@ -11,7 +11,6 @@
             header('Location: home.php');
         }else{
             $id = $_SESSION["id"];
-            // var_dump($id);
             $profileUser = Cleaner::cleanInput($_SESSION["id"]);
             header("Location: profile.php?id=$id");
         }        
@@ -109,17 +108,3 @@
     </section>
 </body>
 </html>
-
-<div class="post-wrapper">
-    <div class="img-wrapper">
-        <img src="" alt="">
-    </div>
-    <div class="post-wrapper">
-        <div class="info-wrapper">
-            <p></p>
-        </div>
-        <div class="action-wrapper">
-            <img src="trash" alt="">
-        </div>
-    </div>
-</div>

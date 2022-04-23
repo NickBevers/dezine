@@ -291,12 +291,16 @@ footer {
 
 .post img.trash_icon{
     width: unset;
-    height: 50px;
+    height: 30px;
     object-fit: unset;
     border: unset;
     position: absolute;
     top: 420px;
     right: 20px;
+}
+
+.post img.trash_icon:hover {
+    filter: invert(.5) sepia(1) saturate(40) hue-rotate(690deg);
 }
 
 .post__info{
