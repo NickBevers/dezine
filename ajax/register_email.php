@@ -1,5 +1,5 @@
 <?php 
-    include_once("./../autoloader.php");
+    include_once(__DIR__ . "/../autoloader.php");
 
     if (!empty($_POST)) {
         $email = $_POST['email'];
