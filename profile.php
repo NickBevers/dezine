@@ -1,12 +1,21 @@
 <?php
     include_once(__DIR__ . "/autoloader.php");
-
+    include_once("./helpers/Cleaner.help.php");
     include_once("./helpers/Security.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
-    $profileUser = $_GET["id"];
+    if(empty($_GET["id"])){
+        if(empty($_SESSION["id"])){
+            header('Location: home.php');
+        }else{
+            $profileUser = Cleaner::cleanInput($_SESSION["id"]);
+        }        
+    } else{
+        $profileUser = Cleaner::cleanInput($_GET["id"]);
+    }  
+
     $user = User::getUserbyId($profileUser);
 
     $postsPerPage = 18;
@@ -20,8 +29,7 @@
     } else {
         $pageNum  = 1;
         $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
-    };
-    
+    }    
 ?>
 <!DOCTYPE html>
 <html lang="en">
