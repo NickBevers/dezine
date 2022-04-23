@@ -2,6 +2,9 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: museo-sans, sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 :root {
@@ -24,6 +27,20 @@ h3{
     color: var(--accent);
 }
 
+.error{
+    position: absolute;
+    background-color: var(--primary);
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
+
+.error p{
+    font-size: 1rem;
+    text-align: center;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+}
 /*profile_user page */
 ul {
     list-style-type: none;
@@ -262,13 +279,24 @@ footer {
     justify-items: flex-start;
     align-items: flex-start;
     background-color: var(--primary);
+    position: relative;
 }
 
 .post img{
     width: 100%;
-    height: 200px;
+    height: 400px;
     object-fit: cover;
     border: 5px solid var(--secondary);
+}
+
+.post img.trash_icon{
+    width: unset;
+    height: 50px;
+    object-fit: unset;
+    border: unset;
+    position: absolute;
+    top: 420px;
+    right: 20px;
 }
 
 .post__info{

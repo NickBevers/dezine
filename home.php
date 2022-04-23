@@ -7,6 +7,7 @@
     }
 
     //var_dump($_SESSION);
+    
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
     
