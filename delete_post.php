@@ -9,10 +9,10 @@
     }
 
     try {
-        Post::deletePostById($_GET["p"], $_SESSION["id"]);
+        Post::deletePostById($_GET["p"]);
     } catch (Exception $e) {
         $_SESSION['flash_error'] = "Something went wrong, try again later.";
     }
     
-    header("Location: profile.php?id=" . $_SESSION["id"]);
+    header("Location: profile.php");
 ?>
