@@ -326,7 +326,7 @@ main{
 .form--register{
     width: min(80vw, 600px);
     height: min(60vh, 400px);
-    background-color: rgb(122, 37, 37);
+    background-color: rgb(207, 205, 205);
     margin-top: 5rem;
     display: flex;
     flex-direction: column;
@@ -339,6 +339,9 @@ main{
     flex-direction: column;
     width: 80%;
 }
+
+.message{display: hidden;}
+.show{display: block;}
 
 @media (max-width: 992px) and (min-width: 768px) {
 

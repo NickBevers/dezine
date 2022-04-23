@@ -55,12 +55,14 @@
 <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> class="form form--register">
   <div class="form__field">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+    <input type="email" name="email" class="form-control register--email" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+    <div class="message message--email"></div>
   </div>
 
   <div class="form__field">
     <label for="exampleInputUsername1" class="form-label">Username</label>
-    <input type="text" name="userngame" class="form-control" id="exampleInputUsername1" required>
+    <input type="text" name="username" class="form-control register--username" id="exampleInputUsername1" required>
+    <div class="message message--username"></div>
   </div>
 
   <div class="form__field">
@@ -80,7 +82,7 @@
 
 
 </main>
-
+<script src="./javascript/register.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script> -->
 </body>
 </html>
