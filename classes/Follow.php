@@ -22,22 +22,22 @@
             return $this;
         }
 
-        // public static function isFollowing($follower_id, $user_id){
-        //     $follower_id = Cleaner::cleanInput($follower_id);
-        //     $user_id = Cleaner::cleanInput($user_id);
-        //     $conn = DB::getInstance();
-        //     $statement = $conn->prepare("select follower_id, user_id from follows where follower_id = :follower_id and user_id = :user_id;");
-        //     $statement->bindValue(':follower_id', $follower_id);
-        //     $statement->bindValue(':user_id', $user_id);
-        //     return $statement->execute();
-        // }
+        public static function isFollowing($follower_id, $user_id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from follows where follower_id = :follower_id and user_id = :user_id;");
+            $statement->bindValue(':follower_id', $follower_id);
+            $statement->bindValue(':user_id', $user_id);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        }
         
         public function followUser(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into follows (follower_id, user_id) values (:follower_id, :user_id);");
             $statement->bindValue(':follower_id', $this->follower_id);
             $statement->bindValue(':user_id', $this->user_id);
-            return $statement->execute();
+            $statement->execute();
+            return $statement->fetch();
         }
 
         public function unfollowUser(){
@@ -45,6 +45,7 @@
             $statement = $conn->prepare("delete from follows where follower_id = :follower_id and user_id = :user_id;");
             $statement->bindValue(':follower_id', $this->follower_id);
             $statement->bindValue(':user_id', $this->user_id);
-            return $statement->execute();
+            $statement->execute();
+            return $statement->fetch();
         }
     }

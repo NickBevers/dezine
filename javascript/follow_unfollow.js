@@ -1,10 +1,9 @@
 let follow_button = document.querySelector(".follow");
 let unfollow_button = document.querySelector(".unfollow");
+let profile_id = follow_button.dataset.profile_id;
+let user_id = unfollow_button.dataset.user_id;
 
 follow_button.addEventListener("click", (e) => {
-    let profile_id = e.target.dataset.profile_id;
-    let user_id = e.target.dataset.user_id;
-    
     let data = new FormData();
     data.append("follower_id", profile_id);
     data.append("user_id", user_id);
@@ -30,9 +29,6 @@ follow_button.addEventListener("click", (e) => {
 })
 
 unfollow_button.addEventListener("click", (e) => {
-    let profile_id = e.target.dataset.profile_id;
-    let user_id = e.target.dataset.user_id;
-    
     let data = new FormData();
     data.append("follower_id", profile_id);
     data.append("user_id", user_id);

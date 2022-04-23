@@ -56,8 +56,13 @@
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
             <?php if(!empty($_GET["id"])): ?>
-                <div class="follow" data-profile_id="<?php echo $_GET["id"] ?>" data-user_id="<?php echo $_SESSION["id"]; ?>">Follow</div>
-                <div class="unfollow" data-profile_id="<?php echo $_GET["id"] ?>" data-user_id="<?php echo $_SESSION["id"]; ?>">Unfollow</div>
+                <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
+                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
+                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
+                <?php else: ?>
+                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Follow</div>
+                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>    
     </section>
