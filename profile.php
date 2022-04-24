@@ -2,9 +2,8 @@
     include_once(__DIR__ . "/autoloader.php");
     include_once("./helpers/Cleaner.help.php");
     include_once("./helpers/Security.help.php");
-	if(!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+	if(!Security::isLoggedIn()) { header('Location: login.php');}
+    
 
     if(empty($_GET["id"])){
         if(empty($_SESSION["id"])){
@@ -20,9 +19,7 @@
     }  
 
     $user = User::getUserbyId($profileUser);
-    if(empty($user)){
-        header('Location: home.php');
-    }
+    if(empty($user)){ header('Location: home.php');}
 
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
@@ -61,6 +58,15 @@
                 <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
+            <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
+                <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
+                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
+                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
+                <?php else: ?>
+                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Follow</div>
+                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>    
     </section>
     
@@ -95,4 +101,7 @@
     <?php endif; ?>
     </section>
 </body>
+<?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
+<script src="./javascript/follow_unfollow.js"></script>
+<?php endif; ?>
 </html>
