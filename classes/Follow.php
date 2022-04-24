@@ -28,7 +28,7 @@
             $statement->bindValue(':follower_id', $follower_id);
             $statement->bindValue(':user_id', $user_id);
             $statement->execute();
-            return $statement->fetch(PDO::FETCH_ASSOC);
+            return $statement->fetch();
         }
         
         public function followUser(){
@@ -37,7 +37,7 @@
             $statement->bindValue(':follower_id', $this->follower_id);
             $statement->bindValue(':user_id', $this->user_id);
             $statement->execute();
-            return $statement->fetch();
+            return $conn->lastInsertId();
         }
 
         public function unfollowUser(){
@@ -45,7 +45,6 @@
             $statement = $conn->prepare("delete from follows where follower_id = :follower_id and user_id = :user_id;");
             $statement->bindValue(':follower_id', $this->follower_id);
             $statement->bindValue(':user_id', $this->user_id);
-            $statement->execute();
-            return $statement->fetch();
+            return $statement->execute();
         }
     }
