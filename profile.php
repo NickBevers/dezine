@@ -55,7 +55,7 @@
                 <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
-            <?php if(!empty($_GET["id"])): ?>
+            <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
                 <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
                 <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
                 <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
@@ -98,7 +98,7 @@
     <?php endif; ?>
     </section>
 </body>
-<?php if(!empty($_GET["id"])): ?>
+<?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>
 <?php endif; ?>
 </html>
