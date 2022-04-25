@@ -113,9 +113,9 @@
             return $res;
         }
 
-        public static function getSearchPost($search_keyword){
+        public static function getSearchPost($search_keyword, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where `title` like :keyword or description like :keyword order by id desc ");
+            $statement = $conn->prepare("select * from posts where `title` like :keyword or description like :keyword or tags like :keyword order by creation_date desc limit $start, $amount ");
             $statement->bindValue(':keyword', '%' . $search_keyword . '%' , PDO::PARAM_STR);
             $statement->execute();
             $res = $statement->fetchAll();

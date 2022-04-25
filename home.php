@@ -10,7 +10,10 @@
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
    
-    
+      if( !empty($_POST) ) {
+        $keyword = $_POST['keyword'];
+        $posts = Search::getSearchPost($keyword);
+
     if (isset($_GET["page"]) && $_GET["page"] > 1) { 
         $pageNum  = $_GET["page"];
         $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
@@ -20,9 +23,7 @@
         $posts = Post::getSomePosts(0, $postsPerPage);
     }
 
-    if( !empty($_POST) ) {
-        $keyword = $_POST['keyword'];
-        $searched_posts = Search::getSearchPost($keyword);
+  
     }
 
 
@@ -55,41 +56,6 @@
     </section>
 
     <section class="posts">
-
-    <?php foreach($title as $keyword): ?>
-            <div>
-                
-                <div class="posts__user">
-                    <?php $user = User::getUserbyId($post["user_id"]); ?>
-                    <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
-                    <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
-                        <h3><?php echo $user["username"] ?></h3>         
-                    </a>
-                </div>
-               
-                <div class="post">
-                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-                    <div class="post__info">
-                        <h3><?php echo $post["title"] ?></h3>
-                        <?php if(isset($_SESSION["id"])): ?>
-                            <p><?php echo $post["description"] ?></p>
-                            <?php $tags = json_decode($post["tags"]); ?>
-                            <div class="post__info__tags">
-                                <?php foreach($tags as $t): ?>
-                                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>  
-                    </div>
-                </div>  
-            </div>            
-        <?php endforeach; ?>
-
-
-
-
-
-
 
 
         <?php foreach($posts as $post): ?>
