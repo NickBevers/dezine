@@ -113,11 +113,29 @@
             return $res;
         }
 
-        public static function deletePostById($postId, $userId){
+        public static function deletePostById($postId){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("delete from posts where user_id = :user_id and id = :post_id");
-            $statement->bindValue('user_id', $userId);
+            $statement = $conn->prepare("delete from posts id = :post_id");
             $statement->bindValue('post_id', $postId);
             $statement->execute();
+        }
+
+        public function updatePostById($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update posts set title = :title, description = :description, tags = :tags where id = :post_id");
+            $statement->bindValue('title', $this->getTitle());
+            $statement->bindValue('description', $this->getDescription());
+            $statement->bindValue('tags', $this->getTags());
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+        }
+
+        public static function getPostByPostId($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where id = :post_id");
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+            $res = $statement->fetch();
+            return $res;
         }
     }
