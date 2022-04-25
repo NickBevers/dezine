@@ -15,10 +15,20 @@
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
             $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
+
+           
     
         } else {
             $pageNum  = 1;
-            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);
+            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage); 
+
+            // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
+
+            if (empty($posts)) {
+                echo "we coulndt find any posts with this title or tags or description";
+            }
+            
+           
         };
     } else{
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
