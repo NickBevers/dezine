@@ -10,20 +10,25 @@
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
    
-      if( !empty($_POST) ) {
-        $keyword = $_POST['keyword'];
-        $posts = Search::getSearchPost($keyword);
-
-    if (isset($_GET["page"]) && $_GET["page"] > 1) { 
-        $pageNum  = $_GET["page"];
-        $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
-
-    } else {
-        $pageNum  = 1;
-        $posts = Post::getSomePosts(0, $postsPerPage);
-    }
-
-  
+    if(!empty($_GET["search"])){
+        $search_term = Cleaner::cleanInput($_GET["search"]);
+        if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
+    
+        } else {
+            $pageNum  = 1;
+            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);
+        };
+    } else{
+        if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
+    
+        } else {
+            $pageNum  = 1;
+            $posts = Post::getSomePosts(0, $postsPerPage);
+        };
     }
 
 
@@ -48,7 +53,7 @@
     <section class="search_box">
 
     <form action="" method="POST">
-	<input type="text" name="keyword" placeholder="Search here..." required="required" />
+	<input type="text" name="search" placeholder="Search here..." required="required" />
 	<input type="submit" value="submit">
 </form>
 
