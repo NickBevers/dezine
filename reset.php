@@ -1,6 +1,6 @@
 <?php
+  include_once(__DIR__ . "/autoloader.php");
   include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-  include_once(__DIR__ . "/classes/Reset.php");
 
   if(!empty($_POST)) {
     if(CheckEmpty::isNotEmpty($_POST['email'])){          

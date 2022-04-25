@@ -1,5 +1,5 @@
 <?php
-    include_once(__DIR__ . "/classes/Reset.php");
+    include_once(__DIR__ . "/autoloader.php");
     include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
     if($_GET['key'] && $_GET['token']){    
