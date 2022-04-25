@@ -8,12 +8,12 @@
         header('Location: login.php');
     }
 
-    if(isset($_GET["p"])){
-        if($_SESSION["id"] != $_GET["u"]) {
+    if(isset($_GET["pid"])){
+        if($_SESSION["id"] != $_GET["uid"]) {
             header('Location: profile.php');
         }
 
-        $post = POST::getPostByPostId($_GET["p"]);
+        $post = POST::getPostByPostId($_GET["pid"]);
     } else{
         header("Location: profile.php");
     }
@@ -24,7 +24,7 @@
             $post->setTitle($_POST["title"]);
             $post->setDescription($_POST["description"]);
             $post->setTags($_POST["tags"]);
-            $post->updatePostById($_GET["p"]);
+            $post->updatePostById($_GET["pid"]);
 
             header("Location: profile.php");
         } catch (Exception $e) {

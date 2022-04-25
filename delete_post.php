@@ -9,7 +9,7 @@
     }
 
     try {
-        Post::deletePostById($_GET["p"]);
+        Post::deletePostById($_GET["pid"]);
     } catch (Exception $e) {
         $_SESSION['flash_error'] = "Something went wrong, try again later.";
     }

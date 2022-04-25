@@ -115,7 +115,7 @@
 
         public static function deletePostById($postId){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("delete from posts id = :post_id");
+            $statement = $conn->prepare("delete from posts where id = :post_id");
             $statement->bindValue('post_id', $postId);
             $statement->execute();
         }

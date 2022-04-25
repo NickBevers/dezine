@@ -98,11 +98,11 @@
                     </div>
                     <?php if($_SESSION["id"] == $_GET["id"]): ?>
                         <div class="post__actions">
-                            <a href="delete_post.php?p=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                 <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                             </a>
                             
-                            <a href="edit_post.php?p=<?php echo($post['id']); ?>&u=<?php echo($_SESSION["id"]); ?>" onclick="return confirm('Are you sure you want to edit this post?');">
+                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
                                 <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
                             </a>
                         </div>
