@@ -52,7 +52,7 @@
 
     <section class="search_box">
 
-    <form action="" method="POST">
+    <form action="" method="GET">
 	<input type="text" name="search" placeholder="Search here..." required="required" />
 	<input type="submit" value="submit">
 </form>
