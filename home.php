@@ -9,6 +9,7 @@
     //var_dump($_SESSION);
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
+   
     
     if (isset($_GET["page"]) && $_GET["page"] > 1) { 
         $pageNum  = $_GET["page"];
@@ -17,9 +18,13 @@
     } else {
         $pageNum  = 1;
         $posts = Post::getSomePosts(0, $postsPerPage);
-    };
+    }
 
-    
+    if( !empty($_POST) ) {
+        $keyword = $_POST['keyword'];
+        $searched_posts = Search::getSearchPost($keyword);
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -38,9 +43,58 @@
     <?php endif; ?>
     <!-- <img width="50%" src="assets\faker_post.jpg" alt="empty post"> -->
 
+
+    <section class="search_box">
+
+    <form action="" method="POST">
+	<input type="text" name="keyword" placeholder="Search here..." required="required" />
+	<input type="submit" value="submit">
+</form>
+
+
+    </section>
+
     <section class="posts">
+
+    <?php foreach($title as $keyword): ?>
+            <div>
+                
+                <div class="posts__user">
+                    <?php $user = User::getUserbyId($post["user_id"]); ?>
+                    <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+                    <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
+                        <h3><?php echo $user["username"] ?></h3>         
+                    </a>
+                </div>
+               
+                <div class="post">
+                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                    <div class="post__info">
+                        <h3><?php echo $post["title"] ?></h3>
+                        <?php if(isset($_SESSION["id"])): ?>
+                            <p><?php echo $post["description"] ?></p>
+                            <?php $tags = json_decode($post["tags"]); ?>
+                            <div class="post__info__tags">
+                                <?php foreach($tags as $t): ?>
+                                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>  
+                    </div>
+                </div>  
+            </div>            
+        <?php endforeach; ?>
+
+
+
+
+
+
+
+
         <?php foreach($posts as $post): ?>
             <div>
+                
                 <div class="posts__user">
                     <?php $user = User::getUserbyId($post["user_id"]); ?>
                     <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">

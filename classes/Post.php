@@ -113,4 +113,13 @@
             return $res;
         }
 
+        public static function getSearchPost($search_keyword){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where `title` like :keyword or description like :keyword order by id desc ");
+            $statement->bindValue(':keyword', '%' . $search_keyword . '%' , PDO::PARAM_STR);
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+
     }
