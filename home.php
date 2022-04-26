@@ -16,17 +16,12 @@
             $pageNum  = $_GET["page"];
             $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
 
-           
-    
         } else {
             $pageNum  = 1;
             $posts = Post::getSearchPosts($search_term, 0, $postsPerPage); 
 
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
 
-            if (empty($posts)) {
-                echo "we coulndt find any posts with this title or tags or description";
-            }
             
            
         };
@@ -65,14 +60,22 @@
     <form action="" method="GET">
 	<input type="text" name="search" placeholder="Search here..." required="required" />
 	<input type="submit" value="submit">
-</form>
+    <?php if(!empty($_GET["search"])): ?>
+        <a href="home.php">X</a>
+    <?php endif; ?>
 
+</form>
 
     </section>
 
     <section class="posts">
 
+    <?php if (empty($posts)): ?>
 
+        <img src="assets/noposts.png ">
+
+        <?php endif; ?>
+                
         <?php foreach($posts as $post): ?>
             <div>
                 
