@@ -470,7 +470,6 @@ main{
         max-height: 0px;
         /* font-size: 22px; */
         /* top:30px; */
-        margin-top: 10px;
         transition: max-height .5s ease-out;
         /* font-family: 'Space Grotesk'; */
     }
@@ -494,9 +493,11 @@ main{
     .menu-icon {
         cursor: pointer;
         display: inline-block;
-        padding: 42px 30px;
+        padding: 38px 30px;
         position: relative;
         user-select: none;
+        position: absolute;
+        right: 30px;
     }
 
     .navicon {
@@ -655,8 +656,9 @@ main{
         cursor: pointer;
         display: inline-block;
         padding: 42px 30px;
-        position: relative;
         user-select: none;
+        position: absolute;
+        right: 30px;
     }
 
     .navicon {

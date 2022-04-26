@@ -40,10 +40,10 @@
     <div class="nav__element nav--left">
       <li>
         <a aria-current="page" href="home.php">
-          <?php if(Security::isLoggedIn()): ?>
+          <?php if (Security::isLoggedIn()): ?>
             Home
           <?php endif; ?>
-          <?php if(!Security::isLoggedIn()): ?>
+          <?php if (!Security::isLoggedIn()): ?>
             Explore
           <?php endif; ?>
         </a>
@@ -53,7 +53,7 @@
     
     <div class="nav__element nav--center">
       <a href="index.php">
-        <?php if($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+        <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
           <img src="./assets/dezine.svg" alt="D-zine logo">
         <?php else: ?>
           <img src="./assets/imd.svg" alt="IMD logo">
@@ -64,33 +64,32 @@
 
     <div class="nav__element nav--right">
 
-      <?php if(!Security::isLoggedIn()): ?>
+      <?php if (!Security::isLoggedIn()): ?>
         <a href="login.php" class="nav__button">Log in</a>
-        <a href="register.php" class="nav__button">Sign in</a>
+        <a href="register.php" class="nav__button">Register</a>
       <?php endif; ?>
 
-      <?php if($_SERVER['REQUEST_URI'] == "/php/dezine/index.php" ): ?>
+      <?php if ($_SERVER['REQUEST_URI'] == "/php/dezine/index.php"): ?>
         <a href="contact.php" class="nav__button">Contact</a>
       <?php endif; ?>
 
-      <?php if(Security::isLoggedIn()): ?>
+      <?php if (Security::isLoggedIn()): ?>
         <a href="new_post.php">+ Add post</a>
       <?php endif; ?>
 
-      <?php if(Security::isLoggedIn()): ?>
+      <?php if (Security::isLoggedIn()): ?>
         <a href="profile.php" class="nav__button">Profile</a>
       <?php endif; ?>
 
-      <?php if(!empty($_GET["id"]) && $_GET["id"] == $_SESSION["id"]): ?>
+      <?php if (!empty($_GET["id"]) && $_GET["id"] == $_SESSION["id"]): ?>
         <a class="nav-link" href="profile_user.php">Edit profile</a>
       <?php endif; ?>
       
-      <?php if(Security::isLoggedIn()): ?>
+      <?php if (Security::isLoggedIn()): ?>
         <a href="logout.php" class="nav__button">Log out</a>
       <?php endif; ?>
 
     </div>
-    <a href="home.php" class="nav__logo"></a>
   </div>
 
   <div class="nav--mobile">
@@ -105,11 +104,41 @@
           <span class="navicon"></span>
         </label>
         <div class="nav--right">
-          <a href="">About</a>
-          <a href="">Explore</a>
-          <a href="login.php">Login</a>
-          <a href="signup.php">Sign up</a>
-          <a href="">contact</a>
+
+          <a aria-current="page" href="home.php">
+            <?php if (Security::isLoggedIn()): ?>
+              Home
+            <?php endif; ?>
+            <?php if (!Security::isLoggedIn()): ?>
+              Explore
+            <?php endif; ?>
+          </a>
+          
+          <?php if (!Security::isLoggedIn()): ?>
+            <a href="login.php" class="nav__button">Log in</a>
+            <a href="register.php" class="nav__button">Register</a>
+          <?php endif; ?>
+
+          <?php if ($_SERVER['REQUEST_URI'] == "/php/dezine/index.php"): ?>
+            <a href="contact.php" class="nav__button">Contact</a>
+          <?php endif; ?>
+
+          <?php if (Security::isLoggedIn()): ?>
+            <a href="new_post.php">+ Add post</a>
+          <?php endif; ?>
+
+          <?php if (Security::isLoggedIn()): ?>
+            <a href="profile.php" class="nav__button">Profile</a>
+          <?php endif; ?>
+
+          <?php if (!empty($_GET["id"]) && $_GET["id"] == $_SESSION["id"]): ?>
+            <a class="nav-link" href="profile_user.php">Edit profile</a>
+          <?php endif; ?>
+          
+          <?php if (Security::isLoggedIn()): ?>
+            <a href="logout.php" class="nav__button">Log out</a>
+          <?php endif; ?>
+
         </div>
       </div>       
   </div>
