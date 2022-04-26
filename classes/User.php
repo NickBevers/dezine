@@ -228,7 +228,7 @@
             $statement2->bindValue(':id', $id);
             $statement2->execute();
 
-            $statement3 = $conn->prepare("delete from comments where user_id = :id");
+            $statement3 = $conn->prepare("delete from likes where user_id = :id");
             $statement3->bindValue(':id', $id);
             $statement3->execute();
         }

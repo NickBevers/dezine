@@ -52,7 +52,8 @@
     <?php 
          unset($_SESSION['flash_error']);
         endif;
-     ?>    
+     ?>
+    <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
         <div class="profile__info__img">
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
