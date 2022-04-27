@@ -1,13 +1,10 @@
 <?php
-    include_once("./helpers/Security.help.php");
+    include_once(__DIR__ . "/autoloader.php");
+    include_once(__DIR__ . "/helpers/Security.help.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-    include_once(__DIR__ . "/autoloader.php");
-
     $email = $_SESSION['email'];
     $user = new User();
     $user->setEmail($email);
@@ -88,7 +85,7 @@
 
 </head>
 
-<body class="container">
+<body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
         <?php if(isset($error)): ?>

@@ -70,13 +70,13 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into posts (title, user_id, image, colors, description, tags, creation_date) values (:title, :user_id, :image, :colors, :description, :tags, :creation_date);");
             // $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
-            $statement->bindValue(":title", $this->title);
-            $statement->bindValue(":user_id", $user_id);
-            $statement->bindValue(":image", $this->image);
-            $statement->bindValue(":colors", $this->colors);
-            $statement->bindValue(":description", $this->description);
-            $statement->bindValue(":tags", $this->tags);
-            $statement->bindValue(":creation_date", $this->getDateTime());
+            $statement->bindValue(':title', $this->title);
+            $statement->bindValue(':user_id', $user_id);
+            $statement->bindValue(':image', $this->image);
+            $statement->bindValue(':colors', $this->colors);
+            $statement->bindValue(':description', $this->description);
+            $statement->bindValue(':tags', $this->tags);
+            $statement->bindValue(':creation_date', $this->getDateTime());
             $res = $statement->execute();
             return $res;
         }
@@ -107,7 +107,7 @@
         public function getPostbyId($id, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date limit $start, $amount");
-            $statement->bindValue("user_id", $id);
+            $statement->bindValue('user_id', $id);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -119,6 +119,33 @@
             $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
             $statement->execute();
             $res = $statement->fetchAll();
+            return $res;
+        }
+
+
+        public static function deletePostById($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("delete from posts where id = :post_id");
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+        }
+
+        public function updatePostById($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update posts set title = :title, description = :description, tags = :tags where id = :post_id");
+            $statement->bindValue('title', $this->getTitle());
+            $statement->bindValue('description', $this->getDescription());
+            $statement->bindValue('tags', $this->getTags());
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+        }
+
+        public static function getPostByPostId($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where id = :post_id");
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+            $res = $statement->fetch();
             return $res;
         }
 

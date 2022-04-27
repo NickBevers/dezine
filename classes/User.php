@@ -170,10 +170,19 @@
             }
         }
 
-        private function userExists(){
+        public function userExists(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
             $statement->bindValue(':email', $this->email);
+            $statement->execute();
+            $res = $statement->fetch();
+            return $res;
+        }
+
+        public function usernameExists(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users where username = :username");
+            $statement->bindValue(':username', $this->username);
             $statement->execute();
             $res = $statement->fetch();
             return $res;
@@ -219,7 +228,7 @@
             $statement2->bindValue(':id', $id);
             $statement2->execute();
 
-            $statement3 = $conn->prepare("delete from comments where user_id = :id");
+            $statement3 = $conn->prepare("delete from likes where user_id = :id");
             $statement3->bindValue(':id', $id);
             $statement3->execute();
         }
