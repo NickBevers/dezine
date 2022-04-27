@@ -113,6 +113,16 @@
             return $res;
         }
 
+        public static function getSearchPosts($search, $start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount ");
+            $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+
+
         public static function deletePostById($postId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from posts where id = :post_id");
@@ -138,4 +148,5 @@
             $res = $statement->fetch();
             return $res;
         }
+
     }

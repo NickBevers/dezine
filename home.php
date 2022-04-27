@@ -10,17 +10,33 @@
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
-    
-    if (isset($_GET["page"]) && $_GET["page"] > 1) { 
-        $pageNum  = $_GET["page"];
-        $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
+   
+    if(!empty($_GET["search"])){
+        $search_term = Cleaner::cleanInput($_GET["search"]);
+        if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
 
-    } else {
-        $pageNum  = 1;
-        $posts = Post::getSomePosts(0, $postsPerPage);
-    };
+        } else {
+            $pageNum  = 1;
+            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage); 
 
+            // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
+
+            
+           
+        };
+    } else{
+        if (isset($_GET["page"]) && $_GET["page"] > 1) { 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
     
+        } else {
+            $pageNum  = 1;
+            $posts = Post::getSomePosts(0, $postsPerPage);
+        };
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -39,9 +55,31 @@
     <?php endif; ?>
     <!-- <img width="50%" src="assets\faker_post.jpg" alt="empty post"> -->
 
+
+    <section class="search_box">
+
+    <form action="" method="GET">
+	<input type="text" name="search" placeholder="Search here..." required="required" />
+	<input type="submit" value="submit">
+    <?php if(!empty($_GET["search"])): ?>
+        <a href="home.php">X</a>
+    <?php endif; ?>
+
+</form>
+
+    </section>
+
     <section class="posts">
+
+    <?php if (empty($posts)): ?>
+
+        <img src="assets/noposts.png ">
+
+        <?php endif; ?>
+                
         <?php foreach($posts as $post): ?>
             <div>
+                
                 <div class="posts__user">
                     <?php $user = User::getUserbyId($post["user_id"]); ?>
                     <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
