@@ -1,5 +1,5 @@
 <?php
-    include_once(__DIR__ . "/DB.php");
+    include_once(__DIR__ . "/../autoloader.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
 
 

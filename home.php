@@ -53,33 +53,29 @@
     <?php if(isset($_SESSION['email'])): ?>
         <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
     <?php endif; ?>
-    <!-- <img width="50%" src="assets\faker_post.jpg" alt="empty post"> -->
-
 
     <section class="search_box">
 
     <form action="" method="GET">
-	<input type="text" name="search" placeholder="Search here..." required="required" />
-	<input type="submit" value="submit">
-    <?php if(!empty($_GET["search"])): ?>
-        <a href="home.php">X</a>
-    <?php endif; ?>
+        <input type="text" name="search" placeholder="Search here..." required="required" />
+        <input type="submit" value="submit">
+        <?php if(!empty($_GET["search"])): ?>
+            <a href="home.php">X</a>
+        <?php endif; ?>
 
-</form>
+    </form>
 
     </section>
 
     <section class="posts">
 
-    <?php if (empty($posts)): ?>
+        <?php if (empty($posts)): ?>
 
-        <img src="assets/noposts.png ">
+            <img src="assets/noposts.png ">
 
-        <?php endif; ?>
-                
+        <?php endif; ?> 
         <?php foreach($posts as $post): ?>
-            <div>
-                
+            <div>                    
                 <div class="posts__user">
                     <?php $user = User::getUserbyId($post["user_id"]); ?>
                     <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
@@ -87,23 +83,28 @@
                         <h3><?php echo $user["username"] ?></h3>         
                     </a>
                 </div>
-               
+            
                 <div class="post">
-                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                    <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                        <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                    </a>
+                    
                     <div class="post__info">
-                        <h3><?php echo $post["title"] ?></h3>
-                        <?php if(isset($_SESSION["id"])): ?>
-                            <p><?php echo $post["description"] ?></p>
-                            <?php $tags = json_decode($post["tags"]); ?>
-                            <div class="post__info__tags">
-                                <?php foreach($tags as $t): ?>
-                                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>  
+                    <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                        <h3 class="post__title"><?php echo $post["title"] ?></h3>
+                    </a>
+                    <?php if(isset($_SESSION["id"])): ?>
+                        <p><?php echo $post["description"] ?></p>
+                        <?php $tags = json_decode($post["tags"]); ?>
+                        <div class="post__info__tags">
+                            <?php foreach($tags as $t): ?>
+                                <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>  
                     </div>
                 </div>  
-            </div>            
+            </div>        
         <?php endforeach; ?>
 
         <?php if($postCount > $postsPerPage): ?>
