@@ -31,7 +31,7 @@
         <div class="post post--index">
             <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
             <div class="post__info">
-                <h3><?php echo $post["title"] ?></h3>
+                <h4><?php echo $post["title"] ?></h4>
                 <p><?php echo $post["description"] ?></p>
                 <?php $tags = json_decode($post["tags"]); ?>
                 <div class="post__info__tags">

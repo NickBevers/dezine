@@ -2,9 +2,6 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: museo-sans, sans-serif;
-    font-weight: 300;
-    font-style: normal;
 }
 
 :root {
@@ -14,6 +11,7 @@
     --white: #FFFFFF;
     --black: #000000;
 
+    --font-weight-thin: 300;
     --font-weight-bold: 700;
     --font-weight-extrabold: 900;
     
@@ -28,6 +26,8 @@
 
 body {
     background-color: var(--white);
+    font-family: museo-sans, sans-serif;
+    font-style: normal;
 }
 
 h1{
@@ -38,6 +38,14 @@ h1{
 
 h3{
     color: var(--accent);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+}
+
+h4{
+    color: var(--accent);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xxs);
 }
 
 /*start pagina layout*/
@@ -339,6 +347,10 @@ footer {
     gap: 2rem;
 }
 
+.posts__bkg{    
+    background-color: var(--primary);  
+}
+
 .post{
     display: grid;
     grid-template-columns: 1fr;
@@ -360,7 +372,6 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 5px;
-
 }
 
 .post img{
@@ -405,7 +416,7 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin: 1rem 0;
 }
 
 .post__info__tags p{
@@ -418,7 +429,7 @@ footer {
     grid-template-rows: 1fr;
     justify-items: flex-start;
     align-items: center;
-    margin-left: 1rem;
+    margin: 0.5rem 1rem 0.5rem 1rem;  
 }
 
 .posts__user img{
@@ -427,8 +438,19 @@ footer {
     border-radius: 50%;
 }
 
+.posts__user__name{
+    text-decoration: none;
+}
+
 .hidden{
     display: none;
+}
+
+.like, 
+.liked,
+.follow,
+.unfollow{
+    cursor: pointer;
 }
 
 main{
