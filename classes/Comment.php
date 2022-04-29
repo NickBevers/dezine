@@ -25,6 +25,7 @@
          */
         public function setText($text)
         {
+            $text = Cleaner::cleanInput($text);
             $this->text = $text;
 
             return $this;
@@ -45,6 +46,7 @@
          */
         public function setPostId($postId)
         {
+            $postId = Cleaner::cleanInput($postId);
             $this->postId = $postId;
 
             return $this;
@@ -65,6 +67,7 @@
          */
         public function setUserId($userId)
         {
+            $userId = Cleaner::cleanInput($userId);
             $this->userId = $userId;
 
             return $this;
@@ -90,10 +93,14 @@
         public static function getCommentsByPostId($postId)
         {
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from comments where post_id = :postId");
-            $statement->bindValue('postId', $postId);
+            $statement = $conn->prepare("SELECT comments.comment, comments.user_id, users.username, users.profile_image 
+                                        FROM comments
+                                        INNER JOIN users ON users.id = comments.user_id
+                                        WHERE comments.post_id = :postId");
+            $statement->bindValue(':postId', $postId);
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
         }
+
     }

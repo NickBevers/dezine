@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Location;
+
     include_once(__DIR__ . "/autoloader.php");
 
     include_once("./helpers/Security.help.php");
@@ -6,9 +9,13 @@
         header('Location: login.php');
     }
 
-    $post = Post::getPostbyPostId($_GET["pid"]);
-
-    $Comments = Comment::getCommentsByPostId($_GET["pid"])
+    if (isset($_GET["pid"])) {
+        $post = Post::getPostbyPostId($_GET["pid"]);
+    } else {
+        header('Location: home.php');
+    }
+    
+    $comments = Comment::getCommentsByPostId($_GET["pid"]);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -44,15 +51,30 @@
                 <?php endif; ?>  
             </div>
         </div>
-        <div class="post__comments">
-            <div class="post__comments__form">
+        <div class="post__comment">
+            <div class="post__comment__form">
+                <?php $user = User::getUserbyId($_SESSION['id']); ?>
                 <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
-                <input type="text" placeholder="What are your thoughts on this project?" class="post___comments__form__input">
-                <a href="#" class="post___comments__form__btn" data-postid="<?php echo $post["id"];?>">Add</a>
+                <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
+                <a href="#" class="post__comment__form__btn" data-pfplink="<?php echo $user["profile_image"]; ?>" data-postid="<?php echo $post["id"];?>">Add</a>
             </div>
-            <ul class="post__comments__list">
-                <?php foreach($Comments as $comment): ?>
-                    <li><?php echo $comment['comment']; ?></li>
+            <ul class="post__comment__list">
+                <?php foreach($comments as $comment): ?>
+                    <li>
+                        <div class="post__comment--left">
+                            <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
+                                <img src="<?php echo $comment["profile_image"]; ?>" alt="<?php echo $comment["username"]; ?>">
+                            </a>
+                        </div>
+
+                        <div class="comment--right">
+                            <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
+                                <?php echo $comment['username']; ?>
+                            </a>
+                            <p><?php echo $comment['comment']; ?></p>
+                        </div>
+                    </li>
+                
                 <?php endforeach;?>
             </ul>
         </div>

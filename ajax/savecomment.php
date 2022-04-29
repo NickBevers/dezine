@@ -12,7 +12,9 @@
 
         $response = [
             'status' => 'succes',
-            'commment' => Cleaner::cleanInput($comment->getText()),
+            'postId' => $comment->getPostId(),
+            'text' => $comment->getText(),
+            'userId' => $comment->getUserId(),
             'message' => 'comment saved'
         ];
 

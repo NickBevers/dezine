@@ -1,7 +1,9 @@
-document.querySelector(".post___comments__form__btn").addEventListener("click", function () {
+document.querySelector(".post__comment__form__btn").addEventListener("click", function (e) {
+    e.preventDefault();
 
     let postId = this.dataset.postid;
-    let comment = document.querySelector(".post___comments__form__input").value;
+    let inputField = document.querySelector(".post__comment__form__input");
+    let comment = inputField.value;
 
     let formData = new FormData();
 
@@ -14,10 +16,38 @@ document.querySelector(".post___comments__form__btn").addEventListener("click", 
         })
         .then(response => response.json())
         .then(result => {
-            let newComment = document.createElement('li');
-            newComment.innerHTML = result.commment;
-            console.log(newComment);
-            document.querySelector(".post__comments__list").appendChild(newComment);
+            let commentList = document.querySelector(".post__comment__list");
+
+            let commentWrapper = document.createElement('li');
+            let commentLeftColumn = document.createElement('div');
+            commentLeftColumn.classList.add('comment--left');
+
+            let pfpLink = document.createElement('a');
+            pfpLink.href = "profile.php?id=" + result.userId;
+            let pfpImg = document.createElement('img');
+            pfpImg.src = this.dataset.pfplink;
+
+            let commentRightColumn = document.createElement('div');
+            commentRightColumn.classList.add('comment--right');
+
+            let usernameLink = document.createElement('a');
+            usernameLink.href = "profile.php?id=" + result.userId;
+            usernameLink.innerHTML = "Bailey";
+            let commentText = document.createElement('p');
+            commentText.innerHTML = result.text;
+
+            pfpLink.appendChild(pfpImg);
+            commentLeftColumn.appendChild(pfpLink);
+
+            commentRightColumn.appendChild(usernameLink);
+            commentRightColumn.appendChild(commentText);
+
+            commentWrapper.appendChild(commentLeftColumn);
+            commentWrapper.appendChild(commentRightColumn);
+        
+            commentList.appendChild(commentWrapper);
+
+            inputField.value = "";
         })
         .catch(error => {
             console.error('Error:', error);
