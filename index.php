@@ -15,7 +15,13 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
 
     <section class="bkg">
-        <img src="./assets/dezine.svg" alt="Dezine logo">
+        <img src="./assets/imd_dezine.svg" alt="Dezine logo">
+    </section>
+    <section class="banner">
+        <div class="banner__loop">
+            <h1 class="banner__loop__text">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work</h1>
+            <h1 class="banner__loop__text2">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work</h1>
+        </div>
     </section>
     
     <?php include_once("./includes/footer.inc.php"); ?>
