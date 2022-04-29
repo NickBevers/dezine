@@ -23,7 +23,7 @@
 
         public function addLike(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into likes (post_id, user_id, active) values (:post_id, :user_id, 1)");
+            $statement = $conn->prepare("insert into likes (post_id, user_id) values (:post_id, :user_id)");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
             return $statement->execute();
@@ -57,15 +57,5 @@
             $res = $statement->fetch();
             // var_dump($res);
             return $res;
-        }
-
-        public function checkLikes(){
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from likes where post_id = :post_id and user_id = :user_id");
-            $statement->bindValue(":post_id", $this->getPostId());
-            $statement->bindValue(":user_id", $this->getUserId());
-            $statement->execute();
-            // var_dump($statement->rowCount());
-            return $statement->rowCount();
         }
     }
