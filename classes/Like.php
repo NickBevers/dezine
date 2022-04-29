@@ -1,4 +1,7 @@
 <?php
+    include_once(__DIR__ . "/../autoloader.php");
+    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    
     class Like {
         private $postId;
         private $userId;
