@@ -1,8 +1,6 @@
 <?php
     include_once("./../autoloader.php");
 
-    session_start();
-
     if (!empty($_POST["liked"])) {
         $postId = $_POST['postId'];
     
