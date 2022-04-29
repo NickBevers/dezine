@@ -1,11 +1,9 @@
 <?php
+    include_once(__DIR__ . "/autoloader.php");
     include_once("./helpers/Security.help.php");
 	  if(!Security::isLoggedIn()) {
       header('Location: login.php');
   }
-    include_once(__DIR__ . "/autoloader.php");
-    // include_once(__DIR__ . "/classes/Post.php");
-        
     if(!empty($_POST)){
         $title = $_POST["title"];
         $description = $_POST["description"];
@@ -27,8 +25,6 @@
               $project->setTags($tags);
               $project->setImage($targetFilePath);
               $project->setColors();
-              // var_dump($project->getColors());
-              // exit();
               if($project->addPost($user_id)){
                 header("Location: home.php");
               } else{
@@ -55,8 +51,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dezine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
-<body class="container">
+<body>
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
 
 <main>
