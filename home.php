@@ -5,8 +5,6 @@
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-
-    //var_dump($_SESSION);
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
@@ -19,12 +17,8 @@
 
         } else {
             $pageNum  = 1;
-            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage); 
-
+            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);           
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
-
-            
-           
         };
     } else{
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
@@ -37,6 +31,7 @@
         };
     }
 
+    $uid = $_SESSION["id"];
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -92,7 +87,7 @@
                     <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
                     <div class="post__info">
                         <h3><?php echo $post["title"] ?></h3>
-                        <?php if(isset($_SESSION["id"])): ?>
+                        <?php if(isset($uid)): ?>
                             <p><?php echo $post["description"] ?></p>
                             <?php $tags = json_decode($post["tags"]); ?>
                             <div class="post__info__tags">
@@ -101,6 +96,34 @@
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>  
+                        <?php $pid = $post["id"]; ?>
+                        <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
+                        <div class="like hidden" data-id="<?php echo $pid; ?>">
+                            <p class="like__text">❤ Like</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="liked" data-id="<?php echo $pid; ?>">
+                            <p class="liked__text">❤ Liked</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <?php else: ?>
+                        <div class="like" data-id="<?php echo $pid; ?>">
+                            <p class="like__text">❤ Like</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="liked hidden" data-id="<?php echo $pid; ?>">
+                            <p class="liked__text">❤ Liked</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>  
             </div>            
@@ -113,5 +136,7 @@
             <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
         <?php endif; ?>
     </section>
+
+    <script src="./javascript/like.js"></script>
 </body>
 </html>

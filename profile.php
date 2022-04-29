@@ -32,6 +32,8 @@
         $pageNum  = 1;
         $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
     }    
+    
+    $uid = $_SESSION["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,15 +88,12 @@
             <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
             <div class="post__info">
                 <h3><?php echo $post["title"] ?></h3>
-                <?php if(isset($_SESSION["id"])): ?>
+                <?php if(isset($uid)): ?>
                     <p><?php echo $post["description"] ?></p>
-                    <?php $tags = $post["tags"]; 
-                    $tags = json_decode($tags);
-                    $i=0;
-                    ?>
+                    <?php $tags = json_decode($post["tags"]); ?>
                     <div class="post__info__tags">
                         <?php foreach($tags as $t): ?>
-                            <p><?php echo "#"; echo $tags[$i]; echo "&nbsp"; $i++; ?></p>
+                            <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                         <?php endforeach; ?>
                     </div>
                     <?php if($_SESSION["id"] == $_GET["id"]): ?>
@@ -110,6 +109,34 @@
                        
                     <?php endif; ?> 
                 <?php endif; ?> 
+                <?php $pid = $post["id"]; ?>
+                        <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
+                        <div class="like hidden" data-id="<?php echo $pid; ?>">
+                            <p class="like__text">❤ Like</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="liked" data-id="<?php echo $pid; ?>">
+                            <p class="liked__text">❤ Liked</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <?php else: ?>
+                        <div class="like" data-id="<?php echo $pid; ?>">
+                            <p class="like__text">❤ Like</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="liked hidden" data-id="<?php echo $pid; ?>">
+                            <p class="liked__text">❤ Liked</p>
+                            <?php if($uid === $post["user_id"]): ?>
+                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
             </div>
         </div>              
     <?php endforeach; ?>
@@ -121,6 +148,7 @@
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     </section>
+    <script src="./javascript/like.js"></script>
 </body>
 <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>

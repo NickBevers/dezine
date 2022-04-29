@@ -354,6 +354,10 @@ footer {
     border-radius: 50%;
 }
 
+.hidden{
+    display: none;
+}
+
 main{
     width: 100vw;
     overflow-x: hidden;
