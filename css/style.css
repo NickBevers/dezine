@@ -377,8 +377,26 @@ footer {
 .post img{
     width: 100%;
     height: 400px;
+    position: relative;
+    /* object-fit: cover; */
+    /* border: 5px solid var(--secondary); */
+}
+
+.post__img{
+    width: 100%;
+    height: 400px;
     object-fit: cover;
     border: 5px solid var(--secondary);
+    z-index: 0;
+}
+
+#post__img-showcase{
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    left: 42%;
+    top: 2%;
+    z-index: 5;
 }
 
 .post img.trash_icon{
