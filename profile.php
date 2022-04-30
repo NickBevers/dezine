@@ -85,7 +85,13 @@
     <section class="posts">
     <?php foreach($posts as $post): ?>
         <div class="post">
-            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            <div class="post__img">
+                <?php if($uid === $post["user_id"]): ?>
+                    <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase">
+                    <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="hidden">
+                <?php endif; ?>
+                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            </div>
             <div class="post__info">
                 <h4><?php echo $post["title"] ?></h4>
                 <?php if(isset($uid)): ?>
