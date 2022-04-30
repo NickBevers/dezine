@@ -87,8 +87,8 @@
         <div class="post">
             <div class="post__img">
                 <?php if($uid === $post["user_id"]): ?>
-                    <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase">
-                    <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="hidden">
+                    <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
+                    <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
                 <?php endif; ?>
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
             </div>
@@ -155,6 +155,7 @@
     <?php endif; ?>
     </section>
     <script src="./javascript/like.js"></script>
+<script src="./javascript/showcase.js"></script>
 </body>
 <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>
