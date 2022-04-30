@@ -106,7 +106,7 @@
         
         public static function getFollowedPosts($uid, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date limit $start, $amount");
+            $statement = $conn->prepare("select * from posts where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount");
             $statement->bindValue(":user_id", $uid);
             $statement->execute();
             $res = $statement->fetchAll();
@@ -115,7 +115,7 @@
 
         public function getPostbyId($id, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date limit $start, $amount");
+            $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date desc limit $start, $amount");
             $statement->bindValue('user_id', $id);
             $statement->execute();
             $res = $statement->fetchAll();
