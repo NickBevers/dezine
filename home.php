@@ -1,59 +1,77 @@
 <?php 
     include_once(__DIR__ . "/autoloader.php");
-
+    
     include_once("./helpers/Security.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-
-    $sorting = '';
-    if(isset($_GET['sort'])){
-        $sorting = $_GET['sort'];
-        switch ($sorting) {
-            case 'date_asc':
-                # code...
-                break;
-
-            case 'date_desc':
-                # code...
-                break;
-
-            case 'following':
-                # code...
-                break;
-    
-            default:
-                # code...
-                break;
-        }
-    }
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
+    $uid = $_SESSION["id"];
+
+    if(isset($_GET['sort'])){
+        $sorting = Cleaner::cleanInput($_GET['sort']);
+        switch ($sorting) {
+            case 'date_asc':
+                $sorting = "asc";
+                break;
+
+            case 'date_desc':
+                $sorting = "desc";
+                break;
+
+            case 'following':
+                $sorting = "follow";
+                break;
+    
+            default:
+                $sorting = "desc";
+                break;
+        }
+    } else{
+        $sorting = '';
+    }
    
-    if(!empty($_GET["search"])){
+    if(!empty($_GET["search"]) && $sorting !== "follow"){
         $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
-            $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
+            $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
 
         } else {
             $pageNum  = 1;
-            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);           
+            $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);           
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
-    } else{
+    } else if(!empty($_GET["search"]) && $sorting === "follow"){
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
-            $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
-    
+            $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
+
         } else {
             $pageNum  = 1;
-            $posts = Post::getSomePosts(0, $postsPerPage);
+            $posts = Post::getFollowedSearchPosts($uid, $search_term, 0, $postsPerPage);           
+        };
+    } else {
+        if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow"){ 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
+    
+        } else if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow"){ 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+    
+        } else{
+            $pageNum  = 1;
+            if($sorting !== "follow"){
+                $posts = Post::getSomePosts($sorting, 0, $postsPerPage);
+            } else{
+                $posts = Post::getFollowedPosts($uid, 0, $postsPerPage);
+            }
         };
     }
 
-    $uid = $_SESSION["id"];
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -72,9 +90,9 @@
     <?php endif; ?>
 
     <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-        <option value="date_asc"  <?php if($sorting == 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-        <option value="date_desc" <?php if($sorting == 'date_desc'):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-        <option value="following" <?php if($sorting == 'following'):?>selected="selected"<?php endif;?>>following</option>
+        <option value="date_desc" <?php if($_GET['sort'] === 'date_desc'):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+        <option value="date_asc"  <?php if($_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+        <option value="following" <?php if($_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
     </select>
 
     <section class="search_box">
