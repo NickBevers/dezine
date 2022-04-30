@@ -397,6 +397,7 @@ footer {
     left: 42%;
     top: 2%;
     z-index: 5;
+    object-fit: contain;
 }
 
 .post img.trash_icon{
