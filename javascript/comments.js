@@ -45,7 +45,7 @@ document.querySelector(".post__comment__form__btn").addEventListener("click", fu
             commentWrapper.appendChild(commentLeftColumn);
             commentWrapper.appendChild(commentRightColumn);
         
-            commentList.appendChild(commentWrapper);
+            commentList.prepend(commentWrapper);
 
             inputField.value = "";
         })
