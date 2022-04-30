@@ -23,4 +23,20 @@
             $this->userId = $userId;
             return $this;
         }
+
+        public function addToShowcase(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("insert into showcase (post_id, user_id) values (:post_id, :user_id)");
+            $statement->bindValue(":post_id", $this->getPostId());
+            $statement->bindValue(":user_id", $this->getUserId());
+            return $statement->execute();
+        }
+
+        public function removeFromShowcase(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("delete from showcase where post_id = :post_id and user_id = :user_id");
+            $statement->bindValue(":post_id", $this->getPostId());
+            $statement->bindValue(":user_id", $this->getUserId());
+            return $statement->execute();
+        }
     }
