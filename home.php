@@ -5,6 +5,28 @@
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
+
+    $sorting = '';
+    if(isset($_GET['sort'])){
+        $sorting = $_GET['sort'];
+        switch ($sorting) {
+            case 'date_asc':
+                # code...
+                break;
+
+            case 'date_desc':
+                # code...
+                break;
+
+            case 'following':
+                # code...
+                break;
+    
+            default:
+                # code...
+                break;
+        }
+    }
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
@@ -48,6 +70,12 @@
     <?php if(isset($_SESSION['email'])): ?>
         <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
     <?php endif; ?>
+
+    <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
+        <option value="date_asc"  <?php if($sorting == 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+        <option value="date_desc" <?php if($sorting == 'date_desc'):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+        <option value="following" <?php if($sorting == 'following'):?>selected="selected"<?php endif;?>>following</option>
+    </select>
 
     <section class="search_box">
         <form action="" method="GET">
@@ -127,5 +155,6 @@
     </section>
 
     <script src="./javascript/like.js"></script>
+    <script src="./javascript/feedSort.js"></script>
 </body>
 </html>
