@@ -86,9 +86,16 @@
     <?php foreach($posts as $post): ?>
         <div class="post">
             <div class="post__img">
-                <?php if($uid === $post["user_id"]): ?>
-                    <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
-                    <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
+                <?php if(Showcase::checkShowcase($post["id"], $uid)): ?>
+                    <?php if($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
+                    <?php endif; ?>
                 <?php endif; ?>
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
             </div>

@@ -39,4 +39,13 @@
             $statement->bindValue(":user_id", $this->getUserId());
             return $statement->execute();
         }
+
+        public static function checkShowcase($postId, $userId){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from showcase where post_id = :post_id and user_id = :user_id");
+            $statement->bindValue(":post_id", $postId);
+            $statement->bindValue(":user_id", $userId);
+            $statement->execute();
+            return $statement->fetch();
+        }
     }
