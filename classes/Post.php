@@ -6,6 +6,7 @@
     use League\ColorExtractor\Color;
     use League\ColorExtractor\ColorExtractor;
     use League\ColorExtractor\Palette;
+    use PHPColorExtractor\PHPColorExtractor;
 
 
     class Post {
@@ -56,13 +57,15 @@
         public function getColors(){return $this->colors;}
 
         public function setColors(){
-            $colorArray = [];
-            $palette = Palette::fromFilename($this->image);
-            $topFive = $palette->getMostUsedColors(5);
-            foreach($topFive as $color) {
-                array_push($colorArray, Color::fromIntToHex($color));
+            $extractor = new PHPColorExtractor();
+            $extractor->setImage($this->getImage())->setTotalColors(5)->setGranularity(10);
+            $palette = $extractor->extractPalette();
+            $colours = [];
+            foreach($palette as $color) {
+                $hslVal = $this->hexToHsl($color);
+                array_push($colours, $hslVal);
             }
-            $this->colors = json_encode($colorArray);
+            $this->colors = json_encode($colours);
             return $this;
         }
 
@@ -166,6 +169,46 @@
             $statement->execute();
             $res = $statement->fetch();
             return $res;
+        }
+
+        private function hexToHsl($hex){
+            // Taken from https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript and converted to correct php code. 
+            $hex = "#" . $hex;
+            $result = "/#([[:xdigit:]]{3}){1,2}\b/";
+            if(preg_match($result, $hex)){
+                $r = intval(substr($hex, 1, 2), 16);
+                $g = intval(substr($hex, 3, 2), 16);
+                $b = intval(substr($hex, 5, 2), 16);
+            
+                $r /= 255; 
+                $g /= 255; 
+                $b /= 255;
+                $max = max($r, $g, $b); 
+                $min = min($r, $g, $b);
+                $h = $s = $l = ($max + $min) / 2;
+            
+                if($max == $min){
+                    $h = $s = 0;
+                } else {
+                    $d = $max - $min;
+                    $s = $l > 0.5 ? $d / (2 - $max - $min) : $d / ($max + $min);
+                    switch($max) {
+                        case $r: $h = ($g - $b) / $d + ($g < $b ? 6 : 0); break;
+                        case $g: $h = ($b - $r) / $d + 2; break;
+                        case $b: $h = ($r - $g) / $d + 4; break;
+                    }
+                    $h /= 6;
+                }
+            
+                $h = round(360*$h);
+                $s = round(100*$s);
+                $l = round(100*$l);
+            
+                return 'hsl(' . $h . ', ' . $s . '%, ' . $l . '%)';
+            } else{
+                throw new Error("The colour you gave is not valid, please try again");
+            }
+
         }
 
     }
