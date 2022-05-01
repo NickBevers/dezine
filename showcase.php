@@ -19,7 +19,8 @@
     }  
 
     $user = User::getUserbyId($profileUser);
-
+    if(empty($user)){ header('Location: home.php');}
+    
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
     $post = new Post();
