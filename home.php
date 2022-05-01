@@ -32,8 +32,8 @@
     } else{
         $sorting = '';
     }
-   
-    if(!empty($_GET["search"]) && $sorting !== "follow"){
+    if($sorting === ''){$posts = Post::getSomePosts("desc", 0, $postsPerPage);}
+    else if(!empty($_GET["search"]) && $sorting !== "follow"){
         $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
@@ -90,8 +90,8 @@
     <?php endif; ?>
 
     <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-        <option value="date_desc" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_asc' || !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-        <option value="date_asc"  <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+        <option value="date_desc"  <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+        <option value="date_asc" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
         <option value="following" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
     </select>
 
