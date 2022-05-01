@@ -403,6 +403,13 @@ footer {
     filter: invert(.5) sepia(1) saturate(81) hue-rotate(203deg);
 }
 
+.post__colors{
+    display: flex;
+    width: 100%;
+    padding: 0.5rem 2rem;
+    justify-content: space-evenly;
+}
+
 .post__info{
     display: flex;
     flex-direction: column;
