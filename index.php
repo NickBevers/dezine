@@ -1,5 +1,6 @@
 <?php  
     include_once(__DIR__ . "/autoloader.php");
+    $sorting = "desc";
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -26,7 +27,7 @@
     </section>
 
     <section class="posts">
-    <?php $posts = POST::getSomePosts(0, 6); ?>
+    <?php $posts = POST::getSomePosts($sorting, 0, 6); ?>
     <?php foreach($posts as $post): ?>
         <div class="post post--index">
             <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
