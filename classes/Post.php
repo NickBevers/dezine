@@ -15,6 +15,7 @@
         private $tags;
         private $image;
         private $colors;
+        private $color_groups;
 
         public function getTitle(){return $this->title;}
 
@@ -61,11 +62,23 @@
             $extractor->setImage($this->getImage())->setTotalColors(5)->setGranularity(10);
             $palette = $extractor->extractPalette();
             $colours = [];
+            $color_groups = [];
             foreach($palette as $color) {
                 $hslVal = $this->hexToHsl($color);
+                $color_group = $this->getColorGroupFromColor($hslVal);
+                array_push($color_groups, $color_group);
                 array_push($colours, $hslVal);
             }
             $this->colors = json_encode($colours);
+            return $this;
+        }
+
+        public function getColor_groups(){
+            return $this->color_groups;
+        }
+
+        public function setColor_groups($color_groups){
+            $this->color_groups = $color_groups;
             return $this;
         }
 
@@ -204,11 +217,18 @@
                 $s = round(100*$s);
                 $l = round(100*$l);
             
-                return 'hsl(' . $h . ', ' . $s . '%, ' . $l . '%)';
+                return 'hsl(' . $h . ',' . $s . '%,' . $l . '%)';
             } else{
                 throw new Error("The colour you gave is not valid, please try again");
             }
-
         }
 
+        private function getColorGroupFromColor($hsl){
+            $hsl = str_replace("hsl(", "", $hsl);
+            $hsl = str_replace(")", "", $hsl);
+            $hsl = explode(", ", $hsl);
+            $h = $hsl[0];
+            $s = str_replace("%", "", $hsl[1]);
+            $l = str_replace("%", "", $hsl[2]);
+        }
     }

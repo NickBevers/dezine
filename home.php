@@ -72,6 +72,12 @@
         };
     }
 
+    if(isset($_GET["color"])){
+        $getColor = Cleaner::cleanInput($_GET["color"]);
+        var_dump($getColor);
+        // str_replace("%20", " ", $getColor);
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -122,7 +128,7 @@
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
                 <div class="post__colors">
                     <?php foreach(json_decode($post["colors"]) as $color): ?>
-                        <div class="post__color" style="background-color: <?php echo $color ?>; width: 20px; height: 20px;"></div>
+                        <a href="./home.php?color=<?php echo $color ?>"><div class="post__color" style="background-color: <?php echo $color ?>; width: 20px; height: 20px;"></div></a>
                     <?php endforeach; ?>
                 </div>
                 <div class="post__info">
