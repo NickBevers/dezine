@@ -1,6 +1,6 @@
 <?php 
     include_once(__DIR__ . "/autoloader.php");
-
+    
     include_once("./helpers/Security.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
@@ -8,30 +8,70 @@
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
-   
-    if(!empty($_GET["search"])){
+    $uid = $_SESSION["id"];
+
+    if(isset($_GET['sort'])){
+        $sorting = Cleaner::cleanInput($_GET['sort']);
+        switch ($sorting) {
+            case 'date_asc':
+                $sorting = "asc";
+                break;
+
+            case 'date_desc':
+                $sorting = "desc";
+                break;
+
+            case 'following':
+                $sorting = "follow";
+                break;
+    
+            default:
+                $sorting = "desc";
+                break;
+        }
+    } else{
+        $sorting = '';
+    }
+    if($sorting === ''){$posts = Post::getSomePosts("desc", 0, $postsPerPage);}
+    else if(!empty($_GET["search"]) && $sorting !== "follow"){
         $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
-            $posts = Post::getSearchPosts($search_term, $pageNum*$postsPerPage, $postsPerPage);
+            $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
 
         } else {
             $pageNum  = 1;
-            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);           
+            $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);           
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
-    } else{
+    } else if(!empty($_GET["search"]) && $sorting === "follow"){
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
-            $posts = Post::getSomePosts($pageNum*$postsPerPage, $postsPerPage);
-    
+            $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
+
         } else {
             $pageNum  = 1;
-            $posts = Post::getSomePosts(0, $postsPerPage);
+            $posts = Post::getFollowedSearchPosts($uid, $search_term, 0, $postsPerPage);           
+        };
+    } else {
+        if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow"){ 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
+    
+        } else if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow"){ 
+            $pageNum  = $_GET["page"];
+            $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+    
+        } else{
+            $pageNum  = 1;
+            if($sorting !== "follow"){
+                $posts = Post::getSomePosts($sorting, 0, $postsPerPage);
+            } else{
+                $posts = Post::getFollowedPosts($uid, 0, $postsPerPage);
+            }
         };
     }
 
-    $uid = $_SESSION["id"];
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -48,6 +88,12 @@
     <?php if(isset($_SESSION['email'])): ?>
         <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
     <?php endif; ?>
+
+    <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
+        <option value="date_desc"  <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+        <option value="date_asc" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+        <option value="following" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
+    </select>
 
     <section class="search_box">
         <form action="" method="GET">
@@ -127,5 +173,6 @@
     </section>
 
     <script src="./javascript/like.js"></script>
+    <script src="./javascript/feedSort.js"></script>
 </body>
 </html>
