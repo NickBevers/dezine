@@ -3,9 +3,6 @@
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
 
     require 'vendor/autoload.php';
-    use League\ColorExtractor\Color;
-    use League\ColorExtractor\ColorExtractor;
-    use League\ColorExtractor\Palette;
     use PHPColorExtractor\PHPColorExtractor;
 
 
@@ -66,10 +63,14 @@
             foreach($palette as $color) {
                 $hslVal = $this->hexToHsl($color);
                 $color_group = $this->getColorGroupFromColor($hslVal);
+                // var_dump($color_group);
                 array_push($color_groups, $color_group);
                 array_push($colours, $hslVal);
             }
+            // var_dump($color_groups);
+            // exit();
             $this->colors = json_encode($colours);
+            $this->color_groups = json_encode($color_groups);
             return $this;
         }
 
@@ -84,12 +85,13 @@
 
         public function addPost($user_id){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("insert into posts (title, user_id, image, colors, description, tags, creation_date) values (:title, :user_id, :image, :colors, :description, :tags, :creation_date);");
+            $statement = $conn->prepare("insert into posts (title, user_id, image, colors, color_group, description, tags, creation_date) values (:title, :user_id, :image, :colors, :color_group, :description, :tags, :creation_date);");
             // $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
             $statement->bindValue(':title', $this->title);
             $statement->bindValue(':user_id', $user_id);
             $statement->bindValue(':image', $this->image);
             $statement->bindValue(':colors', $this->colors);
+            $statement->bindValue(':color_group', $this->color_groups);
             $statement->bindValue(':description', $this->description);
             $statement->bindValue(':tags', $this->tags);
             $statement->bindValue(':creation_date', $this->getDateTime());
@@ -129,10 +131,19 @@
             return $res;
         }
 
-        public function getPostbyId($id, $start, $amount){
+        public static function getPostbyId($id, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date desc limit $start, $amount");
             $statement->bindValue('user_id', $id);
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+
+        public static function getPostsByColor($color, $start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where color_group like :color order by creation_date desc limit $start, $amount");
+            $statement->bindValue(':color', "%" . $color . "%", PDO::PARAM_STR);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -223,12 +234,60 @@
             }
         }
 
+        private function getColorfromHue($hVal){
+            switch ($hVal){
+                case $hVal < 15 || $hVal >= 345: return "red"; break;
+                case $hVal < 40 && $hVal >= 15: return "orange"; break;
+                case $hVal < 60 && $hVal >= 40: return "yellow"; break;
+                case $hVal < 75 && $hVal >= 60: return "lime"; break;
+                case $hVal < 140 && $hVal >= 75: return "green"; break;
+                case $hVal < 180 && $hVal >= 140: return "aqua"; break;
+                case $hVal < 260 && $hVal >= 180: return "blue"; break;
+                case $hVal < 285 && $hVal >= 260: return "purple"; break;
+                case $hVal < 345 && $hVal >= 285: return "pink"; break;
+            }
+        }
+
         private function getColorGroupFromColor($hsl){
             $hsl = str_replace("hsl(", "", $hsl);
             $hsl = str_replace(")", "", $hsl);
-            $hsl = explode(", ", $hsl);
-            $h = $hsl[0];
-            $s = str_replace("%", "", $hsl[1]);
-            $l = str_replace("%", "", $hsl[2]);
+            $hsl = explode(",", $hsl);
+            $h = intval($hsl[0]);
+            $s = intval(str_replace("%", "", $hsl[1]));
+            $l = intval(str_replace("%", "", $hsl[2]));
+
+            if($s <= 10){
+                switch ($l){
+                    case $l >= 90: return "white"; break;
+                    case 75 <= $l && $l < 90: return "light gray"; break;
+                    case 40 <= $l && $l < 75: return "gray"; break;
+                    case 15 <= $l && $l < 40: return "dark gray"; break;
+                    case $l < 15: return "black"; break;
+                }
+            } else if($s > 10 && $s <= 30){
+                switch ($l){
+                    case $l >= 80: return "white"; break;
+                    case 65 <= $l && $l < 80: return "light " . $this->getColorfromHue($h); break;
+                    case 30 <= $l && $l < 65: return $this->getColorfromHue($h); break;
+                    case 15 <= $l && $l < 30: return "dark " . $this->getColorfromHue($h); break;
+                    case $l < 15: return "black"; break;
+                } 
+            } else if($s > 30 && $s <= 55){
+                switch ($l){
+                    case $l >= 90: return "white"; break;
+                    case 65 <= $l && $l < 90: return "light " . $this->getColorfromHue($h); break;
+                    case 30 <= $l && $l < 65: return $this->getColorfromHue($h); break;
+                    case 15 <= $l && $l < 30: return "dark " . $this->getColorfromHue($h); break;
+                    case $l < 15: return "black"; break;
+                }
+            } else if($s > 55){
+                switch ($l){
+                    case $l >= 95: return "white"; break;
+                    case 75 <= $l && $l < 95: return "light " . $this->getColorfromHue($h); break;
+                    case 35 <= $l && $l < 75: return $this->getColorfromHue($h); break;
+                    case 10 <= $l && $l < 35: return "dark " . $this->getColorfromHue($h); break;
+                    case $l < 10: return "black"; break;
+                }
+            }
         }
     }
