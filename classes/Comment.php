@@ -24,11 +24,16 @@
          * @return  self
          */
         public function setText($text)
-        {
+        {   
+            if(empty($text)){
+                throw new Exception("Comment cannot be empty");
+            }
+
             $text = Cleaner::cleanInput($text);
             $this->text = $text;
 
             return $this;
+            
         }
 
         /**
@@ -93,10 +98,7 @@
         public static function getCommentsByPostId($postId)
         {
             $conn = DB::getInstance();
-            $statement = $conn->prepare("SELECT comments.comment, comments.user_id, users.username, users.profile_image 
-                                        FROM comments
-                                        INNER JOIN users ON users.id = comments.user_id
-                                        WHERE comments.post_id = :postId");
+            $statement = $conn->prepare("SELECT comments.comment, comments.user_id, users.username, users.profile_image FROM comments INNER JOIN users ON users.id = comments.user_id WHERE comments.post_id = :postId");
             $statement->bindValue(':postId', $postId);
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);

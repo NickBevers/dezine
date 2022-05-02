@@ -56,7 +56,13 @@ use phpDocumentor\Reflection\Location;
                 <?php $user = User::getUserbyId($_SESSION['id']); ?>
                 <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
                 <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
-                <a href="#" class="post__comment__form__btn" data-pfplink="<?php echo $user["profile_image"]; ?>" data-postid="<?php echo $post["id"];?>">Add</a>
+                <a class="post__comment__form__btn" 
+                    data-pfplink="<?php echo $user["profile_image"]; ?>" 
+                    data-postid="<?php echo $post["id"];?>" 
+                    data-username="<?php echo $user["username"]; ?>"
+                >
+                    Add
+                </a>
             </div>
             <ul class="post__comment__list">
                 <?php foreach($comments as $comment): ?>
@@ -74,7 +80,6 @@ use phpDocumentor\Reflection\Location;
                             <p><?php echo $comment['comment']; ?></p>
                         </div>
                     </li>
-                
                 <?php endforeach;?>
             </ul>
         </div>
