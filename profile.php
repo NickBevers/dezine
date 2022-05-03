@@ -42,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Profile</title>
+    <title><?php echo $user["username"]; ?></title>
 </head>
 <body>
     <?php if(isset($_SESSION['flash_error'])): ?>
