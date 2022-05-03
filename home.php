@@ -9,6 +9,8 @@
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
     $uid = $_SESSION["id"];
+    if(empty($_GET["page"])){$pageNum = 0;} 
+    else{$pageNum  = $_GET["page"];}
 
     if(isset($_GET['sort'])){
         $sorting = Cleaner::cleanInput($_GET['sort']);
@@ -73,6 +75,11 @@
         };
     }
 
+    if(isset($_GET["color"])){
+        $getColor = Cleaner::cleanInput($_GET["color"]);
+        $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -95,6 +102,10 @@
         <option value="date_asc" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
         <option value="following" <?php if(isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
     </select>
+
+    <?php if(isset($_GET["color"])): ?>
+    <a href="home.php">Reset Color filter</a>
+    <?php endif; ?>
 
     <section class="search_box">
         <form action="" method="GET">
@@ -121,6 +132,12 @@
             </div>               
             <div class="post">
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                <div class="post__colors">
+                    <?php $colors = json_decode($post["colors"]); $color_groups = json_decode($post["color_group"]); ?>
+                    <?php for($i = 0; $i < sizeof($colors); $i++): ?>
+                        <a href="./home.php?color=<?php echo $color_groups[$i] ?>"><div class="post__color" style="background-color: <?php echo $colors[$i] ?>; width: 20px; height: 20px;"></div></a>
+                    <?php endfor; ?>
+                </div>
                 <div class="post__info">
                     <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
                         <h3 class="post__title"><?php echo $post["title"] ?></h3>
