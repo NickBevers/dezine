@@ -260,7 +260,7 @@
             if($s <= 10){
                 switch ($l){
                     case $l == 0: return "black"; break;
-                    case $l >= 0 && $l < 15: return "black"; break;
+                    case $l > 0 && $l < 15: return "black"; break;
                     case 15 <= $l && $l < 40: return "dark gray"; break;
                     case 40 <= $l && $l < 75: return "gray"; break;
                     case 75 <= $l && $l < 90: return "light gray"; break;
