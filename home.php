@@ -9,6 +9,9 @@
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
     $uid = $_SESSION["id"];
+    if(!isset($_GET["page"])){
+        $pageNum = 0;
+    }
 
     if(isset($_GET['sort'])){
         $sorting = Cleaner::cleanInput($_GET['sort']);
