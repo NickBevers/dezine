@@ -45,6 +45,7 @@
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } else if(!empty($_GET["search"]) && $sorting === "follow"){
+        $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) { 
             $pageNum  = $_GET["page"];
             $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
