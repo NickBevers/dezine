@@ -196,15 +196,6 @@
             $statement->execute();
         }
 
-        public static function getPostByPostId($postId){
-            $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where id = :post_id");
-            $statement->bindValue('post_id', $postId);
-            $statement->execute();
-            $res = $statement->fetch();
-            return $res;
-        }
-
         private function hexToHsl($hex){
             // Taken from https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript and converted to correct php code. 
             $hex = "#" . $hex;
