@@ -122,7 +122,9 @@
             <div class="post">
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
                 <div class="post__info">
-                    <h4><?php echo $post["title"] ?></h4>
+                    <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                        <h3 class="post__title"><?php echo $post["title"] ?></h3>
+                    </a>
                     <?php if(isset($uid)): ?>
                         <p><?php echo $post["description"] ?></p>
                         <?php $tags = json_decode($post["tags"]); ?>

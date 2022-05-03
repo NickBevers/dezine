@@ -59,7 +59,12 @@
   <div class="nav--mobile">
     <div class="nav--center">
       <a href="index.php">
-        <img src="./assets/imd.svg" alt="IMD logo">
+        <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+          <img src="./assets/dezine.svg" alt="D-zine logo">
+        <?php else: ?>
+          <img src="./assets/imd.svg" alt="IMD logo">
+        <?php endif; ?>
+
       </a>
       </div>
       <div class="nav--mobile_menu">
