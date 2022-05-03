@@ -18,6 +18,8 @@ document.querySelector(".post__comment__form__btn").addEventListener("click", fu
     .then(result => {
         if (result.status === 'failure') {
             document.querySelector(".post__comment__form__input").style.borderColor = 'red';
+            document.querySelector(".post__comment__form__input").style.borderWidth = '2px';
+            document.querySelector(".post__comment__form__input").setAttribute('placeholder', result.message);
             return;
         }
         let commentList = document.querySelector(".post__comment__list");
