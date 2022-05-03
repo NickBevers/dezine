@@ -105,9 +105,18 @@
             return $res;
         }
 
-        public static function getSomePosts($start, $amount){
+        public static function getSomePosts($sorting, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts order by creation_date limit $start, $amount");
+            $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
+        
+        public static function getFollowedPosts($uid, $start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount");
+            $statement->bindValue(":user_id", $uid);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -115,22 +124,32 @@
 
         public function getPostbyUserId($id, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date limit $start, $amount");
+            $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date desc limit $start, $amount");
             $statement->bindValue('user_id', $id);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
         }
 
-        public static function getSearchPosts($search, $start, $amount){
+        public static function getSearchPosts($search, $sort, $start, $amount){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount ");
+            $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date :sort limit $start, $amount ");
             $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
+            $statement->bindValue(':sort', $sort);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
         }
 
+        public static function getFollowedSearchPosts($uid, $search, $start, $amount){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search and where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount ");
+            $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
+            $statement->bindValue(':user_id', $uid);
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
 
         public static function deletePostById($postId){
             $conn = DB::getInstance();
