@@ -47,57 +47,58 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     
-    <h1><?php echo $user["username"]; ?>'s Showcase</h1>
+    <h1 class="showcase__title"><?php echo $user["username"]; ?>'s Showcase</h1>
 
-    <section class="posts">
-    <?php foreach($posts as $post): ?>
-        <?php if(Showcase::checkShowcase($post["id"], $id)): ?>
-            <div class="post">
-                <div class="post__img">
-                    <?php if(Showcase::checkShowcase($post["id"], $uid)): ?>
-                        <?php if($uid === $post["user_id"]): ?>
-                            <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
-                            <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <?php if($uid === $post["user_id"]): ?>
-                            <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
-                            <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
-                        <?php endif; ?>
-                    <?php endif; ?>
-                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+    <section>
+        <?php if(Showcase::userHasShowcase($id) === false && $uid === $id): ?>
+            <div class="showcase__empty">
+                <h2 class="showcase__title-h2">Your showcase is still empty!</h2>
+                <div class="showcase__empty-message">
+                    <p>Add posts to your showcase by clicking on the hearts!</p>   
+                    <img src="./assets/hearts_icon.svg" alt="hearts icon showcase">
                 </div>
-                <div class="post__info">
-                    <h4><?php echo $post["title"] ?></h4>
-                    <?php if(isset($uid)): ?>
-                        <p><?php echo $post["description"] ?></p>
-                        <?php $tags = json_decode($post["tags"]); ?>
-                        <div class="post__info__tags">
-                            <?php foreach($tags as $t): ?>
-                                <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                            <?php endforeach; ?>
-                        </div>
-                        <?php if($_SESSION["id"] == $_GET["id"]): ?>
-                            <div class="post__actions">
-                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                                </a>
-                                
-                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
-                                    <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
-                                </a>
-                            </div>
-                        
-                        <?php endif; ?> 
-                    <?php endif; ?> 
-                </div>
-            </div> 
+            </div>
         <?php else: ?>
-            <h2>Your showcase is still empty!</h2>
-            <p>Add posts to your showcase by clicking on the hearts!</p>   
-            <img src="./assets/hearts_icon.svg" alt="hearts icon showcase">
-        <?php endif; ?>          
-    <?php endforeach; ?>
+            <div class="posts">
+                <?php foreach($posts as $post): ?>
+                    <?php if(Showcase::checkShowcase($post["id"], $id)): ?>
+                        <div class="post post__showcase">
+                            <div class="post__img">
+                                    <?php if($uid === $post["user_id"]): ?>
+                                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
+                                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                                    <?php endif; ?>
+                                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                            </div>
+                            <div class="post__info">
+                                <h4><?php echo $post["title"] ?></h4>
+                                <?php if(isset($uid)): ?>
+                                    <p><?php echo $post["description"] ?></p>
+                                    <?php $tags = json_decode($post["tags"]); ?>
+                                    <div class="post__info__tags">
+                                        <?php foreach($tags as $t): ?>
+                                            <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <?php if($_SESSION["id"] == $_GET["id"]): ?>
+                                        <div class="post__actions">
+                                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                            </a>
+                                            
+                                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                                <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
+                                            </a>
+                                        </div>                        
+                                    <?php endif; ?> 
+                                <?php endif; ?> 
+                            </div>
+                        </div>       
+                    <?php endif; ?> 
+                <?php endforeach; ?>
+            </div>  
+        <?php endif; ?>  
+    </section>
 
     <?php if($postCount > $postsPerPage): ?>
         <?php if($pageNum > 1): ?>
@@ -105,7 +106,6 @@
         <?php endif; ?>
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-    </section>
 
     <script src="./javascript/showcase.js"></script>
 </body>
