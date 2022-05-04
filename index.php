@@ -20,8 +20,8 @@
 
     <section class="banner">
         <div class="banner__loop">
-            <h1 class="banner__loop__text">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work</h1>
-            <h1 class="banner__loop__text2">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work</h1>
+            <h1 class="banner__loop__text">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work -</h1>
+            <h1 class="banner__loop__text2">&nbsp; Showcase of our beautiful work - Showcase of our beautiful work -</h1>
         </div>
     </section>
 
