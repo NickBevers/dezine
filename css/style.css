@@ -512,6 +512,40 @@ main{
 .message{display: hidden;}
 .show{display: block;}
 
+/*showcase*/
+.showcase__title{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.showcase__empty{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.showcase__title-h2{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.showcase__empty-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/*pagination*/
+
+.next_page{
+    position: relative;
+    bottom: 1rem;
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
 
     /* index page */
@@ -877,5 +911,16 @@ main{
     /* posts */
     .posts{
         grid-template-columns: 1fr;
+    }
+
+    /*showcase*/
+
+    .showcase__empty-message{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 2rem;
     }
 }
