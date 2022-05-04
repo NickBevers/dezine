@@ -32,7 +32,7 @@
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }    
     
-    $uid = $_SESSION["id"];
+    $uid = Cleaner::cleanInput($_SESSION["id"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
