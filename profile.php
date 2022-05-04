@@ -153,6 +153,7 @@
             </div>
         </div>              
     <?php endforeach; ?>
+    </section>
 
     <?php if($postCount > $postsPerPage): ?>
         <?php if($pageNum > 1): ?>
@@ -160,7 +161,7 @@
         <?php endif; ?>
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-    </section>
+
     <script src="./javascript/like.js"></script>
 <script src="./javascript/showcase.js"></script>
 </body>
