@@ -28,8 +28,6 @@ body {
     background-color: var(--white);
     font-family: museo-sans, sans-serif;
     font-style: normal;
-    max-width: 1920px;
-    max-height: 1080px;
 }
 
 h1{
@@ -231,8 +229,8 @@ input[type="checkbox"][id^="cb"] {
     display:inline-block;
     -webkit-animation: scrolling-left1 20s linear infinite;
     animation: scrolling-left1 20s linear infinite;
-    position: relative;
-    right: -3.5rem;
+    /* position: relative;
+    right: -3.5rem; */
 }
 
 .banner__loop__text2{
@@ -240,8 +238,8 @@ input[type="checkbox"][id^="cb"] {
     -webkit-animation: scrolling-left2 20s linear infinite;
     animation: scrolling-left2 20s linear infinite;
     animation-delay: 10s;
-    position: relative;
-    right: -3.5rem;
+    /* position: relative;
+    right: -3.5rem; */
 }
 
 @keyframes scrolling-left1 {
