@@ -145,10 +145,12 @@
             throw new Exception("This password does not match the given email");
         }
 
-        public function register() {
+        public function register($referLink = "") {
             if(!$this->userExists()){
-                $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
-                if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
+                if(strlen($referLink) === 0){
+                    $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
+                    if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
+                }
                 $options = [
                 'cost' => 15
                 ];
@@ -158,7 +160,7 @@
                 $options = [
                     'cost' => 15
                   ];
-                $statement = $conn->prepare("insert into users (username, email, password) values (:username, :email, :password);");
+                $statement = $conn->prepare("insert into users (username, email, password, user_role) values (:username, :email, :password, 'user');");
                 $statement->bindValue(':username', $this->username);
                 $statement->bindValue(':email', $this->email);
                 $statement->bindValue(':password', $password);

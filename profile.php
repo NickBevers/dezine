@@ -80,8 +80,9 @@
             <?php endif; ?>
         </div>
         <div class="getRegisterLink">
-            <input type="text">
+            <input type="text" class="specialRegisterLink">
             <button class="getRegisterLinkBtn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
         </div>
     </section>
     
