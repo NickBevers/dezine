@@ -11,11 +11,11 @@
         if(empty($uid)){
             header('Location: home.php');
         }else{
-            $profileUser = Cleaner::cleanInput($uid);
+            $profileUser = $uid;
             header("Location: showcase.php?id=$uid");
         }        
     } else{
-        $profileUser = Cleaner::cleanInput($id);
+        $profileUser = $id;
     }  
 
     $user = User::getUserbyId($profileUser);
@@ -23,15 +23,14 @@
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
-    $post = new Post();
     
     if (isset($_GET["page"]) && $_GET["page"] > 1) { 
         $pageNum  = $_GET["page"];
-        $posts = $post->getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
+        $posts = Post::getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
 
     } else {
         $pageNum  = 1;
-        $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
+        $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }    
 ?>
 <!DOCTYPE html>
