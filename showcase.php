@@ -5,8 +5,8 @@
 
     if(!Security::isLoggedIn()) { header('Location: login.php');}
     
-    $uid = $_SESSION["id"]; 
-    $id = $_GET["id"];
+    $uid = Cleaner::cleanInput($_SESSION["id"]); 
+    $id = Cleaner::cleanInput($_GET["id"]);
     if(empty($id)){
         if(empty($uid)){
             header('Location: home.php');
