@@ -30,7 +30,9 @@ let heartsfull = document.querySelectorAll(".heartsfull");
 if(heartsfull !== null){
     for(let i = 0; i < heartsfull.length; i++){
         heartsfull[i].addEventListener("click", (e) =>{
-            // console.log(e);
+            let img = e.target.parentElement;
+            let post = img.parentElement;
+            // console.log(post);
             let postId = e.target.dataset.id;
             // console.log(postId + " pid");
             let sibling = e.target;
@@ -47,6 +49,10 @@ if(heartsfull !== null){
                 // console.log(sibling.previousElementSibling);
                 sibling.previousElementSibling.classList.remove("hidden");                   
                 sibling.classList.add("hidden");
+                console.log(post.classList.contains("post__showcase"));
+                if(post.classList.contains("post__showcase")){
+                    post.classList.add("hidden");
+                }
             }).catch((error) =>{
                 console.error("Error: ", error);
             });        
