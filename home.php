@@ -151,7 +151,7 @@
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>  
-                    <?php $pid = $post["id"]; ?>
+                    <?php $pid = $post["id"];?>
                     <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
                     <div class="like hidden" data-id="<?php echo $pid; ?>">
                         <p class="like__text">❤ Like</p>
