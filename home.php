@@ -19,11 +19,7 @@
 
         } else {
             $pageNum  = 1;
-            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage); 
-
-            // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
-
-            
+            $posts = Post::getSearchPosts($search_term, 0, $postsPerPage);    
            
         };
     } else{
@@ -86,7 +82,9 @@
                     <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                         <h3><?php echo $user["username"] ?></h3>         
                     </a>
+
                 </div>
+                
                
                 <div class="post">
                     <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -100,6 +98,18 @@
                                     <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                                 <?php endforeach; ?>
                             </div>
+
+
+                            <?php if($_SESSION["id"] !== $post["user_id"]): ?>
+                            <div class="post__info__report">
+                            <a href="new_report.php?postid=<?php echo $post['id']; ?>&userid=<?php echo $user['id'] ; ?>">
+                            <h3>Report post</h3>
+                            </a>
+                            </div>
+                            <?php endif; ?>  
+
+
+
                         <?php endif; ?>  
                     </div>
                 </div>  
@@ -113,5 +123,9 @@
             <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
         <?php endif; ?>
     </section>
+
+    <script src="./javascript/report.js"></script>
+ 
+
 </body>
 </html>
