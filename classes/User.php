@@ -288,4 +288,14 @@
                 return false;
             }
         }
+
+        public static function checkBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select banned from users where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result["banned"]);
+            return $result;
+        }
     }
