@@ -56,11 +56,16 @@
      ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
-        <div class="profile__info__img">
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        <div class="profile__info__image">
+            <img src="<?php echo $user["profile_image"]; ?>" class="profile__info__img" alt="profile image <?php echo $user["username"]; ?>">
         </div>
         <div class="profile__info__details">
-            <h1><?php echo $user["username"]; ?></h1>
+            <div class="profile__info__details__username">
+                <h1><?php echo $user["username"]; ?></h1>
+                <?php if($user["user_role"] === "admin"): ?>
+                    <img src="assets\Icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
+                <?php endif; ?> 
+            </div>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
             <div>
