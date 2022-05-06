@@ -10,17 +10,6 @@
         private $reason;
        
         
-
-        public function getImage(){return $this->image;}
-
-        public function setImage($image)
-        {
-            $image = Cleaner::cleanInput($image);
-            $this->image = $image;
-            return $this;
-        }
-
-
         public function getPostid()
         {
             return $this->post_id;

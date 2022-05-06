@@ -86,7 +86,7 @@
               
             <div class="profile__info__report">
 
-            <a href="new_report.php?postid=0&userid=<?php echo $user['id'] ; ?>">
+            <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
             <h3>Report user</h3>
             </a>
             </div>  
