@@ -155,9 +155,6 @@
                 $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
 
                 $conn = DB::getInstance();
-                $options = [
-                    'cost' => 15
-                  ];
                 $statement = $conn->prepare("insert into users (username, email, password) values (:username, :email, :password);");
                 $statement->bindValue(':username', $this->username);
                 $statement->bindValue(':email', $this->email);
