@@ -1,6 +1,7 @@
 {
     "require": {
         "phpmailer/phpmailer": "^6.6",
-        "bensquire/php-color-extractor": "dev-master"
+        "bensquire/php-color-extractor": "dev-master",
+        "cloudinary/cloudinary_php": "^2"
     }
 }
