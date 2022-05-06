@@ -4,6 +4,9 @@
 	  if(!Security::isLoggedIn()) {
       header('Location: login.php');
   }
+  if(User::checkban($_SESSION["id"])){
+    header('Location: home.php');
+  }
     if(!empty($_POST)){
         $title = $_POST["title"];
         $description = $_POST["description"];
