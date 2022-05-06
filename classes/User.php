@@ -273,4 +273,19 @@
             // var_dump($result);
             return $result;
         }
+
+        public static function checkModerator($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select user_role from users where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result["user_role"]);
+            if($result["user_role"] === "moderator"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
