@@ -78,6 +78,11 @@
                 <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
                 <?php endif; ?>
             <?php endif; ?>
+            <?php if(User::checkModerator($uid)): ?>
+                <div>
+                    <a href="#">Ban user: <?php echo $user["username"]; ?></a>
+                </div>
+            <?php endif; ?>
         </div>    
     </section>
     
