@@ -295,7 +295,30 @@
             $statement->bindValue(':id', $userId);
             $statement->execute();
             $result = $statement->fetch();
+            // var_dump($result);
+            return $result["banned"];
+        }
+
+        public static function addBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set banned = 1 where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            // var_dump($statement->execute());
+            // $result = $statement->fetch();
             // var_dump($result["banned"]);
-            return $result;
+            // return $result;
+            $message = "User has been banned";
+            return $message;
+        }
+
+        public static function removeBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set banned = 0 where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            // var_dump($statement->execute());
+            $message = "The ban has been lifted";
+            return $message;
         }
     }
