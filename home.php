@@ -156,26 +156,46 @@
                     <div class="like hidden" data-id="<?php echo $pid; ?>">
                         <p class="like__text">❤ Like</p>
                         <?php if($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
                         <?php endif; ?>
                     </div>
                     <div class="liked" data-id="<?php echo $pid; ?>">
                         <p class="liked__text">❤ Liked</p>
                         <?php if($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
                         <?php endif; ?>
                     </div>
                     <?php else: ?>
                     <div class="like" data-id="<?php echo $pid; ?>">
                         <p class="like__text">❤ Like</p>
                         <?php if($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
                         <?php endif; ?>
                     </div>
                     <div class="liked hidden" data-id="<?php echo $pid; ?>">
                         <p class="liked__text">❤ Liked</p>
                         <?php if($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
                         <?php endif; ?>
                     </div>
                     <?php endif; ?>

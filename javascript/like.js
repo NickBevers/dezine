@@ -17,8 +17,18 @@ if(like !== null){
             .then(res => {
                 // console.log("Success: ", res);
                 if(parent.querySelector(".likes_count")){
-                    parent.nextElementSibling.querySelector(".likes_count").innerHTML = res.data + " people like this";
-                    parent.querySelector(".likes_count").innerHTML = res.data + " people like this";
+                    if(res.data === 0){                        
+                        parent.nextElementSibling.querySelector(".likes_count").innerHTML = "No one likes this yet";
+                        parent.querySelector(".likes_count").innerHTML = "No one likes this yet";
+                    }
+                    if(res.data === 1){
+                        parent.nextElementSibling.querySelector(".likes_count").innerHTML = res.data + " user likes this";
+                        parent.querySelector(".likes_count").innerHTML = res.data + " user likes this";
+                    }
+                    if(res.data > 1){
+                        parent.nextElementSibling.querySelector(".likes_count").innerHTML = res.data + " users like this";
+                        parent.querySelector(".likes_count").innerHTML = res.data + " users like this";
+                    }
                 }
                 parent.nextElementSibling.classList.remove("hidden");                    
                 parent.classList.add("hidden");
@@ -47,9 +57,20 @@ if( dislike !== null){
             }).then(response => response.json())
             .then(res => {
                 // console.log("Success: ", res);
+                console.log(res.data);
                 if(parent.querySelector(".likes_count")){
-                    parent.querySelector(".likes_count").innerHTML = res.data + " people like this";
-                    parent.previousElementSibling.querySelector(".likes_count").innerHTML = res.data + " people like this";
+                    if(res.data === 0){                        
+                        parent.previousElementSibling.querySelector(".likes_count").innerHTML = "No one likes this yet";
+                        parent.querySelector(".likes_count").innerHTML = "No one likes this yet";
+                    }
+                    if(res.data === 1){
+                        parent.previousElementSibling.querySelector(".likes_count").innerHTML = res.data + " user likes this";
+                        parent.querySelector(".likes_count").innerHTML = res.data + " user likes this";
+                    }
+                    if(res.data > 1){
+                        parent.previousElementSibling.querySelector(".likes_count").innerHTML = res.data + " users like this";
+                        parent.querySelector(".likes_count").innerHTML = res.data + " users like this";
+                    }
                 }
                 // console.log(parent.previousElementSibling); 
                 parent.previousElementSibling.classList.remove("hidden");                   
