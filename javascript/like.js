@@ -36,7 +36,7 @@ function addRemoveLike(e){
                     parent.nextElementSibling.querySelector(".likes_count").innerHTML = "No one likes this yet";
                 }   
                 if(parent.classList.contains("liked")){
-                    parent.previousElementSibling.querySelector(".likes_count").innerHTML = res.data + " No one likes this yet";
+                    parent.previousElementSibling.querySelector(".likes_count").innerHTML = " No one likes this yet";
                 }                  
                 parent.querySelector(".likes_count").innerHTML = "No one likes this yet";
             }
