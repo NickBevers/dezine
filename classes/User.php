@@ -278,4 +278,14 @@
             // var_dump($result);
             return $result;
         }
+
+        public static function isModerator($uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users where id = :id");
+            $statement->bindValue(':id', $uid);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result);
+            return $result["user_role"];
+        }
     }

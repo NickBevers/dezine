@@ -79,11 +79,13 @@
                 <?php endif; ?>
             <?php endif; ?>
         </div>
+        <?php if (User::isModerator($uid) === "moderator"): ?>
         <div class="getRegisterLink">
             <input type="text" class="specialRegisterLink">
             <button class="getRegisterLinkBtn">Get Alumni Link</button>
             <script src="./javascript/getLink.js"></script>
         </div>
+        <?php endif; ?>
     </section>
     
     <section class="posts">
