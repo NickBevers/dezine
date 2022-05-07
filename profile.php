@@ -69,13 +69,15 @@
                 <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
-            <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
-                <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
-                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
-                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
-                <?php else: ?>
-                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Follow</div>
-                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
+            <?php if(User::checkban($_SESSION["id"]) === "0"): ?>
+                <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
+                    <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
+                    <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
+                    <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
+                    <?php else: ?>
+                    <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Follow</div>
+                    <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
             <?php if(User::checkModerator($uid)): ?>
@@ -133,6 +135,7 @@
                     <?php endif; ?> 
                 <?php endif; ?> 
                 <?php $pid = $post["id"]; ?>
+                <?php if(User::checkban($_SESSION["id"]) === "0"): ?>
                     <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
                     <div class="like hidden" data-id="<?php echo $pid; ?>">
                         <p class="like__text">❤ Like</p>
@@ -159,6 +162,7 @@
                         <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                         <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>              
