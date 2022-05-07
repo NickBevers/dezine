@@ -80,7 +80,7 @@
             <?php endif; ?>
             <?php if(User::checkModerator($uid)): ?>
                 <div>
-                    <a href="#">Ban user: <?php echo $user["username"]; ?></a>
+                    <a href="moderator_overview.php">Ban user: <?php echo $user["username"]; ?></a>
                 </div>
             <?php endif; ?>
         </div>    
