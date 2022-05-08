@@ -279,7 +279,7 @@
             return $result;
         }
 
-        public static function isModerator($uid){
+        public static function checkUserLevel($uid){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
             $statement->bindValue(':id', $uid);
