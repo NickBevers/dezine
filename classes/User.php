@@ -279,7 +279,7 @@
             return $result;
         }
 
-        public static function checkUserLevel($uid){
+        public static function checkUserRole($uid){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
             $statement->bindValue(':id', $uid);

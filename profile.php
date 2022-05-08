@@ -79,7 +79,7 @@
                 <?php endif; ?>
             <?php endif; ?>
         </div>
-        <?php if (User::checkUserLevel($uid) === "moderator"): ?>
+        <?php if (User::checkUserRole($uid) === "moderator"): ?>
         <div class="getRegisterLink">
             <input type="text" class="specialRegisterLink">
             <button class="getRegisterLinkBtn">Get Alumni Link</button>
