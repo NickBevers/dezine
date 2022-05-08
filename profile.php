@@ -63,7 +63,7 @@
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
                 <?php if($user["user_role"] === "admin"): ?>
-                    <img src="assets\Icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
+                    <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
                 <?php endif; ?> 
             </div>
             <h4><?php echo $user["education"]; ?></h4>

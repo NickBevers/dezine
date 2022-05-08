@@ -19,6 +19,8 @@
         //second email
         private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
+        //role
+        private $user_role;
 
         public function getUsername(){return $this->username;}
 
@@ -124,6 +126,18 @@
         {
             $github = Cleaner::cleanInput($github);
             $this->github = $github;
+            return $this;
+        }
+
+        public function getUser_role()
+        {
+            return $this->user_role;
+        }
+
+        public function setUser_role($user_role)
+        {
+            $this->user_role = $user_role;
+
             return $this;
         }
 
@@ -270,7 +284,16 @@
             $statement->bindValue(':id', $id);
             $statement->execute();
             $result = $statement->fetch();
-            // var_dump($result);
             return $result;
         }
+
+        public static function checkUserRole($uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users where id = :id");
+            $statement->bindValue(':id', $uid);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result["user_role"];
+        }
+
     }
