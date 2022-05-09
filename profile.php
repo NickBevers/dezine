@@ -78,7 +78,14 @@
                 <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
                 <?php endif; ?>
             <?php endif; ?>
-        </div>    
+        </div>
+        <?php if (User::checkUserRole($uid) !== "user"): ?>
+        <div class="getRegisterLink">
+            <input type="text" class="specialRegisterLink">
+            <button class="getRegisterLinkBtn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
+        <?php endif; ?>
     </section>
     
     <section class="posts">
