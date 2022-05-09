@@ -339,7 +339,22 @@ footer {
     gap: 0.5rem;
 }
 
+.profile__info__details button {
+    margin-left: 1rem;
+    background-color: var(--lighterWhite);
+    border-color: var(--accent);
+    border-width: 2px;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: large;
+}
 
+.profile__info__details button:hover {
+    background-color: var(--lighterWhite);
+    padding: 0.5rem 0.7rem;
+    margin-left: 0.9rem;
+    cursor: pointer;
+}
 
 .profile__info__details__username {
     display: flex;

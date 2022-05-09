@@ -20,7 +20,7 @@
         private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
         //role
-        private $user_role;
+        private $role;
 
         public function getUsername(){return $this->username;}
 
@@ -129,12 +129,12 @@
             return $this;
         }
 
-        public function getUser_role()
+        public function getRole()
         {
             return $this->user_role;
         }
 
-        public function setUser_role($user_role)
+        public function setRole($user_role)
         {
             $this->user_role = $user_role;
 
@@ -294,6 +294,14 @@
             $statement->execute();
             $result = $statement->fetch();
             return $result["user_role"];
+        }
+
+        public static function UpdateUserRole($role, $uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set user_role = :role where id = :uid");
+            $statement->bindValue(':role', $role);
+            $statement->bindValue(':uid', $uid);
+            $statement->execute();
         }
 
     }

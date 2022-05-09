@@ -30,9 +30,21 @@
     } else {
         $pageNum  = 1;
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
-    }    
-    
+    }
+
     $uid = Cleaner::cleanInput($_SESSION["id"]);
+    $role = $user["user_role"];
+    if(isset($_POST["moderator"])){
+        if($_POST["moderator"] === "assign"){
+            $role = "moderator";
+            User::UpdateUserRole($role, $user["id"]);
+        } else {
+            $role = "user";
+            User::UpdateUserRole($role, $user["id"]);
+        }
+        header("Refresh:0");
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,9 +74,17 @@
         <div class="profile__info__details">
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
-                <?php if($user["user_role"] === "admin"): ?>
+                <?php if($user["user_role"] !== "user"): ?>
                     <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
                 <?php endif; ?> 
+                <form action="#" method="post">
+                    <?php if($user["user_role"] === "user"): ?>
+                        <button name="moderator" value="assign" type="submit">Make moderator</button>
+                    <?php endif; ?>
+                    <?php if($user["user_role"] !== "user"): ?>
+                        <button name="moderator" type="delete">Delete moderator role</button>
+                    <?php endif; ?>
+                </form>
             </div>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
