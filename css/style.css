@@ -565,9 +565,10 @@ footer {
 
 .post__comment__form__input {
     width: 80%;
-    height: 4rem;
+    height: 1rem;
     text-align: start;
-    padding-top: 2.5rem;
+    padding: 1rem;
+    padding-top: 1.2rem;
     border-color: var(--grey);
     border-width: 1.5px;
     border-radius: 8px;
