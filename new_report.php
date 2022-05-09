@@ -13,11 +13,19 @@
         $post_id = Cleaner::cleanInput($_GET['postid']);
     }
     else{
-    $post_id = NULL;
+    $post_id = "";
+    }
+
+    if(isset($_GET['userid']))
+    {
+        $reported_user_id = Cleaner::cleanInput($_GET['userid']);
+    }
+    else{
+    $reported_user_id = "";
     }
 
    
-    $reported_user_id = Cleaner::cleanInput($_GET['userid']);
+    
     $user_id = Cleaner::cleanInput($_SESSION['id']);
     $report = new Report();
     var_dump($post_id);
@@ -46,57 +54,70 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
 
-    <?php if($post_id !== NULL ): ?>
+        <?php if($post_id !== "" && $post_id !== NULL ): ?>
         <div class="post">
-                    <img src=<?php echo $reports_post["image"] ?> alt=<?php echo $reports_post["title"] ?>>
-                    <div class="post__info">
-                        <h3><?php echo $reports_post["title"] ?></h3>
-                        <?php if(isset($_SESSION["id"])): ?>
-                            <p><?php echo $reports_post["description"] ?></p>
+            <img src=<?php echo $reports_post["image"] ?> alt=<?php echo $reports_post["title"] ?>>
+            <div class="post__info">
+                <h3><?php echo $reports_post["title"] ?></h3>
+                <?php if(isset($_SESSION["id"])): ?>
+                <p><?php echo $reports_post["description"] ?></p>
 
-                        <?php endif; ?>  
-                    </div>
-                </div>  
+                <?php endif; ?>
+            </div>
+        </div>
 
-           <?php else: ?>
+        <?php else: ?>
 
-            <section class="profile__info">
+        <section class="profile__info">
             <div class="profile__info__img">
-            <img src="<?php echo $reports_user["profile_image"]; ?>" alt="profile image <?php echo $reports_user["username"]; ?>">
+                <img src="<?php echo $reports_user["profile_image"]; ?>"
+                    alt="profile image <?php echo $reports_user["username"]; ?>">
             </div>
 
             <div class="profile__info__details">
-            <h1><?php echo $reports_user["username"]; ?></h1>
-            <h4><?php echo $reports_user["education"]; ?></h4>
-            <p><?php echo $reports_user["bio"]; ?></p>
+                <h1><?php echo $reports_user["username"]; ?></h1>
+                <h4><?php echo $reports_user["education"]; ?></h4>
+                <p><?php echo $reports_user["bio"]; ?></p>
             </div>
-            </section>
-            <?php endif; ?>
- 
-   
+        </section>
+        <?php endif; ?>
 
         <h4>Send Report</h4>
 
-        
-          <div>
-        <div class="mb-3">
+        <div>
+            <div class="mb-3" id="reason--div">
                 <label for="reason" class="form-label">Reason</label>
-                <input type="reason" name="reason" class="form-control" id="reason" 
+                <input type="reason" name="reason" class="form-control" id="reason" required
                     placeholder="the reason for your report">
+
+            </div>
+            <div id="lol" style='display:none;'>
+                <p>please give a reason for the report</p>
+
+            </div>
+            <div id="loll" style='display:none;'>
+                <p>Thank you for helping keep the Dezine community safe and fun for eyeryone. Remember, we don't reveal
+                    who submitted reports to the person.</p>
+                <p>below you see the report you send</p>
+                <div id="report--reason"></div>
+                <div>
+                    <p>Our team will review the post and if it violates our <a href="community_guidelines.php">Community Guidelines</a> or <a href="terms_of_use.php">Terms of Use</a>, we will remove it, the Dezine team</p>
+                </div>
             </div>
 
-            <ul class="lol">
-            <li></li>
-           </ul>
-
             
-
-            <a href="#" class="btn" id="btnAddReport" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>">Submit Report</a>
+            <div id="report--button"></div>
+            <a href="#" class="btn" id="btnAddReport" data-reported_user_id="<?php echo $reported_user_id; ?>"
+                data-post_id="<?php echo $post_id; ?>">Submit Report</a>
         </div>
-           
-     
+
+
+        <br>
+        <br>
+
+
     </main>
-<script src="./javascript/report.js"></script>
+    <script src="./javascript/report.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">

@@ -99,17 +99,13 @@
                                 <?php endforeach; ?>
                             </div>
 
-
                             <?php if($_SESSION["id"] !== $post["user_id"]): ?>
                             <div class="post__info__report">
-                            <a href="new_report.php?postid=<?php echo $post['id']; ?>&userid=<?php echo $user['id'] ; ?>">
+                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
                             <h3>Report post</h3>
                             </a>
                             </div>
                             <?php endif; ?>  
-
-
-
                         <?php endif; ?>  
                     </div>
                 </div>  

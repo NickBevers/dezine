@@ -1,8 +1,9 @@
 <?php 
     include_once(__DIR__ . "/../autoloader.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    include_once(__DIR__ . "/../classes/Report.php");
 
-
+ 
     if (!empty($_POST)) {
         $user_id = Cleaner::cleanInput($_SESSION['id']);
         $reason = $_POST['reason'];
@@ -14,6 +15,7 @@
         $report->setReportedUserId($reported_user_id);
         $report->setReason($reason);
        
+       
 
       
 
@@ -23,6 +25,8 @@
                     $response = [ 
 
                     "status" => "success",
+
+                    "body" => htmlspecialchars($report->getReason()),
                     "message" => "You are no longer following this user."
                 ];
                 echo json_encode($response);

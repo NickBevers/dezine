@@ -53,10 +53,15 @@
         public function sendReport($user_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into reports (post_id, reported_user_id, user_id, reason, timestamp) values (:post_id, :reported_user_id, :user_id, :reason, :timestamp);");
+            
+
+            $reason = $this->getReason();
+
+            
             $statement->bindValue(':post_id', $this->post_id);
             $statement->bindValue(':reported_user_id', $this->reported_user_id);
             $statement->bindValue(':user_id', $user_id);
-            $statement->bindValue(':reason', $this->reason);
+            $statement->bindValue(':reason', $reason);
             $statement->bindValue(':timestamp', $this->getDateTime());
             $res = $statement->execute();
             return $res;
