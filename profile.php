@@ -33,7 +33,9 @@
     }
 
     $uid = Cleaner::cleanInput($_SESSION["id"]);
+
     $role = $user["user_role"];
+
     if(isset($_POST["moderator"])){
         if($_POST["moderator"] === "assign"){
             $role = "moderator";
@@ -74,17 +76,19 @@
         <div class="profile__info__details">
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
-                <?php if($user["user_role"] !== "user"): ?>
+                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
                     <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
                 <?php endif; ?> 
-                <form action="#" method="post">
-                    <?php if($user["user_role"] === "user"): ?>
-                        <button name="moderator" value="assign" type="submit">Make moderator</button>
-                    <?php endif; ?>
-                    <?php if($user["user_role"] !== "user"): ?>
-                        <button name="moderator" type="delete">Delete moderator role</button>
-                    <?php endif; ?>
-                </form>
+                <?php if(User::checkUserRole($uid) === "admin"): ?>
+                    <form action="#" method="post">
+                        <?php if($user["user_role"] === "user"): ?>
+                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                        <?php endif; ?>
+                        <?php if($user["user_role"] !== "user"): ?>
+                            <button name="moderator" type="delete">Delete moderator role</button>
+                        <?php endif; ?>
+                    </form>
+                <?php endif; ?>
             </div>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
