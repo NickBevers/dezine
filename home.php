@@ -137,7 +137,7 @@
 
             </div>               
             <div class="post">
-                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?> class="post__img">
                 <div class="post__colors">
                     <?php $colors = json_decode($post["colors"]); $color_groups = json_decode($post["color_group"]); ?>
                     <?php for($i = 0; $i < sizeof($colors); $i++): ?>
