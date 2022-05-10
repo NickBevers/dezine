@@ -58,7 +58,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <title><?php echo $user["username"]; ?></title>
 </head>
 <body>
