@@ -281,7 +281,7 @@
             $statement->execute();
             $result = $statement->fetch();
             // var_dump($result["user_role"]);
-            if($result["user_role"] === "moderator"){
+            if($result["user_role"] === "moderator" || $result["user_role"] === "admin"){
                 return true;
             }
             else{
