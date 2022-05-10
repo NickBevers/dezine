@@ -80,7 +80,6 @@
                     <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
                 <?php endif; ?> 
                 <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
-                    <?php var_dump($uid); var_dump($user["id"]); ?>
                     <form action="#" method="post">
                         <?php if($user["user_role"] === "user"): ?>
                             <button name="moderator" value="assign" type="submit">Make moderator</button>
