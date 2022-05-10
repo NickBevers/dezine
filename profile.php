@@ -73,8 +73,8 @@
      ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
-        <div class="profile__info__image">
-            <img src="<?php echo $user["profile_image"]; ?>" class="profile__info__img" alt="profile image <?php echo $user["username"]; ?>">
+        <div class="profile__info__img">
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
         </div>
 
         
@@ -82,7 +82,7 @@
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
                 <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
-                    <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
+                    <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
                 <?php endif; ?> 
                 <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
                     <form action="#" method="post">
