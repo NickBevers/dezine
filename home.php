@@ -120,7 +120,7 @@
         <?php endif; ?>
     </section>
 
-    <script src="./javascript/report.js"></script>
+  
  
 
 </body>

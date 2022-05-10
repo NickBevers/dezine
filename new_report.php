@@ -24,17 +24,12 @@
     $reported_user_id = "";
     }
 
-   
-    
     $user_id = Cleaner::cleanInput($_SESSION['id']);
     $report = new Report();
-    var_dump($post_id);
-   
+    
     $reports_post = $report->getReportedPostbyId($post_id);
     $reports_user = $report->getReportedUserbyId($reported_user_id);
 
-  
-   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +48,7 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
-
+        
         <?php if($post_id !== "" && $post_id !== NULL ): ?>
         <div class="post">
             <img src=<?php echo $reports_post["image"] ?> alt=<?php echo $reports_post["title"] ?>>
@@ -84,46 +79,40 @@
 
         <h4>Send Report</h4>
 
-        <div>
-            <div class="mb-3" id="reason--div">
-                <label for="reason" class="form-label">Reason</label>
+        <div class="form__report">
+            <div class="mb-3" id="form__report__reason">
+                <label for="reason" class="form__label">Reason</label>
                 <input type="reason" name="reason" class="form-control" id="reason" required
                     placeholder="the reason for your report">
 
             </div>
-            <div id="lol" style='display:none;'>
+            <div id="form__report__error">
                 <p>please give a reason for the report</p>
 
             </div>
-            <div id="loll" style='display:none;'>
+            <div id="form__report__message">
                 <p>Thank you for helping keep the Dezine community safe and fun for eyeryone. Remember, we don't reveal
                     who submitted reports to the person.</p>
                 <p>below you see the report you send</p>
-                <div id="report--reason"></div>
+                <div id="form__report__reason__body"></div>
                 <div>
-                    <p>Our team will review the post and if it violates our <a href="community_guidelines.php">Community Guidelines</a> or <a href="terms_of_use.php">Terms of Use</a>, we will remove it, the Dezine team</p>
+                    <p>Our team will review the post and if it violates our <a href="community_guidelines.php">Community
+                            Guidelines</a> or <a href="terms_of_use.php">Terms of Use</a>, we will remove it, the D-zine
+                        team</p>
                 </div>
             </div>
 
-            
-            <div id="report--button"></div>
-            <a href="#" class="btn" id="btnAddReport" data-reported_user_id="<?php echo $reported_user_id; ?>"
+            <div id="report__button"></div>
+            <a href="#" class="btn" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>"
                 data-post_id="<?php echo $post_id; ?>">Submit Report</a>
         </div>
-
-
-        <br>
-        <br>
-
-
+       
     </main>
     <script src="./javascript/report.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-
-
 
 </body>
 

@@ -227,6 +227,17 @@ footer {
 .footer__socials img {
     width: 2rem;
 }
+/*new_report*/
+
+#form__report__message {
+
+    display: none;
+}
+
+#form__report__error {
+
+    display: none;
+}
 
 
 /*profile user*/
