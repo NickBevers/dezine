@@ -2,7 +2,14 @@ let email_input = document.querySelector(".register--email");
 let username_input = document.querySelector(".register--username");
 let input_message_email = document.querySelector(".message--email");
 let input_message_username = document.querySelector(".message--username");
-let regex = /[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/;
+let url = new URL(window.location.href);
+let params = url.searchParams;
+let regex;
+if(params.has("token")){
+    regex = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+} else{
+    regex = /[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/;
+}
 
 email_input.addEventListener("keyup", (e) => {
     let email_value = email_input.value;

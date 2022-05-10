@@ -22,16 +22,17 @@
 
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
-    $post = new Post();
     
     if (isset($_GET["page"]) && $_GET["page"] > 1) { 
         $pageNum  = $_GET["page"];
-        $posts = $post->getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
+        $posts = Post::getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
 
     } else {
         $pageNum  = 1;
-        $posts = $post->getPostbyId($profileUser, 0, $postsPerPage);
+        $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }    
+    
+    $uid = Cleaner::cleanInput($_SESSION["id"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Profile</title>
+    <title><?php echo $user["username"]; ?></title>
 </head>
 <body>
     <?php if(isset($_SESSION['flash_error'])): ?>
@@ -92,31 +93,44 @@
             </div>  
             <?php endif; ?>  
         </div>    
+        </div>
+        <?php if (User::checkUserRole($uid) !== "user"): ?>
+        <div class="getRegisterLink">
+            <input type="text" class="specialRegisterLink">
+            <button class="getRegisterLinkBtn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
+        <?php endif; ?>
     </section>
     
     <section class="posts">
     <?php foreach($posts as $post): ?>
         <div class="post">
-            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            <div class="post__img">
+                <?php if(Showcase::checkShowcase($post["id"], $uid)): ?>
+                    <?php if($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
+                    <?php endif; ?>
+                <?php endif; ?>
+                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+            </div>
             <div class="post__info">
-                <h3><?php echo $post["title"] ?></h3>
-                <?php if(isset($_SESSION["id"])): ?>
+                <h4><?php echo $post["title"] ?></h4>
+                <?php if(isset($uid)): ?>
                     <p><?php echo $post["description"] ?></p>
-                    <?php $tags = $post["tags"]; 
-                    $tags = json_decode($tags);
-                    $i=0;
-                    ?>
+                    <?php $tags = json_decode($post["tags"]); ?>
                     <div class="post__info__tags">
                         <?php foreach($tags as $t): ?>
-                            <p><?php echo "#"; echo $tags[$i]; echo "&nbsp"; $i++; ?></p>
+                            <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                         <?php endforeach; ?>
 
                     </div>
-
-
-                        
-
-
 
                     <?php if($_SESSION["id"] == $_GET["id"]): ?>
                         <div class="post__actions">
@@ -136,9 +150,59 @@
                             </div>
                     <?php endif; ?> 
                 <?php endif; ?> 
+              
+                <?php $pid = $post["id"]; ?>
+                    <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
+                    <div class="like hidden" data-id="<?php echo $pid; ?>">
+                        <p class="like__text">❤ Like</p>
+                        <?php if($uid === $post["user_id"]): ?>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="liked" data-id="<?php echo $pid; ?>">
+                        <p class="liked__text">❤ Liked</p>
+                        <?php if($uid === $post["user_id"]): ?>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    <?php else: ?>
+                    <div class="like" data-id="<?php echo $pid; ?>">
+                        <p class="like__text">❤ Like</p>
+                        <?php if($uid === $post["user_id"]): ?>
+                        <span class="likes_count">
+                            <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="liked hidden" data-id="<?php echo $pid; ?>">
+                        <p class="liked__text">❤ Liked</p>
+                        <?php if($uid === $post["user_id"]): ?>
+                        <span class="likes_count">
+                        <?php if(Like::getLikes($pid) === 0): ?> No one likes this yet
+                            <?php elseif(Like::getLikes($pid) === 1): echo Like::getLikes($pid); ?> user likes this
+                            <?php elseif(Like::getLikes($pid) > 1): echo Like::getLikes($pid); ?> users like this
+                            <?php endif; ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>              
     <?php endforeach; ?>
+    </section>
 
     <?php if($postCount > $postsPerPage): ?>
         <?php if($pageNum > 1): ?>
@@ -146,7 +210,10 @@
         <?php endif; ?>
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-    </section>
+
+    <script src="./javascript/like.js"></script>
+    
+  <script src="./javascript/showcase.js"></script>
 </body>
 <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>
