@@ -45,7 +45,22 @@
 </head>
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    
+    <section class="profile__info">
+        <div class="profile__info__img">
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        </div>
+        <div class="profile__info__details">
+            <h1><?php echo $user["username"]; ?></h1>
+            <h4><?php echo $user["education"]; ?></h4>
+            <div>
+                <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
+                <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
+                <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
+                <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+            </div>
+        </div>    
+    </section>
+
     <h1 class="showcase__title"><?php echo $user["username"]; ?>'s Showcase</h1>
 
     <section>
