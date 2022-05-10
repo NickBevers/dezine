@@ -1,0 +1,108 @@
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline-block;
+}
+
+/*profile_user*/
+input[type="checkbox"][id^="cb"] {
+    display: none;
+}
+  
+#label_cb {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#label_cb::before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+}
+
+#label_cb img {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+}
+
+#cb:checked+label {
+    border-color: #ddd;
+  }
+  
+#cb:checked+label::before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
+  }
+  
+#cb:checked+label img {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
+}
+
+/*register*/
+main{   
+    width: 100vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo--register{
+    background-image: url("./../assets/logo2.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 220px;
+    height: 110px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form--register{
+    width: 60vw;
+    height: 60vh;
+    // width: min(80vw, 600px);
+    // height: min(60vh, 400px);
+    background-color: rgb(207, 205, 205);
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form__field{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
