@@ -1,3 +1,9 @@
+document.querySelector(".post__comment__form__input").addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.querySelector(".post__comment__form__btn").click();
+    }
+});
 document.querySelector(".post__comment__form__btn").addEventListener("click", function (e) {
     e.preventDefault();
 

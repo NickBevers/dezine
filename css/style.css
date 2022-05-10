@@ -331,14 +331,14 @@ footer {
     padding: 2rem;
 }
 
-.profile__info__img {
+.profile__info__image {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.profile__info img {
+.profile__info__img {
     width: 200px;
     height: 200px;
     object-fit: cover;
@@ -353,9 +353,32 @@ footer {
     gap: 0.5rem;
 }
 
-.profile__info__details div {
+.profile__info__details button {
+    margin-left: 1rem;
+    background-color: var(--lighterWhite);
+    border-color: var(--accent);
+    border-width: 2px;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: large;
+}
+
+.profile__info__details button:hover {
+    background-color: var(--lighterWhite);
+    padding: 0.5rem 0.7rem;
+    margin-left: 0.9rem;
+    cursor: pointer;
+}
+
+.profile__info__details__username {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile__info__details__verified{
+    height: 1.5rem;
+    padding-left: 1rem;
 }
 
 /* posts */
@@ -489,13 +512,21 @@ footer {
     margin: 0.5rem 1rem 0.5rem 1rem;  
 }
 
-.posts__user img{
+.posts__user__img{
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
+.posts__user__name {
+    display: flex;
+    flex-direction: row;
+}
 
+.posts__user__verified {
+    width: 1.5rem;
+    padding-left: 0.5rem;
+}
 
 .post--single {
     margin: 5% 27%;
@@ -549,9 +580,10 @@ footer {
 
 .post__comment__form__input {
     width: 80%;
-    height: 4rem;
+    height: 1rem;
     text-align: start;
-    padding-top: 2.5rem;
+    padding: 1rem;
+    padding-top: 1.2rem;
     border-color: var(--grey);
     border-width: 1.5px;
     border-radius: 8px;

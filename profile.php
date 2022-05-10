@@ -30,9 +30,23 @@
     } else {
         $pageNum  = 1;
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
-    }    
-    
+    }
+
     $uid = Cleaner::cleanInput($_SESSION["id"]);
+
+    $role = $user["user_role"];
+
+    if(isset($_POST["moderator"])){
+        if($_POST["moderator"] === "assign"){
+            $role = "moderator";
+            User::UpdateUserRole($role, $user["id"]);
+        } else {
+            $role = "user";
+            User::UpdateUserRole($role, $user["id"]);
+        }
+        header("Refresh:0");
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,16 +70,28 @@
      ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
-        <div class="profile__info__img">
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        <div class="profile__info__image">
+            <img src="<?php echo $user["profile_image"]; ?>" class="profile__info__img" alt="profile image <?php echo $user["username"]; ?>">
         </div>
 
         
         <div class="profile__info__details">
-            
-        
-
-            <h1><?php echo $user["username"]; ?></h1>
+            <div class="profile__info__details__username">
+                <h1><?php echo $user["username"]; ?></h1>
+                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                    <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
+                <?php endif; ?> 
+                <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                    <form action="#" method="post">
+                        <?php if($user["user_role"] === "user"): ?>
+                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                        <?php endif; ?>
+                        <?php if($user["user_role"] !== "user"): ?>
+                            <button name="moderator" type="delete">Delete moderator role</button>
+                        <?php endif; ?>
+                    </form>
+                <?php endif; ?>
+            </div>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
             <div>

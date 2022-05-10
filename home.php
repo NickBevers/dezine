@@ -126,10 +126,14 @@
         <div class="posts__bkg">                
             <div class="posts__user">
                 <?php $user = User::getUserbyId($post["user_id"]); ?>
-                <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+                <img src="<?php echo $user["profile_image"]; ?>" class="posts__user__img"  alt="profile image <?php echo $user["username"]; ?>">
                 <a href="profile.php?id=<?php echo $post["user_id"]; ?>" class="posts__user__name">
-                    <h3><?php echo $user["username"] ?></h3>         
+                    <h3><?php echo $user["username"] ?></h3>
+                    <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                        <img src="assets\icon_check.svg" class="posts__user__verified" alt="verified icon">    
+                    <?php endif; ?>
                 </a>
+
             </div>               
             <div class="post">
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -163,7 +167,7 @@
                             </div>
                             <?php endif; ?> 
                     <?php endif; ?>  
-                    <?php $pid = $post["id"]; ?>
+                    <?php $pid = $post["id"];?>
                     <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
                     <div class="like hidden" data-id="<?php echo $pid; ?>">
                         <p class="like__text">❤ Like</p>
