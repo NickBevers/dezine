@@ -16,6 +16,14 @@ use phpDocumentor\Reflection\Location;
     }
     
     $comments = Comment::getCommentsByPostId($_GET["pid"]);
+    
+    $visitor = Post::getViewsbyId($_SESSION["id"], $_GET["pid"]);
+
+    if($_SESSION["id"] !== $post["user_id"]){
+        if($visitor === false){
+            Post::addViewbyPost($_GET["pid"], $_SESSION["id"]);
+        }
+    }
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -35,6 +43,12 @@ use phpDocumentor\Reflection\Location;
             <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                 <h3><?php echo $user["username"] ?></h3>         
             </a>
+            <?php if($_SESSION["id"] === $post["user_id"]): ?>
+                <div>
+                    <img src="./assets/eye_icon.svg" alt="eye icon for views count">
+                    <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="post post--single__content">
             <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
