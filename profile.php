@@ -114,25 +114,26 @@
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php if($_GET["id"] != $_SESSION["id"]): ?>              
-                <div class="profile__info__report">
-                    <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
-                        <h3>Report user</h3>
+            <div class="profile__info__btn">
+                <?php if($_GET["id"] != $_SESSION["id"]): ?>   
+                    <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="primary__btn">
+                        Report user
                     </a>
-                </div>  
-            <?php endif; ?> 
-      
-            <?php if (User::checkModerator($uid)): ?>
-                <div>
+                <?php endif; ?> 
+        
+                <?php if (User::checkModerator($uid)): ?>
                     <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="primary__btn">
                         <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
-                            Retract ban user : <?php echo $user["username"]; ?>
+                            Retract ban
                         <?php else: ?>
-                            Ban user: <?php echo $user["username"]; ?>
+                            Ban user
                         <?php endif; ?>    
                     </a>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+                <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="primary__btn">
+                    Showcase user
+                </a>
+            </div>            
         </div>    
         </div>
         <?php if (User::checkUserRole($uid) !== "user"): ?>
