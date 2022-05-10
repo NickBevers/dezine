@@ -19,6 +19,8 @@
         //second email
         private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
+        //role
+        private $role;
 
         public function getUsername(){return $this->username;}
 
@@ -127,6 +129,18 @@
             return $this;
         }
 
+        public function getRole()
+        {
+            return $this->user_role;
+        }
+
+        public function setRole($user_role)
+        {
+            $this->user_role = $user_role;
+
+            return $this;
+        }
+
         public function canLogin() {
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email OR second_email = :email");
@@ -145,17 +159,19 @@
             throw new Exception("This password does not match the given email");
         }
 
-        public function register() {
+        public function register($referLink = "") {
             if(!$this->userExists()){
-                $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
-                if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
+                if(strlen($referLink) === 0){
+                    $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
+                    if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
+                }
                 $options = [
                 'cost' => 15
                 ];
                 $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
 
                 $conn = DB::getInstance();
-                $statement = $conn->prepare("insert into users (username, email, password) values (:username, :email, :password);");
+                $statement = $conn->prepare("insert into users (username, email, password, user_role) values (:username, :email, :password, 'user');");
                 $statement->bindValue(':username', $this->username);
                 $statement->bindValue(':email', $this->email);
                 $statement->bindValue(':password', $password);
@@ -270,7 +286,6 @@
             $statement->bindValue(':id', $id);
             $statement->execute();
             $result = $statement->fetch();
-            // var_dump($result);
             return $result;
         }
 
@@ -320,5 +335,22 @@
             // var_dump($statement->execute());
             $message = "The ban has been lifted";
             return $message;
+        }
+      
+        public static function checkUserRole($uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users where id = :id");
+            $statement->bindValue(':id', $uid);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result["user_role"];
+        }
+
+        public static function UpdateUserRole($role, $uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set user_role = :role where id = :uid");
+            $statement->bindValue(':role', $role);
+            $statement->bindValue(':uid', $uid);
+            $statement->execute();
         }
     }

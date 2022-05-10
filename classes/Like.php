@@ -61,4 +61,15 @@
             // var_dump($res);
             return $res;
         }
+
+        public static function checkLikes($postId, $userId){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from likes where post_id = :post_id and user_id = :user_id");
+            $statement->bindValue(":post_id", $postId);
+            $statement->bindValue(":user_id", $userId);
+            $statement->execute();
+            $res = $statement->rowCount();
+            // var_dump($res);
+            return $res;
+        }
     }

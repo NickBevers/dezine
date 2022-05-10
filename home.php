@@ -43,6 +43,7 @@
 
         } else {
             $pageNum  = 1;
+
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);           
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
@@ -125,10 +126,14 @@
         <div class="posts__bkg">                
             <div class="posts__user">
                 <?php $user = User::getUserbyId($post["user_id"]); ?>
-                <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+                <img src="<?php echo $user["profile_image"]; ?>" class="posts__user__img"  alt="profile image <?php echo $user["username"]; ?>">
                 <a href="profile.php?id=<?php echo $post["user_id"]; ?>" class="posts__user__name">
-                    <h3><?php echo $user["username"] ?></h3>         
+                    <h3><?php echo $user["username"] ?></h3>
+                    <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                        <img src="assets\icon_check.svg" class="posts__user__verified" alt="verified icon">    
+                    <?php endif; ?>
                 </a>
+
             </div>               
             <div class="post">
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -150,6 +155,15 @@
                                 <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                             <?php endforeach; ?>
                         </div>
+                  
+                          <?php if($_SESSION["id"] != $post["user_id"]): ?>
+
+                            <div class="post__info__report">
+                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                            <h3>Report post</h3>
+                            </a>
+                            </div>
+                            <?php endif; ?> 
                     <?php endif; ?>  
                     <?php $pid = $post["id"]; ?>
                     <?php if(User::checkban($_SESSION["id"]) === "0"): ?>
@@ -193,7 +207,6 @@
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     </section>
-
     <script src="./javascript/like.js"></script>
     <script src="./javascript/feedSort.js"></script>
 </body>

@@ -34,8 +34,22 @@
         $pageNum  = 1;
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }
-    
+
     $uid = Cleaner::cleanInput($_SESSION["id"]);
+
+    $role = $user["user_role"];
+
+    if(isset($_POST["moderator"])){
+        if($_POST["moderator"] === "assign"){
+            $role = "moderator";
+            User::UpdateUserRole($role, $user["id"]);
+        } else {
+            $role = "user";
+            User::UpdateUserRole($role, $user["id"]);
+        }
+        header("Refresh:0");
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,11 +73,28 @@
      ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
-        <div class="profile__info__img">
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+        <div class="profile__info__image">
+            <img src="<?php echo $user["profile_image"]; ?>" class="profile__info__img" alt="profile image <?php echo $user["username"]; ?>">
         </div>
+
+        
         <div class="profile__info__details">
-            <h1><?php echo $user["username"]; ?></h1>
+            <div class="profile__info__details__username">
+                <h1><?php echo $user["username"]; ?></h1>
+                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                    <img src="assets\icon_check.svg" class="profile__info__details__verified" alt="verified icon">    
+                <?php endif; ?> 
+                <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                    <form action="#" method="post">
+                        <?php if($user["user_role"] === "user"): ?>
+                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                        <?php endif; ?>
+                        <?php if($user["user_role"] !== "user"): ?>
+                            <button name="moderator" type="delete">Delete moderator role</button>
+                        <?php endif; ?>
+                    </form>
+                <?php endif; ?>
+            </div>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
             <div>
@@ -83,6 +114,16 @@
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
+            <?php if($_GET["id"] != $_SESSION["id"]): ?>
+              
+            <div class="profile__info__report">
+
+            <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
+            <h3>Report user</h3>
+            </a>
+            </div>  
+            <?php endif; ?> 
+      
             <?php if (User::checkModerator($uid)): ?>
                 <div>
                     <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>">
@@ -95,6 +136,14 @@
                 </div>
             <?php endif; ?>
         </div>    
+        </div>
+        <?php if (User::checkUserRole($uid) !== "user"): ?>
+        <div class="getRegisterLink">
+            <input type="text" class="specialRegisterLink">
+            <button class="getRegisterLinkBtn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
+        <?php endif; ?>
     </section>
     
     <section class="posts">
@@ -169,6 +218,13 @@
                         <?php endif; ?> 
                     <?php endif; ?>
                 </div>
+                    <?php if ($uid !== $_GET["id"]): ?>
+                        <div class="profile__info__report">
+                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                                <h3>Report post</h3>
+                            </a>
+                        </div>
+                    <?php endif; ?> 
             </div>
         </div>              
     <?php endforeach; ?>
@@ -182,7 +238,8 @@
     <?php endif; ?>
 
     <script src="./javascript/like.js"></script>
-<script src="./javascript/showcase.js"></script>
+    
+  <script src="./javascript/showcase.js"></script>
 </body>
 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>
