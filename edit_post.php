@@ -8,6 +8,10 @@
         header('Location: login.php');
     }
 
+    if(User::checkban($_SESSION["id"])){
+        header('Location: home.php');
+    }
+
     if(isset($_GET["pid"])){
         if($_SESSION["id"] != $_GET["uid"]) {
             header('Location: profile.php');

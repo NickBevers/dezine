@@ -51,38 +51,40 @@ use phpDocumentor\Reflection\Location;
                 <?php endif; ?>  
             </div>
         </div>
-        <div class="post__comment">
-            <div class="post__comment__form">
-                <?php $user = User::getUserbyId($_SESSION['id']); ?>
-                <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
-                <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
-                <a class="post__comment__form__btn" 
-                    data-pfplink="<?php echo $user["profile_image"]; ?>" 
-                    data-postid="<?php echo $post["id"];?>" 
-                    data-username="<?php echo $user["username"]; ?>"
-                >
-                    Add
-                </a>
-            </div>
-            <ul class="post__comment__list">
-                <?php foreach($comments as $comment): ?>
-                    <li>
-                        <div class="post__comment--left">
-                            <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
-                                <img src="<?php echo $comment["profile_image"]; ?>" alt="<?php echo $comment["username"]; ?>">
-                            </a>
-                        </div>
+        <?php if(User::checkban($_SESSION["id"]) === 0): ?>
+            <div class="post__comment">
+                <div class="post__comment__form">
+                    <?php $user = User::getUserbyId($_SESSION['id']); ?>
+                    <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+                    <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
+                    <a class="post__comment__form__btn" 
+                        data-pfplink="<?php echo $user["profile_image"]; ?>" 
+                        data-postid="<?php echo $post["id"];?>" 
+                        data-username="<?php echo $user["username"]; ?>"
+                    >
+                        Add
+                    </a>
+                </div>
+                <ul class="post__comment__list">
+                    <?php foreach($comments as $comment): ?>
+                        <li>
+                            <div class="post__comment--left">
+                                <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
+                                    <img src="<?php echo $comment["profile_image"]; ?>" alt="<?php echo $comment["username"]; ?>">
+                                </a>
+                            </div>
 
-                        <div class="comment--right">
-                            <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
-                                <?php echo $comment['username']; ?>
-                            </a>
-                            <p><?php echo $comment['comment']; ?></p>
-                        </div>
-                    </li>
-                <?php endforeach;?>
-            </ul>
-        </div>
+                            <div class="comment--right">
+                                <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
+                                    <?php echo $comment['username']; ?>
+                                </a>
+                                <p><?php echo $comment['comment']; ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+        <?php endif; ?>
     </div>
     <script src="javascript\comments.js"></script>
 </body>

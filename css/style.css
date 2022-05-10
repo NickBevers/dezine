@@ -410,12 +410,14 @@ footer {
 }
 
 .post__actions {
-    position: absolute;
+    /* position: absolute;
     top: 420px;
-    right: 20px;
+    right: 20px; */
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .post img{
@@ -613,7 +615,9 @@ footer {
 .like, 
 .liked,
 .follow,
-.unfollow{
+.unfollow, 
+.hearts,
+.heartsfull{
     cursor: pointer;
 }
 

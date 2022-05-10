@@ -289,6 +289,54 @@
             return $result;
         }
 
+        public static function checkModerator($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select user_role from users where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result["user_role"]);
+            if($result["user_role"] === "moderator" || $result["user_role"] === "admin"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public static function checkBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select banned from users where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetch();
+            // var_dump($result);
+            return $result["banned"];
+        }
+
+        public static function addBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set banned = 1 where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            // var_dump($statement->execute());
+            // $result = $statement->fetch();
+            // var_dump($result["banned"]);
+            // return $result;
+            $message = "User has been banned";
+            return $message;
+        }
+
+        public static function removeBan($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update users set banned = 0 where id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            // var_dump($statement->execute());
+            $message = "The ban has been lifted";
+            return $message;
+        }
+      
         public static function checkUserRole($uid){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
@@ -305,5 +353,4 @@
             $statement->bindValue(':uid', $uid);
             $statement->execute();
         }
-
     }
