@@ -3,9 +3,9 @@
 
     if (!empty($_POST)) {
         $id = $_POST['id'];
-        if(User::checkBan($id) === "0"){
+        if(User::checkBan($id) === 0){
             $message = User::addBan($id);
-        }elseif(User::checkBan($id) === "1"){
+        }elseif(User::checkBan($id) === 1){
             $message = User::removeBan($id);
         }
 
