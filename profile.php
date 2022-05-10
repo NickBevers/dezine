@@ -103,7 +103,7 @@
                 <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
-            <?php if (User::checkban($_SESSION["id"]) === 0): ?>
+            <?php if (intval(User::checkban($_SESSION["id"])) === 0):  ?>
                 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
                     <?php if (Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
                     <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
@@ -176,7 +176,7 @@
                 <?php endif; ?> 
                 <?php $pid = $post["id"]; ?>
                 <div class="post__actions">
-                    <?php if (User::checkban($_SESSION["id"]) === 0): ?>
+                    <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
                         <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
                             <div class="like hidden" data-id="<?php echo $pid; ?>">
                                 <p class="like__text">❤ Like</p>
@@ -218,13 +218,13 @@
                         <?php endif; ?> 
                     <?php endif; ?>
                 </div>
-                    <?php if ($uid !== $_GET["id"]): ?>
-                        <div class="profile__info__report">
-                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
-                                <h3>Report post</h3>
-                            </a>
-                        </div>
-                    <?php endif; ?> 
+                <?php if ($uid !== $_GET["id"]): ?>
+                    <div class="profile__info__report">
+                        <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                            <h3>Report post</h3>
+                        </a>
+                    </div>
+                <?php endif; ?> 
             </div>
         </div>              
     <?php endforeach; ?>
