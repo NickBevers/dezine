@@ -95,84 +95,7 @@ input[type="checkbox"][id^="cb"] {
     display: none;
 }
 
-/* posts */
-
-.post--single {
-    margin: 5% 27%;
-}
-
-.post--single__content img {
-    height: 100%;
-}
-
-.post--single__content {
-    display: block;
-    padding-bottom: 1rem;
-}
-
-.post__comment {
-    padding: 2rem;
-    background-color: var(--lighterWhite);
-}
-
-.post__comment__list  {
-    display: flex;
-    flex-direction: column;
-    padding-right: 2rem;
-    padding-bottom: 2rem;
-}
-
-.post__comment__list img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 1rem;
-}
-
-.post__comment__list li {
-    padding-top: 2rem;
-    border-bottom: var(--grey);
-    display: flex;
-    align-items: center;
-}
-.post__comment__form{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.post__comment__form img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.post__comment__form__input {
-    width: 80%;
-    height: 1rem;
-    text-align: start;
-    padding: 1rem;
-    padding-top: 1.2rem;
-    border-color: var(--grey);
-    border-width: 1.5px;
-    border-radius: 8px;
-}
-
-.post__comment__form__btn{
-    background-color: var(--accent);
-    color: var(--white);
-    border-radius: 8px;
-    padding: .5rem;
-    text-decoration: none;
-}
-
-.post__comment__form__btn:hover{
-    text-decoration: underline;
-  
-}
-
-main{
-   
+main{   
     width: 100vw;
     overflow-x: hidden;
     display: flex;
@@ -212,49 +135,9 @@ main{
 .message{display: hidden;}
 .show{display: block;}
 
-/*showcase*/
-.showcase__title{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-.showcase__empty{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
-
-.showcase__title-h2{
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-}
-
-.showcase__empty-message{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-}
-
 /*pagination*/
 
 .next_page{
     position: relative;
     bottom: 1rem;
-}
-
-@media (max-width: 600px) {
-    /*showcase*/
-
-    .showcase__empty-message{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        margin-top: 2rem;
-    }
 }
