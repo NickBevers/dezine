@@ -114,19 +114,17 @@
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php if($_GET["id"] != $_SESSION["id"]): ?>
-              
-            <div class="profile__info__report">
-
-            <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
-            <h3>Report user</h3>
-            </a>
-            </div>  
+            <?php if($_GET["id"] != $_SESSION["id"]): ?>              
+                <div class="profile__info__report">
+                    <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
+                        <h3>Report user</h3>
+                    </a>
+                </div>  
             <?php endif; ?> 
       
             <?php if (User::checkModerator($uid)): ?>
                 <div>
-                    <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>">
+                    <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="primary__btn">
                         <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
                             Retract ban user : <?php echo $user["username"]; ?>
                         <?php else: ?>

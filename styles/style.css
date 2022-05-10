@@ -707,6 +707,20 @@ footer {
   margin: 0 2rem;
 }
 
+.primary__btn {
+  border: 3px solid var(--black);
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.primary__btn:hover {
+  border: 3px solid var(--accent);
+  color: var(--accent);
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
   .nav--right a {
     padding: 0.5rem;
