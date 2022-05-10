@@ -43,6 +43,7 @@
 
         } else {
             $pageNum  = 1;
+
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);           
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
@@ -150,6 +151,14 @@
                                 <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                             <?php endforeach; ?>
                         </div>
+                  
+                          <?php if($_SESSION["id"] !== $post["user_id"]): ?>
+                            <div class="post__info__report">
+                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                            <h3>Report post</h3>
+                            </a>
+                            </div>
+                            <?php endif; ?> 
                     <?php endif; ?>  
                     <?php $pid = $post["id"]; ?>
                     <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
@@ -211,7 +220,6 @@
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     </section>
-
     <script src="./javascript/like.js"></script>
     <script src="./javascript/feedSort.js"></script>
 </body>

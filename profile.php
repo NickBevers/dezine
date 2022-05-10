@@ -59,7 +59,12 @@
         <div class="profile__info__img">
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
         </div>
+
+        
         <div class="profile__info__details">
+            
+        
+
             <h1><?php echo $user["username"]; ?></h1>
             <h4><?php echo $user["education"]; ?></h4>
             <p><?php echo $user["bio"]; ?></p>
@@ -78,6 +83,16 @@
                 <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
                 <?php endif; ?>
             <?php endif; ?>
+            <?php if($_GET["id"] != $_SESSION["id"]): ?>
+              
+            <div class="profile__info__report">
+
+            <a href="new_report.php?userid=<?php echo $user['id'] ; ?>">
+            <h3>Report user</h3>
+            </a>
+            </div>  
+            <?php endif; ?>  
+        </div>    
         </div>
         <?php if (User::checkUserRole($uid) !== "user"): ?>
         <div class="getRegisterLink">
@@ -114,7 +129,9 @@
                         <?php foreach($tags as $t): ?>
                             <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                         <?php endforeach; ?>
+
                     </div>
+
                     <?php if($_SESSION["id"] == $_GET["id"]): ?>
                         <div class="post__actions">
                             <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
@@ -125,9 +142,15 @@
                                 <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
                             </a>
                         </div>
-                       
+                        <?php else: ?>
+                            <div class="profile__info__report">
+                                <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                                    <h3>Report post</h3>
+                                </a>
+                            </div>
                     <?php endif; ?> 
                 <?php endif; ?> 
+              
                 <?php $pid = $post["id"]; ?>
                     <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
                     <div class="like hidden" data-id="<?php echo $pid; ?>">
@@ -189,7 +212,8 @@
     <?php endif; ?>
 
     <script src="./javascript/like.js"></script>
-<script src="./javascript/showcase.js"></script>
+    
+  <script src="./javascript/showcase.js"></script>
 </body>
 <?php if(!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>

@@ -135,6 +135,9 @@ input[type="checkbox"][id^="cb"] {
     box-shadow: 0 0 5px #333;
     z-index: -1;
 }
+/*---------------------------*/
+
+
 
 /* index page */
 .nav--full {
@@ -305,6 +308,17 @@ footer {
 .footer__socials img {
     width: 2rem;
 }
+/*new_report*/
+
+#form__report__message {
+
+    display: none;
+}
+
+#form__report__error {
+
+    display: none;
+}
 
 
 /*profile user*/
@@ -346,6 +360,7 @@ footer {
 
 /* posts */
 .posts{
+  
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     /* grid-template-rows: 1fr; */
@@ -480,6 +495,8 @@ footer {
     border-radius: 50%;
 }
 
+
+
 .post--single {
     margin: 5% 27%;
 }
@@ -569,6 +586,7 @@ footer {
 }
 
 main{
+   
     width: 100vw;
     overflow-x: hidden;
     display: flex;
