@@ -16,7 +16,7 @@
     </div>
     
     <div class="nav__element nav--center">
-      <a href="index.php">
+      <a href="home.php">
         <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
           <img src="./assets/dezine.svg" alt="D-zine logo">
         <?php else: ?>
