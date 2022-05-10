@@ -152,7 +152,10 @@
                             <?php endforeach; ?>
                         </div>
                   
-                          <?php if($_SESSION["id"] !== $post["user_id"]): ?>
+                          <?php if($_SESSION["id"] != $post["user_id"]): ?>
+
+                            <?php var_dump($_SESSION["id"]) ?>
+                            <?php var_dump($post["user_id"]) ?>
                             <div class="post__info__report">
                             <a href="new_report.php?postid=<?php echo $post['id']; ?>">
                             <h3>Report post</h3>
