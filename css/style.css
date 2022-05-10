@@ -22,23 +22,6 @@
     display: none;
 }
 
-main{   
-    width: 100vw;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-
-
-.form__field{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-}
-
 .message{display: hidden;}
 .show{display: block;}
 
