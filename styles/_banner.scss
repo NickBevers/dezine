@@ -1,0 +1,54 @@
+.banner{
+    background-color: var(--primary);
+    margin-top: 3.5rem;
+    /* width: 100vw; */
+    overflow: hidden;
+}
+
+.banner__loop{
+    width:100%;
+    padding: 4rem 0;
+    margin:0 auto;
+    white-space: nowrap;
+    font-weight: 300;
+}
+
+.banner__loop__text{
+    display:inline-block;
+    -webkit-animation: scrolling-left1 20s linear infinite;
+    animation: scrolling-left1 20s linear infinite;
+    /* position: relative;
+    right: -3.5rem; */
+}
+
+.banner__loop__text2{
+    display:inline-block;
+    -webkit-animation: scrolling-left2 20s linear infinite;
+    animation: scrolling-left2 20s linear infinite;
+    animation-delay: 10s;
+    /* position: relative;
+    right: -3.5rem; */
+}
+
+@keyframes scrolling-left1 {
+    0% {transform: translateX(100%);
+        -webkit-transform: translateX(100%);}
+      100% {transform: translateX(-100%);
+          -webkit-transform: translateX(-100%);}
+}
+
+@keyframes scrolling-left2 {
+    0% {transform: translateX(0%);
+        -webkit-transform: translateX(0%);}
+      100% {transform: translateX(-200%);
+          -webkit-transform: translateX(-200%);}
+}
+
+@-webkit-keyframes scrolling-left1 {
+    0% {-webkit-transform: translateX(100%);}
+      100% {-webkit-transform: translateX(-100%);}
+}
+@-webkit-keyframes scrolling-left2 {
+    0% {-webkit-transform: translateX(0%);}
+      100% {-webkit-transform: translateX(-200%);}
+}
