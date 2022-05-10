@@ -72,7 +72,7 @@
                 <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
                 <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
             </div>
-            <?php if (User::checkban($_SESSION["id"]) === "0"): ?>
+            <?php if (User::checkban($_SESSION["id"]) === 0): ?>
                 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
                     <?php if (Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
                     <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
@@ -127,7 +127,7 @@
                 <?php endif; ?> 
                 <?php $pid = $post["id"]; ?>
                 <div class="post__actions">
-                    <?php if (User::checkban($_SESSION["id"]) === "0"): ?>
+                    <?php if (User::checkban($_SESSION["id"]) === 0): ?>
                         <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
                             <div class="like hidden" data-id="<?php echo $pid; ?>">
                                 <p class="like__text">❤ Like</p>
@@ -162,7 +162,7 @@
                             <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                 <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                             </a>
-                        <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === "0"):?>                                    
+                        <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
                             <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                 <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                             </a>      

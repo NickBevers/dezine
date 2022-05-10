@@ -51,7 +51,7 @@ use phpDocumentor\Reflection\Location;
                 <?php endif; ?>  
             </div>
         </div>
-        <?php if(User::checkban($_SESSION["id"]) === "0"): ?>
+        <?php if(User::checkban($_SESSION["id"]) === 0): ?>
             <div class="post__comment">
                 <div class="post__comment__form">
                     <?php $user = User::getUserbyId($_SESSION['id']); ?>
