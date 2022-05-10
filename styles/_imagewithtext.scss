@@ -7,14 +7,14 @@
     padding: 2rem;
 }
 
-.profile__info__image {
+.profile__info__img {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.profile__info__img {
+.profile__info img {
     width: 200px;
     height: 200px;
     object-fit: cover;
@@ -52,7 +52,10 @@
     align-items: center;
 }
 
-.profile__info__details__verified{
+#profile__verified{
     height: 1.5rem;
     padding-left: 1rem;
+    border-radius: 0;
+    width: 100%;
+    object-fit: contain;
 }
