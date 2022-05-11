@@ -44,10 +44,9 @@
 
 </head>
 
-<body>
+<body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    <main>
-        
+    <main>        
         <?php if($post_id !== "" && $post_id !== NULL ): ?>
         <div class="post">
             <img src=<?php echo $reports_post["image"] ?> alt=<?php echo $reports_post["title"] ?>>
@@ -76,18 +75,15 @@
         </section>
         <?php endif; ?>
 
-        <h4>Send Report</h4>
 
-        <div class="form__report">
-            <div class="mb-3" id="form__report__reason">
+        <div class="form form--profile">
+            <h2>Send Report</h2>
+            <div class="form__field" id="form__report__reason">
                 <label for="reason" class="form__label">Reason</label>
-                <input type="reason" name="reason" class="form-control" id="reason" required
-                    placeholder="the reason for your report">
-
+                <input type="reason" name="reason" class="form-control" id="reason" required placeholder="the reason for your report">
             </div>
             <div id="form__report__error">
                 <p>please give a reason for the report</p>
-
             </div>
             <div id="form__report__message">
                 <p>Thank you for helping keep the Dezine community safe and fun for eyeryone. Remember, we don't reveal
@@ -102,10 +98,9 @@
             </div>
 
             <div id="report__button"></div>
-            <a href="#" class="btn" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>"
-                data-post_id="<?php echo $post_id; ?>">Submit Report</a>
+            <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>">Submit Report</a>
         </div>
-       
+        <?php include_once("./includes/footer.inc.php"); ?>
     </main>
     <script src="./javascript/report.js"></script>
 </body>

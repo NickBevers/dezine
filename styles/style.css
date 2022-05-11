@@ -1579,4 +1579,20 @@ input[type="file"] {
 .form__field-btn {
   margin-top: 2rem;
 }
+
+#form__report__message {
+  display: none;
+}
+
+#form__report__error {
+  display: none;
+}
+
+.message {
+  display: hidden;
+}
+
+.show {
+  display: block;
+}
 /*# sourceMappingURL=style.css.map */

@@ -13,18 +13,6 @@
     padding-bottom: .4rem;
 }
 
-/*new_report*/
-#form__report__message {
-    display: none;
-}
-
-#form__report__error {
-    display: none;
-}
-
-.message{display: hidden;}
-.show{display: block;}
-
 /*pagination*/
 .next_page{
     position: relative;
