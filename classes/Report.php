@@ -80,4 +80,12 @@
             $res = $statement->fetch();
             return $res;
         }
+
+        public static function getReports(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from reports order by timestamp asc");
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
     }

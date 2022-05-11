@@ -13,6 +13,9 @@
             Explore
           </a>
         <?php endif; ?>
+        <?php if (isset($_SESSION["id"]) && User::checkUserRole($_SESSION["id"]) !== "user"): ?>
+          <a href="moderator_overview.php">Moderate</a>
+        <?php endif; ?>
         
       </li>
     </div>
@@ -40,6 +43,8 @@
       <?php if ($_SERVER['REQUEST_URI'] == "/php/dezine/index.php"): ?>
         <a href="contact.php" class="nav__button">Contact</a>
       <?php endif; ?>
+
+      
 
       <?php if (Security::isLoggedIn()): ?>
         <a href="new_post.php">+ Add post</a>

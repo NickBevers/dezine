@@ -289,6 +289,15 @@
             return $result;
         }
 
+        public static function getUserNamebyId($id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select username from users where id = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result;
+        }
+
         public static function checkModerator($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select user_role from users where id = :id");
@@ -353,4 +362,13 @@
             $statement->bindValue(':uid', $uid);
             $statement->execute();
         }
+        public static function getProfileImagebyId($id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select profile_image from users where id = :id");
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result;
+        }
+
     }
