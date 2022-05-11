@@ -12,6 +12,8 @@
     --lighterWhite: #ffffff;
     --black: #000000;
     --grey: rgb(102, 101, 101);
+    --lightgrey: #a4a3a3;
+    --lightergrey: #d5d5d5;
 
     --font-weight-thin: 300;
     --font-weight-bold: 700;
@@ -36,6 +38,12 @@ h1{
     color: var(--accent);
     font-weight: var(--font-weight-extrabold);
     font-size: var(--font-size-xxl);
+}
+
+h2{
+    color: var(--accent);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-md);
 }
 
 h3{
