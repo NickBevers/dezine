@@ -62,28 +62,32 @@
             unset($_SESSION['flash_error']);
             endif;
         ?>
-        <form method="post" enctype='multipart/form-data'>
-            <div class="mb-3">
+        <form method="post" enctype='multipart/form-data' class="form form--register">
+            <h2>Edit post</h2>
+            <div class="form__field">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" value="<?php echo(htmlspecialchars($post["title"])); ?>" required>
             </div>
 
-            <div class="mb-3">
+            <div class="form__field">
                 <label for="description" class="form-label">Description</label>
                 <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required
                     style="resize: none;"><?php echo(htmlspecialchars($post["description"])); ?></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="form__field">
                 <label for="tags" class="form-label">Tags</label>
                 <input type="text" name="tags" class="form-control" id="tags" value="<?php echo(implode(", ", json_decode($post["tags"]))); ?>" required>
                 <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <a href="profile.php">Cancel</a>
+            <div class="form__submit">
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Save changes</button>
+                <a href="profile.php" class="btn secondary__btn-reverse secondary__btn-signup">Cancel</a>
+            </div>
         </form>
     </main>
+    <?php include_once("./includes/footer.inc.php"); ?>
 </body>
 
 </html>

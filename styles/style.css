@@ -1595,4 +1595,8 @@ input[type="file"] {
 .show {
   display: block;
 }
+
+.ban, .unban {
+  margin-top: 1rem;
+}
 /*# sourceMappingURL=style.css.map */
