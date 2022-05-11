@@ -22,12 +22,16 @@
     margin: 0 2rem;
 }
 
-.primary__btn{
-    border: 3px solid var(--black);
-    padding: 0.5rem 1rem;
+.btn{
+    font-size: var(--font-size-xxs);
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+.primary__btn{
+    border: 3px solid var(--black);
+    padding: 0.5rem 1rem;
     color: var(--black);
     // margin: 0 2rem;
 }
@@ -35,6 +39,41 @@
 .primary__btn:hover{
     border: 3px solid var(--accent);
     color: var(--accent);
+}
+
+.secondary__btn{
+    border: 3px solid var(--black);
+    padding: 0.5rem 1rem;
+    color: var(--secondary);
+    border-radius: 20px;
+    background-color: var(--black);
+    // margin: 0 2rem;
+}
+
+.secondary__btn:hover{
+    border: 3px solid var(--black);
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.secondary__btn-signup{    
+    width: 38vw;
+    margin-bottom: 1rem;
+}
+
+.secondary__btn-reverse{
+    border: 3px solid var(--secondary);
+    padding: 0.5rem 1rem;
+    color: var(--black);
+    border-radius: 20px;
+    background-color: var(--secondary);
+    text-align: center;
+}
+
+.secondary__btn-reverse:hover{
+    border: 3px solid var(--secondary);
+    color: var(--secondary);
+    background-color: var(--black);
 }
 
 @media (max-width: 1116px) and (min-width: 768px) {
