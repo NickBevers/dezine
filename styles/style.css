@@ -14,6 +14,8 @@
   --lighterWhite: #ffffff;
   --black: #000000;
   --grey: rgb(102, 101, 101);
+  --lightgrey: #a4a3a3;
+  --lightergrey: #d5d5d5;
   --font-weight-thin: 300;
   --font-weight-bold: 700;
   --font-weight-extrabold: 900;
@@ -43,6 +45,12 @@ h1 {
   color: var(--accent);
   font-weight: var(--font-weight-extrabold);
   font-size: var(--font-size-xxl);
+}
+
+h2 {
+  color: var(--accent);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
 }
 
 h3 {
@@ -707,18 +715,56 @@ footer {
   margin: 0 2rem;
 }
 
-.primary__btn {
-  border: 3px solid var(--black);
-  padding: 0.5rem 1rem;
+.btn {
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.primary__btn {
+  border: 3px solid var(--black);
+  padding: 0.5rem 1rem;
   color: var(--black);
 }
 
 .primary__btn:hover {
   border: 3px solid var(--accent);
   color: var(--accent);
+}
+
+.secondary__btn {
+  border: 3px solid var(--black);
+  padding: 0.5rem 1rem;
+  color: var(--secondary);
+  border-radius: 20px;
+  background-color: var(--black);
+}
+
+.secondary__btn:hover {
+  border: 3px solid var(--black);
+  color: var(--black);
+  background-color: var(--white);
+}
+
+.secondary__btn-signup {
+  width: 38vw;
+  margin-bottom: 1rem;
+}
+
+.secondary__btn-reverse {
+  border: 3px solid var(--secondary);
+  padding: 0.5rem 1rem;
+  color: var(--black);
+  border-radius: 20px;
+  background-color: var(--secondary);
+  text-align: center;
+}
+
+.secondary__btn-reverse:hover {
+  border: 3px solid var(--secondary);
+  color: var(--secondary);
+  background-color: var(--black);
 }
 
 @media (max-width: 1116px) and (min-width: 768px) {
@@ -1365,7 +1411,7 @@ input[type="checkbox"][id^="cb"] {
 
 /*register*/
 main {
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1394,10 +1440,11 @@ main {
 }
 
 .form--register {
-  width: 60vw;
-  height: 60vh;
-  background-color: #cfcdcd;
-  margin-top: 5rem;
+  width: 50vw;
+  height: 80vh;
+  background-color: var(--lightergrey);
+  border-radius: 5px;
+  margin: 5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1411,6 +1458,15 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.form--register h2 {
+  color: var(--black);
+  text-align: start;
+  width: 38vw;
+  margin-top: 1rem;
 }
 
 .form__field {
@@ -1422,5 +1478,26 @@ main {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 80%;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1.5px solid var(--lightgrey);
+  height: 2rem;
+}
+
+.form-text {
+  font-size: 0.8rem;
+  color: var(--grey);
+}
+
+.form__submit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 /*# sourceMappingURL=style.css.map */
