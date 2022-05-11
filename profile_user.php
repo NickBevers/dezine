@@ -163,7 +163,8 @@
 
             <div class="form__field form__field-btn">
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Update</button>
-                <a href="profile_password.php" class="btn secondary__btn-reverse secondary__btn-signup">Reset password</a>
+                <a href="profile_password.php" class="btn secondary__btn-reverse secondary__btn-signup">Change password</a>
+                <a href="./userDelete.php" class="btn secondary__btn secondary__btn-signup">Delete account</a>
             </div>
         </form>
     </main>

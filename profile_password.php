@@ -58,32 +58,27 @@
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
 
-
-
-            <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
-                <div class="mb-3">
+            <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> class="form form--register">
+            <h2>Change password</h2>
+                <div class="form__field">
                     <label for="exampleInputUsername1" class="form-label">Current Password</label>
                     <input type="password" name="c_password" class="form-control" id="exampleInputUsername1">
                 </div>
 
-                <div class="mb-3">
+                <div class="form__field">
                     <label for="exampleInputPassword1" class="form-label">New Password</label>
                     <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
                     <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
                 </div>
 
-                <div class="mb-3">
+                <div class="form__field">
                     <label for="password_conf" class="form-label">Password confirmation</label>
                     <input type="password" name="password_conf" class="form-control" id="password_conf">
                     <div id="passwordHelp" class="form-text">Passwords must match password above</div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Reset password</button>
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
             </form>
-
-            <a href="./userDelete.php" class="btn btn-danger mt-3">Delete account</a>
         </main>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     </body>
 </html>
