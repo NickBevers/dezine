@@ -55,42 +55,40 @@
     <title>Dezine</title>    
     <link rel="stylesheet" href="./styles/style.css">    
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
-
 </head>
-<body>
-<?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
+<body class="container">
+  <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
+  <main>
+    <?php if(isset($error)): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
 
-<main>
-<?php if(isset($error)): ?>
-    <div class="alert alert-danger"><?php echo $error; ?></div>
-<?php endif; ?>
+    <form method="post" enctype='multipart/form-data' class="form form--register">
+      <h2>New Post</h2>
+      <div class="form__field">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" required>
+      </div>
 
-<form method="post" enctype='multipart/form-data'>
-  <div class="mb-3">
-    <label for="title" class="form-label">Tile</label>
-    <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" required>
-  </div>
+      <div class="form__field">
+        <label for="description" class="form-label">Description</label>
+        <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required style="resize: none;"></textarea>
+      </div>
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
-    <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required style="resize: none;"></textarea>
-  </div>
+      <div class="form__field">
+        <label for="tags" class="form-label">Tags</label>
+        <input type="text" name="tags" class="form-control" id="tags" required>
+        <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
+      </div>
 
-  <div class="mb-3">
-    <label for="tags" class="form-label">Tags</label>
-    <input type="text" name="tags" class="form-control" id="tags" required>
-    <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
-  </div>
-
-  <div class="mb-3">
-    <label for="image" class="form-label">Image</label>
-    <input type="file" name="image" class="form-control" id="image" required>
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Create new post</button>
-</form>
-
-
-</main>
+      <div class="form__field">
+        <label for="image" class="btn secondary__btn-reverse">Image
+          <input type="file" name="image" class="form__image-input" id="image" required>
+        </label>
+      </div>
+      
+      <button type="submit" class="btn secondary__btn secondary__btn-signup">Create new post</button>
+    </form> 
+  </main>
 </body>
 </html>
