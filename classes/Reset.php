@@ -1,11 +1,8 @@
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    require 'vendor/autoload.php';
     include_once(__DIR__ . "/DB.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    // require "../vendor/autoload.php";
+    require "/XAMPP/htdocs/dezine/vendor/autoload.php";
 
     
     class Reset{
@@ -66,33 +63,49 @@
 
                 $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
 
-                $mail = new PHPMailer(true);
+                // $mail = new PHPMailer(true);
+                $mail = new \SendGrid\Mail\Mail();
+
+                $mail->setFrom("reset@dezine.be", "Dezine Team");
+                $mail->setSubject("Password reset link");
+                $mail->addTo("$this->email", " ");
+                $mail->addContent("text/plain", $link);
+                // $mail->addContent(
+                //     "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
+                // );
+                $config = parse_ini_file(__DIR__ . "/../config/config.ini");
+                $sendgrid = new \SendGrid($config['SENDGRID_API_KEY']);
 
                 try {
                     //Server settings
-                    $mail->SMTPDebug = 0;
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'dezine.php@gmail.com';
-                    $mail->Password = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+                    // $mail->SMTPDebug = 0;
+                    // $mail->isSMTP();
+                    // $mail->Host = 'smtp.gmail.com';
+                    // $mail->SMTPAuth = true;
+                    // $mail->Username = 'dezine.php@gmail.com';
+                    // $mail->Password = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';
+                    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    // $mail->Port = 587;
 
                     //Recipients
-                    $mail->setFrom('reset@dezine.be', 'Dezine');
-                    $mail->addAddress($this->email, '');
+                    // $mail->setFrom('reset@dezine.be', 'Dezine');
+                    // $mail->addAddress($this->email, '');
                     
                     //Content
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Password reset link';
-                    $mail->Body = $link;
+                    // $mail->isHTML(true);
+                    // $mail->Subject = 'Password reset link';
+                    // $mail->Body = $link;
 
-                    $mail->send();
-                    $message = 'Message has been sent';
+                    // $mail->send();
+
+                    $response = $sendgrid->send($mail);
+                    $message = 'Message has been sent ' . $response->statusCode();
+                    // print $response->statusCode() . "\n";
+                    // print_r($response->headers());
+                    // print $response->body() . "\n";
                     return $message;
-                } catch (Exception $e) {
-                    $error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                } catch (Exception $e) {                    
+                    $error = "Message could not be sent:". $e->getMessage() ."\n";
                     return $error;
                 }
             }
