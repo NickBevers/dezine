@@ -29,32 +29,26 @@
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
     <title>Reset password</title>
 </head>
-   <body>
-      <div class="container">
-          <div class="card">
-            <div class="card-header text-center">
-              Reset password
-            </div>
-            
-            <?php if(!empty($message)): ?>
-                <div class="alert alert-success"><?php echo $message; ?></div>
-            <?php endif; ?>
+   <body class="container">
+    <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
+      <main>         
+        <?php if(!empty($message)): ?>
+            <div class="alert alert-success"><?php echo $message; ?></div>
+        <?php endif; ?>
 
-            <?php if(!empty($error)): ?>
-                <div class="alert alert-danger"><?php echo $error; ?></div>
-            <?php endif; ?>
+        <?php if(!empty($error)): ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
 
-            <div class="card-body">
-              <form action="" method="post">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input type="email" name="email" class="form-control" id="email">
-                </div>
-                <input type="submit" name="reset-token" class="btn btn-primary">
-              </form>
-            </div>
+        <form action="" method="post" class="form form--register">
+          <h2>Reset password</h2>
+          <div class="form__field">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" name="email" placeholder="Email" class="form-control" id="email">
           </div>
-      </div>
- 
+          <button type="submit" name="reset-token" class="btn secondary__btn secondary__btn-signup">Reset</button>
+        </form>
+      </main>
+      <?php include_once("./includes/footer.inc.php"); ?>
    </body>
 </html>
