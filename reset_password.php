@@ -1,6 +1,6 @@
 <?php
-    include_once("./autoloader.php");
-    include_once("./helpers/CheckEmpty.help.php");
+    include_once(__DIR__ . "/autoloader.php");
+    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 
     if($_GET['key'] && $_GET['token']){    
         $email = $_GET['key'];
