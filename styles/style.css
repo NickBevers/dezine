@@ -720,6 +720,7 @@ footer {
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .primary__btn {
@@ -748,7 +749,7 @@ footer {
 }
 
 .secondary__btn-signup {
-  width: 38vw;
+  width: 37vw;
   margin-bottom: 1rem;
 }
 
@@ -1499,5 +1500,15 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.form__image-input {
+  border: none;
+  border-radius: 0;
+  height: 2rem;
+}
+
+input[type="file"] {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

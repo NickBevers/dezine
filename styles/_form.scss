@@ -132,3 +132,14 @@ main{
     display: flex;
     flex-direction: column;
 }
+
+.form__image-input{
+    border: none;
+    border-radius: 0;
+    height: 2rem;
+}
+
+
+input[type="file"] {
+    display: none;
+}
