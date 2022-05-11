@@ -81,10 +81,9 @@
     <title>Dezine</title>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
-
 </head>
 
-<body>
+<body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
         <?php if(isset($error)): ?>
@@ -95,78 +94,78 @@
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <h4>Update Profile</h4>
-
-        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> enctype='multipart/form-data'>
-
-            <div class="mb-3">
-                <img src=<?php echo $users["profile_image"] ?>>
-                <ul>
-                    <li>
-                        <label for="profile_image" class="form-label">profile_image</label>
-                        <input type="file" name="profile_image" class="form-control" id="profile_image">
-                    </li>
-                    <li>
+        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> enctype='multipart/form-data' class="form form--profile">
+            <h2>Update Profile</h2>
+            <div class="form__field form__field-image">
+                <div class="form__field">
+                    <img src=<?php echo $users["profile_image"] ?> class="form__image">              
+                </div>  
+                <div class="form__field form__image-cb">
                         <input type="checkbox" name="checkbox_name" value="checkbox_value" id="cb">
                         <label for="cb" id="label_cb"><img src="assets/default_profile_image.png"/></label>
-                    </li>
-                </ul>
+                    </div>
+            </div>
+            <div class="form__field">
+                <label for="profile_image" class="btn secondary__btn-reverse">Edit profile picture
+                    <input type="file" name="profile_image" class="form-control" id="profile_image">
+                </label>
             </div>
 
-            <div class="mb-3">
-                <label for="username" class="form-label">username</label>
+            <div class="form__field">
+                <label for="username" class="form-label">Username</label>
                 <input type="username" name="username" class="form-control" id="username" required
                     value="<?php echo $users["username"]; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="education" class="form-label">education</label>
+            <div class="form__field">
+                <label for="education" class="form-label">Education</label>
                 <input type="education" name="education" class="form-control" id="education"
                     value="<?php echo $users["education"]; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="bio" class="form-label">bio</label>
+            <div class="form__field">
+                <label for="bio" class="form-label">Bio</label>
                 <textarea type="bio" name="bio" class="form-control" id="bio" cols="60"
                     row="30"><?php echo $users["bio"]; ?></textarea>
             </div>
 
             <h4>Update Socials</h4>
-            <div class="mb-3">
-                <label for="linkedin" class="form-label">linkedin</label>
+            <div class="form__field">
+                <label for="linkedin" class="form-label">Linkedin</label>
                 <input type="linkedin" name="linkedin" class="form-control" id="linkedin"
                     value="<?php echo $users["linkedin"]; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="website" class="form-label">website</label>
+            <div class="form__field">
+                <label for="website" class="form-label">Website</label>
                 <input type="website" name="website" class="form-control" id="website"
                     value="<?php echo $users["website"]; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="instagram" class="form-label">instagram</label>
+            <div class="form__field">
+                <label for="instagram" class="form-label">Instagram</label>
                 <input type="instagram" name="instagram" class="form-control" id="instagram"
                     value="<?php echo $users["instagram"]; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="github" class="form-label">github</label>
+            <div class="form__field">
+                <label for="github" class="form-label">Github</label>
                 <input type="github" name="github" class="form-control" id="github"
                     value="<?php echo $users["github"]; ?>">
             </div>
 
-            <h4>Update Add Second Email</h4>
-            <div class="mb-3">
-                <label for="second_email" class="form-label">second_email</label>
+            <h4>Update Second Email</h4>
+            <div class="form__field">
+                <label for="second_email" class="form-label">Second_email</label>
                 <input type="second_email" name="second_email" class="form-control" id="second_email"
                     value="<?php echo $users["second_email"]; ?>">
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
+            <div class="form__field form__field-btn">
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Update</button>
+                <a href="profile_password.php" class="btn secondary__btn-reverse secondary__btn-signup">Reset password</a>
+            </div>
         </form>
-
-        <a href="profile_password.php">Reset password</a>
     </main>
 </body>
 

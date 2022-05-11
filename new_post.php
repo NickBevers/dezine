@@ -82,7 +82,7 @@
       </div>
 
       <div class="form__field">
-        <label for="image" class="btn secondary__btn-reverse">Image
+        <label for="image" class="btn secondary__btn-reverse">Add image
           <input type="file" name="image" class="form__image-input" id="image" required>
         </label>
       </div>
