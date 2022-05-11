@@ -1,0 +1,53 @@
+/* index page */
+.bkg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.bkg img {
+    width: 50rem;
+}
+
+@media (max-width: 1116px) and (min-width: 768px) {
+    /* index page */
+    .bkg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .bkg img {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+    /* index page */
+    .bkg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .bkg img {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 600px) {
+    /* index page */
+    .bkg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .bkg img {
+        width: 100%;
+    }
+}

@@ -8,6 +8,10 @@
         header('Location: login.php');
     }
 
+    if(User::checkban($_SESSION["id"])){
+        header('Location: home.php');
+    }
+
     if(isset($_GET["pid"])){
         if($_SESSION["id"] != $_GET["uid"]) {
             header('Location: profile.php');
@@ -42,8 +46,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit post</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="./styles/style.css">    
+    <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
 </head>
 
 <body class="container">
@@ -58,29 +62,32 @@
             unset($_SESSION['flash_error']);
             endif;
         ?>
-        <form method="post" enctype='multipart/form-data'>
-            <div class="mb-3">
+        <form method="post" enctype='multipart/form-data' class="form form--register">
+            <h2>Edit post</h2>
+            <div class="form__field">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" value="<?php echo(htmlspecialchars($post["title"])); ?>" required>
             </div>
 
-            <div class="mb-3">
+            <div class="form__field">
                 <label for="description" class="form-label">Description</label>
                 <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required
                     style="resize: none;"><?php echo(htmlspecialchars($post["description"])); ?></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="form__field">
                 <label for="tags" class="form-label">Tags</label>
                 <input type="text" name="tags" class="form-control" id="tags" value="<?php echo(implode(", ", json_decode($post["tags"]))); ?>" required>
                 <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <a href="profile.php">Cancel</a>
+            <div class="form__submit">
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Save changes</button>
+                <a href="profile.php" class="btn secondary__btn-reverse secondary__btn-signup">Cancel</a>
+            </div>
         </form>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <?php include_once("./includes/footer.inc.php"); ?>
 </body>
 
 </html>

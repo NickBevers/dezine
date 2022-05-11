@@ -3,27 +3,31 @@
   <div class="nav--full">
     <div class="nav__element nav--left">
       <li>
-        <a aria-current="page" href="home.php">
-          <?php if (Security::isLoggedIn()): ?>
+        <?php if (Security::isLoggedIn()): ?>
+          <a aria-current="page" href="home.php">
             Home
-          <?php endif; ?>
-          <?php if (!Security::isLoggedIn()): ?>
+          </a>
+        <?php endif; ?>
+        <?php if (!Security::isLoggedIn()): ?>
+          <a aria-current="page" href="index.php">
             Explore
-          <?php endif; ?>
-        </a>
+          </a>
+        <?php endif; ?>
         
       </li>
     </div>
     
     <div class="nav__element nav--center">
-      <a href="index.php">
         <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
-          <img src="./assets/dezine.svg" alt="D-zine logo">
+          <a href="home.php">
+            <img src="./assets/dezine.svg" alt="D-zine logo">
+          </a>
         <?php else: ?>
-          <img src="./assets/imd.svg" alt="IMD logo">
+          <a href="index.php">
+            <img src="./assets/imd.svg" alt="IMD logo">
+          </a>
         <?php endif; ?>
 
-      </a>
     </div>
 
     <div class="nav__element nav--right">
