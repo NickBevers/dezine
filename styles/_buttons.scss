@@ -1,21 +1,21 @@
 .nav--right a {
-    border: 3px solid var(--black);
+    border: 3px solid $black;
     padding: 0.5rem 1rem;
     font-weight: 700;
     text-transform: uppercase;
 }
 
 .nav--right a:hover {
-    border: 3px solid var(--accent);
+    border: 3px solid $accent;
 }
 
 .nav--full a {
     text-decoration: none;
-    color: var(--black);
+    color: $black;
 }
 
 .nav--full a:hover {
-    color: var(--accent);
+    color: $accent;
 }
 
 .nav--left a {
@@ -23,7 +23,7 @@
 }
 
 .btn{
-    font-size: var(--font-size-xxs);
+    font-size: $font-size-xxs;
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
@@ -32,30 +32,30 @@
 }
 
 .primary__btn{
-    border: 3px solid var(--black);
+    border: 3px solid $black;
     padding: 0.5rem 1rem;
-    color: var(--black);
+    color: $black;
     // margin: 0 2rem;
 }
 
 .primary__btn:hover{
-    border: 3px solid var(--accent);
-    color: var(--accent);
+    border: 3px solid $accent;
+    color: $accent;
 }
 
 .secondary__btn{
-    border: 3px solid var(--black);
+    border: 3px solid $black;
     padding: 0.5rem 1rem;
-    color: var(--secondary);
+    color: $secondary;
     border-radius: 20px;
-    background-color: var(--black);
+    background-color: $black;
     // margin: 0 2rem;
 }
 
 .secondary__btn:hover{
-    border: 3px solid var(--black);
-    color: var(--black);
-    background-color: var(--white);
+    border: 3px solid $black;
+    color: $black;
+    background-color: $white;
 }
 
 .secondary__btn-signup{    
@@ -64,18 +64,18 @@
 }
 
 .secondary__btn-reverse{
-    border: 3px solid var(--secondary);
+    border: 3px solid $secondary;
     padding: 0.5rem 1rem;
-    color: var(--black);
+    color: $black;
     border-radius: 20px;
-    background-color: var(--secondary);
+    background-color: $secondary;
     text-align: center;
 }
 
 .secondary__btn-reverse:hover{
-    border: 3px solid var(--secondary);
-    color: var(--secondary);
-    background-color: var(--black);
+    border: 3px solid $secondary;
+    color: $secondary;
+    background-color: $black;
 }
 
 @media (max-width: 1116px) and (min-width: 768px) {
@@ -93,12 +93,12 @@
         /* font-family: 'Space Grotesk'; */
         margin-right: 10px;
         margin-top: 0;
-        color: var(--accent);
+        color: $accent;
     }
 
     .nav--right a:hover {
         border: none;
-        border-bottom: 3px solid var(--accent);
+        border-bottom: 3px solid $accent;
     }
 }
 
@@ -110,11 +110,11 @@
         /* font-family: 'Space Grotesk'; */
         margin-right: 10px;
         margin-top: 0;
-        color: var(--accent);
+        color: $accent;
     }
 
     .nav--right a:hover {
         border: none;
-        border-bottom: 3px solid var(--accent);
+        border-bottom: 3px solid $accent;
     }
 }
