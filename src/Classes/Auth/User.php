@@ -1,7 +1,12 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
+    namespace Classes\Auth;
+    // use "./../../../bootstrap.php";
+    // include_once(__DIR__ . "/../../../bootstrap.php");
+    // use bootstrap;
+    // include_once(__DIR__ . "/../../../helpers/Cleaner.help.php");
+    use Cleaner;
+    use Exception;
+    use PDO;
 
     class User {
         private $username;

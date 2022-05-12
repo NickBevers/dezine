@@ -1,7 +1,12 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
+    namespace Classes\Content;
+    // include_once(__DIR__ . "bootstrap.php");
+    // include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    use Cleaner;
+    use Classes\Auth\DB;
+    use DateTime;
+    use PDO;
+    use Error;
     require 'vendor/autoload.php';
     use PHPColorExtractor\PHPColorExtractor;
 
