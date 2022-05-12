@@ -58,7 +58,7 @@
                 $state->execute();
                 
                 //link nog aanpassen
-                $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
+                $link = 'localhost/dezine/reset_password.php?key='.$this->email.'&token='.$token;
 
                 $config = parse_ini_file("./config/config.ini");
                 $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
