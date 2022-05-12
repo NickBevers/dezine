@@ -1,9 +1,14 @@
 <?php
+	include_once("bootstrap.php");
 	include_once("./helpers/Security.help.php");
+	include_once("./helpers/Cleaner.help.php");
+	use \Classes\Auth\User;
+
+
 	if(Security::isLoggedIn()) {
 		header('Location: home.php');
 	}
-    include_once("./classes/User.php");
+    // include_once("./classes/User.php");
 	
 	if( !empty($_POST) ) {
 		$email = $_POST["email"];
@@ -13,6 +18,7 @@
             $user->setEmail($email);
 			$user->setPassword($password);
 			$usr = $user->canLogin();
+			var_dump($usr);
             if($usr) {
                 session_start();
                 $_SESSION['email'] = $user->getEmail();
@@ -64,8 +70,5 @@
 			</div>			
 		</form>
 	</main>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
