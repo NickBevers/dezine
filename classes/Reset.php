@@ -72,12 +72,12 @@
                     //Server settings
                     $mail->SMTPDebug = 0;
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Host = 'webreus.email';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'dezine.php@gmail.com';
-                    $mail->Password = 'NHZ^%Ktr3QgK$BMCPzq8BwiW';
+                    $mail->Username = "dezine@nickbevers.be";
+                    $mail->Password = 'jD&Vdbmm6HAqpe$BHx@6';
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+                    $mail->Port = 2525;
 
                     //Recipients
                     $mail->setFrom('reset@dezine.be', 'Dezine');
