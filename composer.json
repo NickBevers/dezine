@@ -3,6 +3,7 @@
         "phpmailer/phpmailer": "^6.6",
         "bensquire/php-color-extractor": "dev-master",
         "cloudinary/cloudinary_php": "^2",
-        "sendgrid/sendgrid": "~7"
+        "sendgrid/sendgrid": "~7",
+        "mailjet/mailjet-apiv3-php": "^1.5"
     }
 }

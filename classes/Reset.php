@@ -2,6 +2,7 @@
     include_once(__DIR__ . "/DB.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
     require 'vendor/autoload.php';
+    use \Mailjet\Resources;
 
     
     class Reset{
@@ -59,19 +60,32 @@
                 //link nog aanpassen
                 $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
 
-                $mail = new \SendGrid\Mail\Mail();
-
-                $mail->setFrom("dezine.php@gmail.com", "Dezine Team");
-                $mail->setSubject("Password reset link");
-                $mail->addTo("$this->email", " ");
-                $mail->addContent("text/html", $link);
                 $config = parse_ini_file("./config/config.ini");
-                $sendgrid = new \SendGrid($config['SENDGRID_API_KEY']);
+                $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
+                $body = [
+                    'Messages' => [
+                    [
+                        'From' => [
+                        'Email' => "dezine@nickbevers.be",
+                        'Name' => "D-zine"
+                        ],
+                        'To' => [
+                        [
+                            'Email' => $this->email,
+                            'Name' => $result["username"]
+                        ]
+                        ],
+                        'Subject' => "D-zine password reset.",
+                        'TextPart' => "Password reset",
+                        'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
+                        'CustomID' => "PWReset"
+                    ]
+                    ]
+                ];
 
                 try {
-
-                    $response = $sendgrid->send($mail);
-                    $message = 'Message has been sent ';
+                    $response = $mj->post(Resources::$Email, ['body' => $body]);
+                    if($response->success()){$message = "The email was sent. PLease check your inbox and spam.";}
                     return $message;
                 } catch (Exception $e) {                    
                     $error = "Message could not be sent:". $e->getMessage() ."\n";
