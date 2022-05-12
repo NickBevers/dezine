@@ -172,7 +172,11 @@
                         <div class="like hidden" data-id="<?php echo $pid; ?>">
                             <p class="like__text">❤ Like</p>
                             <?php if($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php if(Like::getLikes($pid) === 0): ?>
+                                <span class="likes_count">No one likes this yet</span>
+                            <?php else: ?>
+                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <div class="liked" data-id="<?php echo $pid; ?>">
@@ -185,7 +189,11 @@
                         <div class="like" data-id="<?php echo $pid; ?>">
                             <p class="like__text">❤ Like</p>
                             <?php if($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php if(Like::getLikes($pid) === 0): ?>
+                                <span class="likes_count">No one likes this yet</span>
+                            <?php else: ?>
+                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <div class="liked hidden" data-id="<?php echo $pid; ?>">
