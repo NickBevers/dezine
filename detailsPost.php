@@ -78,7 +78,8 @@
                     <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
                     <a class="post__comment__form__btn" 
                         data-pfplink="<?php echo $user["profile_image"]; ?>" 
-                        data-postid="<?php echo $post["id"];?>" 
+                        data-postid="<?php echo $post["id"];?>"
+                        data-uid="<?php echo $_SESSION["id"];?>" 
                         data-username="<?php echo $user["username"]; ?>"
                     >
                         Add
