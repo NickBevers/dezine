@@ -1,7 +1,7 @@
 <?php
     namespace Classes\Content;
-    use Cleaner;
-    use Classes\Auth\DB;
+    use Classes\Auth\DB; 
+    use \Helpers\Cleaner;
 
     class Showcase{
         private $postId;
@@ -30,7 +30,7 @@
             $statement = $conn->prepare("insert into showcase (post_id, user_id) values (:post_id, :user_id)");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
-            var_dump($statement->execute());
+            // var_dump($statement->execute());
             return $statement->execute();
         }
 
@@ -39,7 +39,7 @@
             $statement = $conn->prepare("delete from showcase where post_id = :post_id and user_id = :user_id");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
-            var_dump($statement->execute());
+            // var_dump($statement->execute());
             return $statement->execute();
         }
 
