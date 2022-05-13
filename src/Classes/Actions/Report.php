@@ -1,7 +1,7 @@
 <?php
     namespace Classes\Actions;
     use Classes\Auth\DB;
-    use Cleaner;
+    use \Helpers\Cleaner;
     use DateTime;
 
     class Report {

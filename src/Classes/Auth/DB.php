@@ -1,6 +1,5 @@
 <?php
     namespace Classes\Auth;
-    // include_once(__DIR__ . "/../../../bootstrap.php");
     use PDO;
 
     abstract class DB {

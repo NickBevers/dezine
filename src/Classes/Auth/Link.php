@@ -1,7 +1,7 @@
 <?php
     namespace Classes\Auth;
     use Classes\Auth\DB;
-    use Cleaner;
+    use \Helpers\Cleaner;
     use PDO;
     use DateTime;
 

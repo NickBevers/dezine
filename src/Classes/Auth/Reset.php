@@ -1,7 +1,7 @@
 <?php
     namespace Classes\Auth;
     use Classes\Auth\DB;
-    use Cleaner;
+    use \Helpers\Cleaner;
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;

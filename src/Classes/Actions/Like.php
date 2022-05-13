@@ -1,8 +1,6 @@
 <?php
     namespace Classes\Actions;
-    // include_once(__DIR__ . "/../bootstrap.php");
-    // include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-    use Cleaner;
+    use \Helpers\Cleaner;
     use Classes\Auth\DB;
     
     class Like {

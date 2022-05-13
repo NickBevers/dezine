@@ -1,10 +1,6 @@
 <?php
     namespace Classes\Auth;
-    // use "./../../../bootstrap.php";
-    // include_once(__DIR__ . "/../../../bootstrap.php");
-    // use bootstrap;
-    // include_once(__DIR__ . "/../../../helpers/Cleaner.help.php");
-    use Cleaner;
+    use \Helpers\Cleaner;
     use Exception;
     use PDO;
 
