@@ -1,8 +1,8 @@
 <?php
     include_once("bootstrap.php");
-    include_once("./helpers/Security.help.php");
-    include_once("./helpers/Validate.help.php");
-    include_once("./helpers/Cleaner.help.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
     use \Classes\Auth\User;
     Validate::start();
 

@@ -1,8 +1,7 @@
 <?php
     include_once("bootstrap.php");
-    include_once("./helpers/Security.help.php");
-    include_once("./helpers/Validate.help.php");
-    include_once("./helpers/Cleaner.help.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
     use Classes\Content\Post;
     use Classes\Actions\Comment;
     use Classes\Auth\User;    
