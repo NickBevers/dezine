@@ -65,9 +65,10 @@
                     <a href="detailsPost.php?pid=<?php echo $post["id"];?>">
                         <img src="<?php echo $post["image"]; ?>" class="reports__post__img" alt="reported post">
                     </a>
-                    <div>
-                        <p> Reason for report: <?php echo $report["reason"]; ?></p>
-                        <p> Date and time of report: <?php echo $report["timestamp"]; ?></p>
+                    <div class="report__details">
+                        <p><strong>Reason for report: </strong><?php echo $report["reason"]; ?></p>
+                        <p><strong>Date and time of report: </strong><?php echo $report["timestamp"]; ?></p>
+                        <button href="#" class="primary__btn" >Archive report</button>
                     </div>
                 </div>
                 <?php endif; ?> 
@@ -80,9 +81,10 @@
                             <?php echo(User::getUserNamebyId($report["user_id"])['username']); ?>
                         </a> 
                     </p>
-                    <div>
-                        <p> Reason for report: <?php echo $report["reason"]; ?></p>
-                        <p> Date and time of report: <?php echo $report["timestamp"]; ?></p>
+                    <div class="report__details">
+                        <p><strong>Reason for report: </strong><?php echo $report["reason"]; ?></p>
+                        <p><strong>Date and time of report: </strong><?php echo $report["timestamp"]; ?></p>
+                        <button href="#"class="primary__btn">Archive report</button>
                     </div>
                 </div>
                 <?php endif; ?> 
