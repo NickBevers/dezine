@@ -1,9 +1,8 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
-    require 'vendor/autoload.php';
+    include_once("./../helpers/Cleaner.help.php");
+    include_once("./../autoloader.php");
     use PHPColorExtractor\PHPColorExtractor;
+    require './../vendor/autoload.php';
 
 
     class Post {
@@ -128,7 +127,7 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
             $statement->execute();
-            $res = $statement->fetchAll();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
         }
         

@@ -1,7 +1,6 @@
 <?php 
     include_once(__DIR__ . "/../autoloader.php");
     include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-    include_once(__DIR__ . "/../classes/Report.php");
 
     if (!empty($_POST)) {
         $user_id = Cleaner::cleanInput($_SESSION['id']);
