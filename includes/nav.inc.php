@@ -14,7 +14,7 @@
           </a>
         <?php endif; ?>
         <?php if (isset($_SESSION["id"]) && User::checkUserRole($_SESSION["id"]) !== "user"): ?>
-          <a href="moderator_overview.php">Moderate</a>
+          <a href="moderator.php">Moderate</a>
         <?php endif; ?>
         
       </li>
