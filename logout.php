@@ -1,5 +1,6 @@
 <?php 
-    session_start();
-    session_destroy();
+    include_once("./helpers/Validate.help.php");
+    Validate::start();
+    Validate::end();
     header("Location: index.php");
 ?>

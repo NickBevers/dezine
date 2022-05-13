@@ -3,16 +3,15 @@
     include_once("./helpers/Security.help.php");
     include_once("./helpers/Validate.help.php");
     include_once("./helpers/Cleaner.help.php");
+    use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Actions\Like;
 
     Validate::start();
 
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-
-    use \Classes\Auth\User;
-    use \Classes\Content\Post;
-    use \Classes\Actions\Like;
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
