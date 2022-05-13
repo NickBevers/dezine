@@ -1,11 +1,18 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
+    include_once("bootstrap.php");
     include_once("./helpers/Security.help.php");
-    if (!Security::isLoggedIn()) {
+    include_once("./helpers/Cleaner.help.php");
+    include_once("./helpers/Validate.help.php");    
+    use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Actions\Like;
+    use \Classes\Content\Showcase;
+    use \Classes\Actions\Follow;
+    Validate::start();
+
+    if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    
 
     if (empty($_GET["id"])) {
         if (empty($_SESSION["id"])) {

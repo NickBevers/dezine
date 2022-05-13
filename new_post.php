@@ -1,6 +1,11 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Security.help.php");
+    include_once(__DIR__ . "/bootstrap.php");
+    include_once(__DIR__ . "/helpers/Security.help.php");
+    include_once(__DIR__ . "/helpers/Validate.help.php");
+    use \Classes\Content\Post;
+    use \Classes\Auth\User;
+    Validate::start();
+
 	  if(!Security::isLoggedIn()) {
       header('Location: login.php');
   }

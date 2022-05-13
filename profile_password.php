@@ -1,13 +1,14 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Security.help.php");
+    include_once(__DIR__ . "/bootstrap.php");
+    include_once(__DIR__ . "/helpers/Security.help.php");
+    include_once(__DIR__ . "/helpers/Validate.help.php");
+    use \Classes\Auth\User;
+
+    Validate::start();
+
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-
-    //var_dump($_SESSION);
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];
@@ -15,7 +16,7 @@
         $password_conf = $_POST["password_conf"];
         $email = $_SESSION['email'];
 
-        if(CheckEmpty::isNotEmpty($c_password) && CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
+        if(Validate::isNotEmpty($c_password) && Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)){
             if($new_password === $password_conf){
                 if ($c_password === $new_password) {
                     $error = "New password cannot be the same as the old password";

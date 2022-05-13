@@ -2,6 +2,7 @@
     include_once("bootstrap.php");
     include_once("./helpers/Security.help.php");
     include_once("./helpers/Validate.help.php");
+    include_once("./helpers/Cleaner.help.php");
 
     Validate::start();
 
@@ -11,6 +12,7 @@
 
     use \Classes\Auth\User;
     use \Classes\Content\Post;
+    use \Classes\Actions\Like;
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
