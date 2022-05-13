@@ -1,5 +1,7 @@
-<?php include_once("./helpers/Security.help.php"); ?>
-<nav>
+<?php 
+  include_once("bootstrap.php");
+  use \Helpers\Security;
+?><nav>
   <div class="nav--full">
     <div class="nav__element nav--left">
       <li>
