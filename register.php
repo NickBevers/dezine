@@ -1,10 +1,13 @@
 <?php
+    include_once("bootstrap.php");
     include_once("./helpers/Security.help.php");
     include_once("./helpers/Cleaner.help.php");
+    use Classes\Auth\User;
+    use Classes\Auth\Link;
+
     if (Security::isLoggedIn()) {
         header('Location: home.php');
     }
-    include_once(__DIR__ . "/classes/User.php");
 
     if (!empty($_GET["token"])) {
         $token = Cleaner::cleanInput($_GET["token"]);

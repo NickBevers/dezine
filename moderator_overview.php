@@ -1,7 +1,11 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
+    include_once("bootstrap.php");
     include_once("./helpers/Security.help.php");
+    include_once("./helpers/Validate.help.php");
+    include_once("./helpers/Cleaner.help.php");
+    use \Classes\Auth\User;
+    Validate::start();
+
     if(!Security::isLoggedIn()) { header('Location: login.php');}
 
     $uid = Cleaner::cleanInput($_SESSION["id"]);

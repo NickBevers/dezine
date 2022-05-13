@@ -1,9 +1,11 @@
 <?php
-
-    include_once(__DIR__ . "/autoloader.php");
+    include_once("bootstrap.php");
+    include_once("./helpers/Security.help.php");
+    include_once("./helpers/Validate.help.php");
     include_once("./helpers/Cleaner.help.php");
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    use Classes\Actions\Report;
+    Validate::start();
+
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }

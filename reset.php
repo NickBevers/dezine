@@ -1,9 +1,12 @@
 <?php
-  include_once(__DIR__ . "/autoloader.php");
-  include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+  include_once("bootstrap.php");
+  include_once("./helpers/Security.help.php");
+  include_once("./helpers/Cleaner.help.php");
+  include_once("./helpers/Validate.help.php");
+  use Classes\Auth\Reset;
 
   if(!empty($_POST)) {
-    if(CheckEmpty::isNotEmpty($_POST['email'])){          
+    if(Validate::isNotEmpty($_POST['email'])){          
         $emailId = $_POST['email'];
 
         // echo $emailId;
