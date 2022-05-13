@@ -1,28 +1,23 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Classes\Actions;
+    // include_once(__DIR__ . "/../bootstrap.php");
+    // include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    use Cleaner;
+    use Classes\Auth\DB;
+    use Exception;
+    use PDO;
 
     class Comment
     {
         private $text;
         private $postId;
-        private $userId;
+        private $userId;        
 
-        
-
-        /**
-         * Get the value of text
-         */
         public function getText()
         {
             return $this->text;
         }
 
-        /**
-         * Set the value of text
-         *
-         * @return  self
-         */
         public function setText($text)
         {   
             if(empty($text)){
@@ -36,19 +31,11 @@
             
         }
 
-        /**
-         * Get the value of postId
-         */
         public function getPostId()
         {
             return $this->postId;
         }
 
-        /**
-         * Set the value of postId
-         *
-         * @return  self
-         */
         public function setPostId($postId)
         {
             $postId = Cleaner::cleanInput($postId);
@@ -57,19 +44,12 @@
             return $this;
         }
 
-        /**
-         * Get the value of userId
-         */
+
         public function getUserId()
         {
             return $this->userId;
         }
 
-        /**
-         * Set the value of userId
-         *
-         * @return  self
-         */
         public function setUserId($userId)
         {
             $userId = Cleaner::cleanInput($userId);
