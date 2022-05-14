@@ -1,9 +1,20 @@
 .post--single {
     margin: 5% 27%;
+    background-color: $primary;
+}
+
+.post--single__user{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: flex-start;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;  
 }
 
 .post--single__content img {
     height: 100%;
+    border: 5px solid $secondary;
 }
 
 .post--single__content {
@@ -70,4 +81,24 @@
 .post__comment__form__btn:hover{
     text-decoration: underline;
   
+}
+
+.views{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    justify-self: flex-end;
+    gap: 0.5rem;
+
+    img{
+        width: 50px;
+        height: 50px;
+    }
+
+    span{
+        color: $accent;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+    }
 }

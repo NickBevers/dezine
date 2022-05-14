@@ -94,10 +94,10 @@
                 <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
                     <form action="#" method="post">
                         <?php if($user["user_role"] === "user"): ?>
-                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                            <button name="moderator" value="assign" type="submit" class="moderator__btn">Make moderator</button>
                         <?php endif; ?>
                         <?php if($user["user_role"] !== "user"): ?>
-                            <button name="moderator" type="delete">Delete moderator role</button>
+                            <button name="moderator" type="delete" class="moderator__btn">Delete moderator role</button>
                         <?php endif; ?>
                     </form>
                 <?php endif; ?>
@@ -140,16 +140,14 @@
                 <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
                     Showcase user
                 </a>
-            </div>            
-        </div>    
-        </div>
-        <?php if (User::checkUserRole($uid) !== "user"): ?>
-        <div class="getRegisterLink">
-            <input type="text" class="specialRegisterLink">
-            <button class="getRegisterLinkBtn">Get Alumni Link</button>
-            <script src="./javascript/getLink.js"></script>
-        </div>
-        <?php endif; ?>
+            </div>             
+            <?php if (User::checkUserRole($uid) !== "user"): ?>
+            <div class="getRegisterLink">
+                <button class="getRegisterLinkBtn moderator__btn">Get Alumni Link</button>
+                <script src="./javascript/getLink.js"></script>
+            </div>
+            <?php endif; ?>         
+        </div>  
     </section>
     
     <section class="posts">
@@ -209,19 +207,21 @@
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
-                        <?php endif; ?>                    
-                        <?php if ($uid == $_GET["id"]): ?>
-                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
-                                <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
-                            </a>  
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>
-                        <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>      
-                        <?php endif; ?> 
+                        <?php endif; ?>  
+                        <div class="post__actions-edit">
+                            <?php if ($uid == $_GET["id"]): ?>
+                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                    <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
+                                </a>  
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>
+                            <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>      
+                            <?php endif; ?>
+                        </div>          
                     <?php endif; ?>
                 </div>
                 <?php if ($uid !== $_GET["id"]): ?>
