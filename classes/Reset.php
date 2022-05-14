@@ -58,7 +58,7 @@
                 $state->execute();
                 
                 //link nog aanpassen
-                $link = 'localhost/dezine/reset_password.php?key='.$this->email.'&token='.$token;
+                $link = 'https://weared-zine.be/reset_password.php?key='.$this->email.'&token='.$token;
 
                 $config = parse_ini_file("./config/config.ini");
                 $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
