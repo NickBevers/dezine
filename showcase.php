@@ -101,14 +101,15 @@
                                         <?php endforeach; ?>
                                     </div>
                                     <?php if($_SESSION["id"] == $_GET["id"]): ?>
-                                        <div class="post__actions">
-                                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                                            </a>
-                                            
-                                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
-                                                <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
-                                            </a>
+                                        <div class="post__actions post__actions-showcase"> 
+                                            <div class="post__actions-edit">                                          
+                                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                                    <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
+                                                </a>
+                                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                                </a>
+                                            </div>
                                         </div>                        
                                     <?php endif; ?> 
                                 <?php endif; ?> 

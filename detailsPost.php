@@ -42,14 +42,14 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <div class="post--single">                    
-        <div class="posts__user">
+        <div class="post--single__user">
             <?php $user = User::getUserbyId($post["user_id"]); ?>
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>" class="posts__user__img">
             <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                 <h3><?php echo $user["username"] ?></h3>         
             </a>
             <?php if($_SESSION["id"] === $post["user_id"]): ?>
-                <div>
+                <div class="views">
                     <img src="./assets/eye_icon.svg" alt="eye icon for views count">
                     <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
                 </div>

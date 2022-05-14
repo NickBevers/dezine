@@ -209,19 +209,21 @@
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
-                        <?php endif; ?>                    
-                        <?php if ($uid == $_GET["id"]): ?>
-                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
-                                <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
-                            </a>  
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>
-                        <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>      
-                        <?php endif; ?> 
+                        <?php endif; ?>  
+                        <div class="post__actions-edit">
+                            <?php if ($uid == $_GET["id"]): ?>
+                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                    <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
+                                </a>  
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>
+                            <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>      
+                            <?php endif; ?>
+                        </div>          
                     <?php endif; ?>
                 </div>
                 <?php if ($uid !== $_GET["id"]): ?>
