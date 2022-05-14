@@ -1,10 +1,14 @@
 <?php
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use Classes\Content\Post;
+    use Classes\Actions\Comment;
+    use Classes\Auth\User;    
+    use phpDocumentor\Reflection\Location;
 
-use phpDocumentor\Reflection\Location;
-
-    include_once(__DIR__ . "/autoloader.php");
-
-    include_once("./helpers/Security.help.php");
+    Validate::start();
+    
     if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
@@ -66,7 +70,7 @@ use phpDocumentor\Reflection\Location;
                 <?php endif; ?>  
             </div>
         </div>
-        <?php if(User::checkban($_SESSION["id"]) === 0): ?>
+        <?php if(intval(User::checkban($_SESSION["id"])) === 0): ?>
             <div class="post__comment">
                 <div class="post__comment__form">
                     <?php $user = User::getUserbyId($_SESSION['id']); ?>
@@ -74,7 +78,8 @@ use phpDocumentor\Reflection\Location;
                     <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
                     <a class="post__comment__form__btn" 
                         data-pfplink="<?php echo $user["profile_image"]; ?>" 
-                        data-postid="<?php echo $post["id"];?>" 
+                        data-postid="<?php echo $post["id"];?>"
+                        data-uid="<?php echo $_SESSION["id"];?>" 
                         data-username="<?php echo $user["username"]; ?>"
                     >
                         Add

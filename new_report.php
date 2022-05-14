@@ -1,9 +1,11 @@
 <?php
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use Classes\Actions\Report;
+    Validate::start();
 
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
@@ -98,7 +100,7 @@
             </div>
 
             <div id="report__button"></div>
-            <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>">Submit Report</a>
+            <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>" data-post_user_id="<?php echo $user_id; ?>">Submit Report</a>
         </div>
         <?php include_once("./includes/footer.inc.php"); ?>
     </main>

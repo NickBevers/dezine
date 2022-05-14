@@ -1,5 +1,6 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
+    include_once("./../bootstrap.php");
+    use \Classes\Actions\Follow;
 
     if (!empty($_POST)) {
         $follower_id = $_POST['follower_id'];

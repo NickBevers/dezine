@@ -1,12 +1,13 @@
 <?php
+    namespace Classes\Auth;
+    use Classes\Auth\DB;
+    use \Helpers\Cleaner;
+
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
     require 'vendor/autoload.php';
-    include_once(__DIR__ . "/DB.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
     
     class Reset{
         private $email;

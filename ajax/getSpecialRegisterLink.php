@@ -1,5 +1,6 @@
 <?php
-    include_once("./../autoloader.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Classes\Auth\Link;
     
     if(!empty($_POST)){
         try {

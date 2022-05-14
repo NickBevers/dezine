@@ -19,11 +19,13 @@ if(heartsfull !== null){
 
 function addRemoveShowcase(e){
     let postId = e.target.dataset.id;
+    let userId = e.target.dataset.uid;
     let sibling = e.target;
     let img = e.target.parentElement;
     let post = img.parentElement;
     let data = new FormData();
-    data.append("postId", postId);            
+    data.append("postId", postId);
+    data.append("userId", userId);              
     
     fetch("ajax/addToShowcase.php", {
         method: "POST",
@@ -35,7 +37,8 @@ function addRemoveShowcase(e){
             sibling.nextElementSibling.classList.remove("hidden");                    
             sibling.classList.add("hidden");
         } else if(sibling.classList.contains("heartsfull")){
-            sibling.previousElementSibling.classList.remove("hidden");                   
+            sibling.previousElementSibling.classList.remove("hidden"); 
+            console.log(post);                  
             sibling.classList.add("hidden");
             if(post.classList.contains("post__showcase")){
                 post.classList.add("hidden");

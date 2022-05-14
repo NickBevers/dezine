@@ -1,8 +1,10 @@
 <?php 
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use Classes\Content\Post;
     
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+    Validate::start();
 
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');

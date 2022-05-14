@@ -1,8 +1,11 @@
 <?php 
-    
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use Classes\Content\Post;
+    use Classes\Auth\User;  
+
+    Validate::start();
 
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
@@ -17,7 +20,7 @@
             header('Location: profile.php');
         }
 
-        $post = POST::getPostByPostId($_GET["pid"]);
+        $post = Post::getPostByPostId($_GET["pid"]);
     } else{
         header("Location: profile.php");
     }

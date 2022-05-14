@@ -1,7 +1,13 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+     include_once("bootstrap.php");
+     use \Helpers\Validate;
+     use \Helpers\Security;
+     use \Helpers\Cleaner;
+     use \Classes\Auth\User;
+     use \Classes\Content\Post;
+     use \Classes\Content\Showcase;
+ 
+     Validate::start();
 
     if(!Security::isLoggedIn()) { header('Location: login.php');}
     
@@ -79,8 +85,8 @@
                         <div class="post post__showcase">
                             <div class="post__img">
                                     <?php if($uid === $post["user_id"]): ?>
-                                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
-                                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                                     <?php endif; ?>
                                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
                             </div>

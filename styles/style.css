@@ -940,8 +940,6 @@ footer {
 }
 
 .post {
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 1fr;
       grid-template-columns: 1fr;
   -ms-grid-rows: 410px;
@@ -1583,6 +1581,8 @@ input[type="file"] {
   padding: 2rem;
   width: 50vw;
   border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .alert-success {
