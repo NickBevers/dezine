@@ -1643,6 +1643,12 @@ input[type="file"] {
       -ms-flex-align: start;
           align-items: flex-start;
   padding: 2rem 1rem;
+  width: 100%;
+  border-bottom: solid 1px var(--black);
+}
+
+.report:last-child {
+  border-bottom: none;
 }
 
 .report__details {

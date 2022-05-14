@@ -88,4 +88,31 @@
             $res = $statement->fetchAll();
             return $res;
         }
+
+        public static function archiveReport($report_id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update reports set archived = 1 where id = :report_id");
+            $statement->bindValue(':report_id', $report_id);
+            $statement->execute();
+            $message = "Report has been archived";
+            return $message;
+        }
+
+        public static function checkReport($report_id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select archived from reports where id = :id");
+            $statement->bindValue(':id', $report_id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result["archived"];
+        }
+
+        public static function removeArchive($report_id){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("update reports set archived = 0 where id = :id");
+            $statement->bindValue(':id', $report_id);
+            $statement->execute();
+            $message = "The report has been unarchived";
+            return $message;
+        }
     }
