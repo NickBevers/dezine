@@ -1,5 +1,7 @@
 <?php  
-    include_once(__DIR__ . "/autoloader.php");
+    include_once("bootstrap.php");
+    use Classes\Content\Post;
+    
     $sorting = "desc";
 
 ?><!DOCTYPE html>

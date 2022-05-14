@@ -1,5 +1,6 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
+    include_once("./../bootstrap.php");
+    use \Classes\Auth\User;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];

@@ -1,10 +1,11 @@
 <?php
-    include_once(__DIR__ . "/DB.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-    require 'vendor/autoload.php';
+    namespace Classes\Auth;
+    use Classes\Auth\DB;
+    use \Helpers\Cleaner;
     use \Mailjet\Resources;
-
+    use Exception;
     
+    require 'vendor/autoload.php';
     class Reset{
         private $email;
         private $token;

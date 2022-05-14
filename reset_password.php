@@ -1,6 +1,10 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use Classes\Auth\Reset;
+    
 
     if($_GET['key'] && $_GET['token']){    
         $email = $_GET['key'];
@@ -17,7 +21,7 @@
           $password_conf = $_POST["password_conf"];
           $email = $returned;
  
-          if(CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
+          if(Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)){
              if($new_password === $password_conf){
                 try {
                     Reset::resetPassword($email, $new_password);

@@ -1,6 +1,8 @@
 <?php
-    include_once(__DIR__ . "/DB.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Classes\Actions;
+    use Classes\Auth\DB;
+    use \Helpers\Cleaner;
+    use DateTime;
 
     class Report {
 

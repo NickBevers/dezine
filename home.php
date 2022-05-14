@@ -1,7 +1,14 @@
 <?php 
-    include_once(__DIR__ . "/autoloader.php");
-    
-    include_once("./helpers/Security.help.php");
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Actions\Like;
+
+    Validate::start();
+
 	if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
@@ -169,26 +176,34 @@
                     <?php $pid = $post["id"]; ?>
                     <?php if(User::checkban($_SESSION["id"]) === "0"): ?>
                         <?php if(Like::getLikesbyPostandUser($pid, $uid)): ?>
-                        <div class="like hidden" data-id="<?php echo $pid; ?>">
+                        <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                             <p class="like__text">❤ Like</p>
                             <?php if($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php if(Like::getLikes($pid) === 0): ?>
+                                <span class="likes_count">No one likes this yet</span>
+                            <?php else: ?>
+                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
                             <?php endif; ?>
                         </div>
-                        <div class="liked" data-id="<?php echo $pid; ?>">
+                        <div class="liked" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                             <p class="liked__text">❤ Liked</p>
                             <?php if($uid === $post["user_id"]): ?>
                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                             <?php endif; ?>
                         </div>
                         <?php else: ?>
-                        <div class="like" data-id="<?php echo $pid; ?>">
+                        <div class="like" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                             <p class="like__text">❤ Like</p>
                             <?php if($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php if(Like::getLikes($pid) === 0): ?>
+                                <span class="likes_count">No one likes this yet</span>
+                            <?php else: ?>
+                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                            <?php endif; ?>
                             <?php endif; ?>
                         </div>
-                        <div class="liked hidden" data-id="<?php echo $pid; ?>">
+                        <div class="liked hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                             <p class="liked__text">❤ Liked</p>
                             <?php if($uid === $post["user_id"]): ?>
                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>

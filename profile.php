@@ -1,11 +1,18 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
-    if (!Security::isLoggedIn()) {
+    include_once("bootstrap.php");   
+    use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Actions\Like;
+    use \Classes\Content\Showcase;
+    use \Classes\Actions\Follow;
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    Validate::start();
+
+    if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    
 
     if (empty($_GET["id"])) {
         if (empty($_SESSION["id"])) {
@@ -151,13 +158,13 @@
             <div class="post__img">
                 <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
                     <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                     <?php endif; ?>
                 <?php else: ?>
                     <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                     <?php endif; ?>
                 <?php endif; ?>
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>

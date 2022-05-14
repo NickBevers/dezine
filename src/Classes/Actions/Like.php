@@ -1,6 +1,7 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Classes\Actions;
+    use \Helpers\Cleaner;
+    use Classes\Auth\DB;
     
     class Like {
         private $postId;
@@ -25,7 +26,7 @@
         }
 
         public function addLike(){
-            $conn = Db::getInstance();
+            $conn = DB::getInstance();
             $statement = $conn->prepare("insert into likes (post_id, user_id) values (:post_id, :user_id)");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
@@ -33,7 +34,7 @@
         }
 
         public function addDislike(){
-            $conn = Db::getInstance();
+            $conn = DB::getInstance();
             $statement = $conn->prepare("delete from likes where post_id = :post_id and user_id = :user_id");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
@@ -41,7 +42,7 @@
         }
 
         public static function getLikes($postId){
-            $conn = Db::getInstance();
+            $conn = DB::getInstance();
             $statement = $conn->prepare("select * from likes where post_id = :post_id");
             $statement->bindValue(":post_id", $postId);
             $statement->execute();
@@ -52,7 +53,7 @@
         }
 
         public static function getLikesbyPostandUser($postId, $userId){
-            $conn = Db::getInstance();
+            $conn = DB::getInstance();
             $statement = $conn->prepare("select * from likes where post_id = :post_id and user_id = :user_id");
             $statement->bindValue(":post_id", $postId);
             $statement->bindValue(":user_id", $userId);
@@ -63,7 +64,7 @@
         }
 
         public static function checkLikes($postId, $userId){
-            $conn = Db::getInstance();
+            $conn = DB::getInstance();
             $statement = $conn->prepare("select * from likes where post_id = :post_id and user_id = :user_id");
             $statement->bindValue(":post_id", $postId);
             $statement->bindValue(":user_id", $userId);

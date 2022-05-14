@@ -115,7 +115,7 @@
 
     .navicon:before,
     .navicon:after {
-        background: var(--accent);
+        background: $accent;
         content: '';
         display: block;
         height: 100%;
@@ -135,7 +135,7 @@
 
     .menu-btn:checked~.nav--right {
         max-height: 340px;
-        background-color: var(--white);
+        background-color: $white;
         height: 100vh;
     }
 
@@ -234,7 +234,7 @@
 
     .navicon:before,
     .navicon:after {
-        background: var(--accent);
+        background: $accent;
         content: '';
         display: block;
         height: 100%;
@@ -254,7 +254,7 @@
 
     .menu-btn:checked~.nav--right {
         max-height: 340px;
-        background-color: var(--white);
+        background-color: $white;
         height: 100vh;
     }
 
