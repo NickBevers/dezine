@@ -747,6 +747,21 @@ footer {
   background-color: #000000;
 }
 
+.moderator__btn {
+  background-color: #ffffff;
+  border-color: #120CFF;
+  border-width: 2px;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  font-size: large;
+}
+
+.moderator__btn:hover {
+  background-color: #ffffff;
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
   .nav--right a {
     padding: 0.5rem;
@@ -758,8 +773,6 @@ footer {
   .nav--right a {
     background-color: transparent;
     border: none;
-    /* font-size: 22px; */
-    /* font-family: 'Space Grotesk'; */
     margin-right: 10px;
     margin-top: 0;
     color: #120CFF;
@@ -774,8 +787,6 @@ footer {
   .nav--right a {
     background-color: transparent;
     border: none;
-    /* font-size: 22px; */
-    /* font-family: 'Space Grotesk'; */
     margin-right: 10px;
     margin-top: 0;
     color: #120CFF;
@@ -843,23 +854,6 @@ footer {
   gap: 0.5rem;
 }
 
-.profile__info__details button {
-  margin-left: 1rem;
-  background-color: #ffffff;
-  border-color: #120CFF;
-  border-width: 2px;
-  border-radius: 0.5rem;
-  padding: 0.4rem 0.6rem;
-  font-size: large;
-}
-
-.profile__info__details button:hover {
-  background-color: #ffffff;
-  padding: 0.5rem 0.7rem;
-  margin-left: 0.9rem;
-  cursor: pointer;
-}
-
 .profile__info__details__username {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -871,6 +865,7 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 2rem;
 }
 
 #profile__verified {
@@ -899,6 +894,12 @@ footer {
   gap: 1rem;
 }
 
+.getRegisterLink input {
+  border-radius: 5px;
+  border: 1.5px solid #a4a3a3;
+  height: 2rem;
+}
+
 @media (max-width: 768px) and (min-width: 600px) {
   .profile__info__btn {
     -webkit-box-orient: vertical;
@@ -909,6 +910,13 @@ footer {
         -ms-flex-align: start;
             align-items: flex-start;
     gap: 0.5rem;
+  }
+  .profile__info {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    padding: 3rem;
   }
 }
 
@@ -922,6 +930,13 @@ footer {
         -ms-flex-align: start;
             align-items: flex-start;
     gap: 0.5rem;
+  }
+  .profile__info {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    padding: 3rem;
   }
 }
 

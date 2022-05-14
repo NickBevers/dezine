@@ -94,10 +94,10 @@
                 <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
                     <form action="#" method="post">
                         <?php if($user["user_role"] === "user"): ?>
-                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                            <button name="moderator" value="assign" type="submit" class="moderator__btn">Make moderator</button>
                         <?php endif; ?>
                         <?php if($user["user_role"] !== "user"): ?>
-                            <button name="moderator" type="delete">Delete moderator role</button>
+                            <button name="moderator" type="delete" class="moderator__btn">Delete moderator role</button>
                         <?php endif; ?>
                     </form>
                 <?php endif; ?>
@@ -140,16 +140,14 @@
                 <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
                     Showcase user
                 </a>
-            </div>            
-        </div>    
-        </div>
-        <?php if (User::checkUserRole($uid) !== "user"): ?>
-        <div class="getRegisterLink">
-            <input type="text" class="specialRegisterLink">
-            <button class="getRegisterLinkBtn">Get Alumni Link</button>
-            <script src="./javascript/getLink.js"></script>
-        </div>
-        <?php endif; ?>
+            </div>             
+            <?php if (User::checkUserRole($uid) !== "user"): ?>
+            <div class="getRegisterLink">
+                <button class="getRegisterLinkBtn moderator__btn">Get Alumni Link</button>
+                <script src="./javascript/getLink.js"></script>
+            </div>
+            <?php endif; ?>         
+        </div>  
     </section>
     
     <section class="posts">
