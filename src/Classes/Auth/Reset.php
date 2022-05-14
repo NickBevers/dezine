@@ -2,13 +2,10 @@
     namespace Classes\Auth;
     use Classes\Auth\DB;
     use \Helpers\Cleaner;
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    require 'vendor/autoload.php';
+    use \Mailjet\Resources;
+    use Exception;
     
+    require 'vendor/autoload.php';
     class Reset{
         private $email;
         private $token;
@@ -42,8 +39,6 @@
             $statement->execute();
             $result = $statement->fetch();
 
-            // var_dump($result , "result");
-
             if ($result) {
                 $token = md5($this->email).rand(10, 9999);
                 $expFormat = mktime(
@@ -63,37 +58,37 @@
                 $state->bindValue(":email", $this->email);
                 $state->execute();
                 
-                //link nog aanpassen
+                $link = 'https://weared-zine.be/reset_password.php?key='.$this->email.'&token='.$token;
 
-                $link = "<a href='localhost/dezine/reset_password.php?key=".$this->email."&token=".$token."'>Click To Reset password</a>";
-
-                $mail = new PHPMailer(true);
+                $config = parse_ini_file("./config/config.ini");
+                $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
+                $body = [
+                    'Messages' => [
+                    [
+                        'From' => [
+                        'Email' => "dezine@nickbevers.be",
+                        'Name' => "D-zine"
+                        ],
+                        'To' => [
+                        [
+                            'Email' => $this->email,
+                            'Name' => $result["username"]
+                        ]
+                        ],
+                        'Subject' => "D-zine password reset.",
+                        'TextPart' => "Password reset",
+                        'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
+                        'CustomID' => "PWReset"
+                    ]
+                    ]
+                ];
 
                 try {
-                    //Server settings
-                    $mail->SMTPDebug = 0;
-                    $mail->isSMTP();
-                    $mail->Host = 'webreus.email';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = "dezine@nickbevers.be";
-                    $mail->Password = 'jD&Vdbmm6HAqpe$BHx@6';
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 2525;
-
-                    //Recipients
-                    $mail->setFrom('reset@dezine.be', 'Dezine');
-                    $mail->addAddress($this->email, '');
-                    
-                    //Content
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Password reset link';
-                    $mail->Body = $link;
-
-                    $mail->send();
-                    $message = 'Message has been sent';
+                    $response = $mj->post(Resources::$Email, ['body' => $body]);
+                    if($response->success()){$message = "The email was sent. PLease check your inbox and spam.";}
                     return $message;
-                } catch (Exception $e) {
-                    $error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                } catch (Exception $e) {                    
+                    $error = "Message could not be sent:". $e->getMessage() ."\n";
                     return $error;
                 }
             }
