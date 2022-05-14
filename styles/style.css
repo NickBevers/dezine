@@ -1195,6 +1195,7 @@ footer {
 
 .post--single__content img {
   height: 100%;
+  border: 5px solid #BFFD00;
 }
 
 .post--single__content {
