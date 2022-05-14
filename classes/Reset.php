@@ -57,7 +57,6 @@
                 $state->bindValue(":email", $this->email);
                 $state->execute();
                 
-                //link nog aanpassen
                 $link = 'https://weared-zine.be/reset_password.php?key='.$this->email.'&token='.$token;
 
                 $config = parse_ini_file("./config/config.ini");
