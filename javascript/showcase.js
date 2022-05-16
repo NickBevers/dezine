@@ -48,3 +48,14 @@ function addRemoveShowcase(e){
         console.error("Error: ", error);
     });  
 }
+
+// let share = document.querySelector(".share");
+// share.addEventListener("click", copy());
+
+// function copy(){
+//     copyText = share.value;
+//     navigator.clipboard.writeText(copyText);
+//     let p = document.createElement("p");
+//     p.innerHTML = "Link was copied";
+//     document.querySelector(".profile__info-share").appendChild(p);
+// }

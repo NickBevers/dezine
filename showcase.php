@@ -60,6 +60,13 @@
                 <h1><?php echo $user["username"]; ?></h1>
                 <h4><?php echo $user["education"]; ?></h4>
                 <p><?php echo $user["bio"]; ?></p>
+                <div class="profile__info-share">
+                    <a href="mailto:?subject=Check out this IMD showcase!&amp;body=Check out this IMD showcase https://www.weared-zine.be/showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>"
+                        title="Share by Email" class="btn primary__btn">
+                            Share by mail
+                    </a>
+                    <button value="localhost/dezine/showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn share">Share by link</button>
+                </div>
             </div>    
             <div class="profile__info-socials">
                 <?php if(!empty($user["linkedin"])): ?>

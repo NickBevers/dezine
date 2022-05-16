@@ -126,14 +126,14 @@
                     <?php endif; ?>
                 <?php endif; ?>             
                 <div class="profile__info__btn">
+                    <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
+                        Showcase user
+                    </a>
                     <?php if($_GET["id"] != $_SESSION["id"]): ?>   
                         <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
                             Report user
                         </a>
                     <?php endif; ?> 
-                    <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
-                        Showcase user
-                    </a>
                 </div>   
                 <div class="profile__info__moderator">
                     <?php if (User::checkUserRole($uid) !== "user"): ?>
