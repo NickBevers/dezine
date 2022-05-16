@@ -55,16 +55,27 @@
         <div class="profile__info__img">
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
         </div>
-        <div class="profile__info__details">
-            <h1><?php echo $user["username"]; ?></h1>
-            <h4><?php echo $user["education"]; ?></h4>
-            <div>
-                <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
-                <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
-                <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
-                <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
+        <div class="profile__info__block">
+            <div class="profile__info__details">
+                <h1><?php echo $user["username"]; ?></h1>
+                <h4><?php echo $user["education"]; ?></h4>
+                <p><?php echo $user["bio"]; ?></p>
+            </div>    
+            <div class="profile__info-socials">
+                <?php if(!empty($user["linkedin"])): ?>
+                    <a href="<?php echo $user["linkedin"]; ?>" target="_blank"><img src="./assets/linkedin_icon.svg" alt="linkedin icon"></a>
+                <?php endif; ?>
+                <?php if(!empty($user["website"])): ?>
+                    <a href="<?php echo $user["website"]; ?>" target="_blank"><img src="./assets/web_small_icon.svg" alt="website icon"></a>
+                <?php endif; ?>
+                <?php if(!empty($user["instagram"])): ?>
+                    <a href="<?php echo $user["instagram"]; ?>" target="_blank"><img src="./assets/insta_small_icon.svg" alt="instagram icon"></a>
+                <?php endif; ?>
+                <?php if(!empty($user["github"])): ?>
+                    <a href="<?php echo $user["github"]; ?>" target="_blank"><img src="./assets/github_icon.svg" alt="github icon"></a>
+                <?php endif; ?>
             </div>
-        </div>    
+        </div>
     </section>
 
     <h1 class="showcase__title"><?php echo $user["username"]; ?>'s Showcase</h1>

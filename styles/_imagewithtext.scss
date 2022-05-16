@@ -4,7 +4,10 @@
     grid-template-rows: 1fr;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    margin: 0 5rem;
+    padding: 2rem 0 4rem 0;
+
+    border-bottom: 1.5px solid $lightergrey;
 }
 
 .profile__info__img {
@@ -19,6 +22,14 @@
     height: 200px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.profile__info__block{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3rem;
 }
 
 .profile__info__details {
@@ -52,13 +63,43 @@
     gap: 1rem;
 }
 
-.getRegisterLink{
-    input{
-        border-radius: 5px;
-        border: 1.5px solid $lightgrey;
-        height: 2rem;
+.profile__info__moderator{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile__info-socials{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.3rem;
+
+    img{
+        width: 30px;
+        height: 30px;
+        border-radius: 0;
+        object-fit: contain;
+
+        &:hover{
+            filter:invert(77%) sepia(85%) saturate(607%) hue-rotate(19deg) brightness(103%) contrast(103%);
+        }
     }
 }
+
+.follow p, .unfollow p{
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xxs;
+
+    &:hover{
+        color: $accent;
+        text-decoration: underline double $accent;
+    }
+}
+
 
 @media (max-width: 768px) and (min-width: 600px) {
     .profile__info__btn{

@@ -84,70 +84,90 @@
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
         </div>
 
-        
-        <div class="profile__info__details">
-            <div class="profile__info__details__username">
-                <h1><?php echo $user["username"]; ?></h1>
-                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
-                    <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
-                <?php endif; ?> 
-                <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
-                    <form action="#" method="post">
-                        <?php if($user["user_role"] === "user"): ?>
-                            <button name="moderator" value="assign" type="submit" class="moderator__btn">Make moderator</button>
-                        <?php endif; ?>
-                        <?php if($user["user_role"] !== "user"): ?>
-                            <button name="moderator" type="delete" class="moderator__btn">Delete moderator role</button>
-                        <?php endif; ?>
-                    </form>
-                <?php endif; ?>
-            </div>
-            <h4><?php echo $user["education"]; ?></h4>
-            <p><?php echo $user["bio"]; ?></p>
-            <div>
-                <a href="<?php echo $user["website"]; ?>"><?php echo $user["website"]; ?></a>
-                <a href="<?php echo $user["instagram"]; ?>"><?php echo $user["instagram"]; ?></a>
-                <a href="<?php echo $user["github"]; ?>"><?php echo $user["github"]; ?></a>
-                <a href="<?php echo $user["linkedin"]; ?>"><?php echo $user["linkedin"]; ?></a>
-            </div>
-            <?php if (intval(User::checkban($_SESSION["id"])) === 0):  ?>
-                <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
-                    <?php if (Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
-                    <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Follow</div>
-                    <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Unfollow</div>
-                    <?php else: ?>
-                    <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">Follow</div>
-                    <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">Unfollow</div>
+        <div class="profile__info__block">
+            <div class="profile__info__details">
+                <div class="profile__info__details__username">
+                    <h1><?php echo $user["username"]; ?></h1>
+                    <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                        <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
+                    <?php endif; ?> 
+                    <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                        <form action="#" method="post">
+                            <?php if($user["user_role"] === "user"): ?>
+                                <button name="moderator" value="assign" type="submit" class="btn moderator__btn">Make moderator</button>
+                            <?php endif; ?>
+                            <?php if($user["user_role"] !== "user"): ?>
+                                <button name="moderator" type="delete" class="btn moderator__btn">Delete moderator role</button>
+                            <?php endif; ?>
+                        </form>
                     <?php endif; ?>
-                <?php endif; ?>
-            <?php endif; ?>
-            <div class="profile__info__btn">
-                <?php if($_GET["id"] != $_SESSION["id"]): ?>   
-                    <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
-                        Report user
+                </div>
+                <h4><?php echo $user["education"]; ?></h4>
+                <p><?php echo $user["bio"]; ?></p>
+                <?php if (intval(User::checkban($_SESSION["id"])) === 0):  ?>
+                    <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
+                        <div class="profile__info-follow">
+                            <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
+                                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">
+                                    <p>Follow</p>
+                                </div>
+                                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">
+                                    <p>Unfollow</p>
+                                </div>
+                            <?php else: ?>
+                                <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>">
+                                    <p>Follow</p>
+                                </div>
+                                <div class="unfollow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">
+                                    <p>Unfollow</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>   
+                    <?php endif; ?>
+                <?php endif; ?>             
+                <div class="profile__info__btn">
+                    <?php if($_GET["id"] != $_SESSION["id"]): ?>   
+                        <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
+                            Report user
+                        </a>
+                    <?php endif; ?> 
+                    <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
+                        Showcase user
                     </a>
-                <?php endif; ?> 
-        
-                <?php if (User::checkModerator($uid)): ?>
-                    <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn primary__btn">
-                        <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
-                            Retract ban
-                        <?php else: ?>
-                            Ban user
-                        <?php endif; ?>    
-                    </a>
+                </div>   
+                <div class="profile__info__moderator">
+                    <?php if (User::checkUserRole($uid) !== "user"): ?>
+                        <div class="getRegisterLink">
+                            <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
+                            <script src="./javascript/getLink.js"></script>
+                        </div>
+                    <?php endif; ?>   
+                    <?php if (User::checkModerator($uid)): ?>
+                        <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
+                            <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
+                                Retract ban
+                            <?php else: ?>
+                                Ban user
+                            <?php endif; ?>    
+                        </a>
+                    <?php endif; ?>  
+                </div>                              
+            </div>  
+            <div class="profile__info-socials">
+                <?php if(!empty($user["linkedin"])): ?>
+                    <a href="<?php echo $user["linkedin"]; ?>" target="_blank"><img src="./assets/linkedin_icon.svg" alt="linkedin icon"></a>
                 <?php endif; ?>
-                <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
-                    Showcase user
-                </a>
-            </div>             
-            <?php if (User::checkUserRole($uid) !== "user"): ?>
-            <div class="getRegisterLink">
-                <button class="getRegisterLinkBtn moderator__btn">Get Alumni Link</button>
-                <script src="./javascript/getLink.js"></script>
+                <?php if(!empty($user["website"])): ?>
+                    <a href="<?php echo $user["website"]; ?>" target="_blank"><img src="./assets/web_small_icon.svg" alt="website icon"></a>
+                <?php endif; ?>
+                <?php if(!empty($user["instagram"])): ?>
+                    <a href="<?php echo $user["instagram"]; ?>" target="_blank"><img src="./assets/insta_small_icon.svg" alt="instagram icon"></a>
+                <?php endif; ?>
+                <?php if(!empty($user["github"])): ?>
+                    <a href="<?php echo $user["github"]; ?>" target="_blank"><img src="./assets/github_icon.svg" alt="github icon"></a>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>         
-        </div>  
+        </div>
     </section>
     
     <section class="posts">

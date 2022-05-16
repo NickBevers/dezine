@@ -34,13 +34,13 @@ h2 {
 h3 {
   color: #120CFF;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 h4 {
   color: #120CFF;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .hidden {
@@ -704,7 +704,7 @@ footer {
 
 .primary__btn {
   border: 3px solid #000000;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.6rem;
   color: #000000;
 }
 
@@ -715,7 +715,7 @@ footer {
 
 .secondary__btn {
   border: 3px solid #000000;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.6rem;
   color: #BFFD00;
   border-radius: 20px;
   background-color: #000000;
@@ -734,7 +734,7 @@ footer {
 
 .secondary__btn-reverse {
   border: 3px solid #BFFD00;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.6rem;
   color: #000000;
   border-radius: 20px;
   background-color: #BFFD00;
@@ -749,16 +749,14 @@ footer {
 
 .moderator__btn {
   background-color: #ffffff;
-  border-color: #120CFF;
-  border-width: 2px;
-  border-radius: 0.5rem;
+  border: 2px solid #120CFF;
   padding: 0.4rem 0.6rem;
-  font-size: large;
+  color: #120CFF;
 }
 
 .moderator__btn:hover {
-  background-color: #ffffff;
-  padding: 0.5rem 0.7rem;
+  background-color: #120CFF;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -810,7 +808,9 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 2rem;
+  margin: 0 5rem;
+  padding: 2rem 0 4rem 0;
+  border-bottom: 1.5px solid #d5d5d5;
 }
 
 .profile__info__img {
@@ -835,6 +835,23 @@ footer {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
+}
+
+.profile__info__block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 3rem;
 }
 
 .profile__info__details {
@@ -894,10 +911,62 @@ footer {
   gap: 1rem;
 }
 
-.getRegisterLink input {
-  border-radius: 5px;
-  border: 1.5px solid #a4a3a3;
-  height: 2rem;
+.profile__info__moderator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+
+.profile__info-socials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.profile__info-socials img {
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.profile__info-socials img:hover {
+  -webkit-filter: invert(77%) sepia(85%) saturate(607%) hue-rotate(19deg) brightness(103%) contrast(103%);
+          filter: invert(77%) sepia(85%) saturate(607%) hue-rotate(19deg) brightness(103%) contrast(103%);
+}
+
+.follow p, .unfollow p {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.follow p:hover, .unfollow p:hover {
+  color: #120CFF;
+  -webkit-text-decoration: underline double #120CFF;
+          text-decoration: underline double #120CFF;
 }
 
 @media (max-width: 768px) and (min-width: 600px) {
