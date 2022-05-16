@@ -4,6 +4,8 @@
     use \Helpers\Security;
     use \Helpers\Cleaner;
     use \Classes\Auth\User;
+    use Classes\Actions\Report;
+    use Classes\Content\Post;
 
     Validate::start();
     
@@ -37,7 +39,6 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
         <h1>Moderator Overviewpage</h1>
-        <!-- styling nog doen -->
         <?php if(isset($_GET["id"])): ?>
         <div class="alert alert-success hidden"></div>
 

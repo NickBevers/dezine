@@ -1,8 +1,6 @@
 <?php
     include_once("bootstrap.php");
     use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
     use Classes\Auth\Reset;
 
     if ($_GET['key'] && $_GET['token']) {
