@@ -1,22 +1,25 @@
 <?php
-  include_once(__DIR__ . "/autoloader.php");
-  include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    include_once("bootstrap.php");
+    include_once("./helpers/Security.help.php");
+    include_once("./helpers/Cleaner.help.php");
+    include_once("./helpers/Validate.help.php");
+    use Classes\Auth\Reset;
+    use Helpers\Validate;
 
-  if(!empty($_POST)) {
-    if(CheckEmpty::isNotEmpty($_POST['email'])){          
-        $emailId = $_POST['email'];
+    if (!empty($_POST)) {
+        if (Validate::isNotEmpty($_POST['email'])) {
+            $emailId = $_POST['email'];
 
-        // echo $emailId;
-        try{
-          $reset = new Reset();
-          $reset->setEmail($emailId);
-          $message = $reset->resetMail();
-        } catch(Throwable $e){
-          $error = $e->getMessage();
+            // echo $emailId;
+            try {
+                $reset = new Reset();
+                $reset->setEmail($emailId);
+                $message = $reset->resetMail();
+            } catch (Throwable $e) {
+                $error = $e->getMessage();
+            }
         }
-        
     }
-  }
 
 ?>
 <!DOCTYPE html>
@@ -32,11 +35,11 @@
    <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
       <main>         
-        <?php if(!empty($message)): ?>
+        <?php if (!empty($message)): ?>
             <div class="alert alert-success"><?php echo $message; ?></div>
         <?php endif; ?>
 
-        <?php if(!empty($error)): ?>
+        <?php if (!empty($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 

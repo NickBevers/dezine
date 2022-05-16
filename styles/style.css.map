@@ -14,7 +14,8 @@
         "_singlepost.scss",
         "_centeredtext.scss",
         "_form.scss",
-        "_reports.scss"
+        "_reports.scss",
+        "_error.scss"
     ],
     "names": [],
     "file": "style.css"

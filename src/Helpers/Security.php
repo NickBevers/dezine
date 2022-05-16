@@ -1,4 +1,5 @@
 <?php
+    namespace Helpers;
     abstract class Security {
         public static function isLoggedIn(){
 

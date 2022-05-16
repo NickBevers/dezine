@@ -1,0 +1,16 @@
+.alert{
+    color: $black;
+    padding: 2rem;
+    width: 50vw;
+    border-radius: 5px;
+    font-size: $font-size-xxs;
+    font-weight: $font-weight-extrabold;
+}
+
+.alert-success{
+    background-color: $secondary;
+}
+
+.alert-danger{
+    background-color: $primary;
+}
