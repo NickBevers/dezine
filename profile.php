@@ -20,14 +20,15 @@
             header('Location: home.php');
         } else {
             $id = $_SESSION["id"];
-            $profileUser = Cleaner::cleanInput($_SESSION["id"]);
+            $profileUser = intval(Cleaner::cleanInput($_SESSION["id"]));
             header("Location: profile.php?id=$id");
         }
     } else {
-        $profileUser = Cleaner::cleanInput($_GET["id"]);
+        $profileUser = intval(Cleaner::cleanInput($_GET["id"]));
     }
 
     $user = User::getUserbyId($profileUser);
+
     if (empty($user)) {
         header('Location: home.php');
     }
@@ -217,7 +218,7 @@
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>
-                            <?php elseif ($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
+                            <?php elseif (User::checkModerator($uid)):?>                                    
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>      

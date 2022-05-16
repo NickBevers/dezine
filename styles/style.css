@@ -952,6 +952,7 @@ footer {
 
 .posts__bkg {
   background-color: #FCD7F7;
+  max-width: 30vw;
 }
 
 .post {
