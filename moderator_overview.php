@@ -4,12 +4,15 @@
     use \Helpers\Security;
     use \Helpers\Cleaner;
     use \Classes\Auth\User;
+
     Validate::start();
 
-    if(!Security::isLoggedIn()) { header('Location: login.php');}
+    if (!Security::isLoggedIn()) {
+        header('Location: login.php');
+    }
 
     $uid = Cleaner::cleanInput($_SESSION["id"]);
-    if(!User::checkModerator($uid)){
+    if (!User::checkModerator($uid)) {
         header('Location: home.php');
     }
 
@@ -34,7 +37,7 @@
         <div class="form form--profile">
             <div class="alert alert-success hidden"></div>
 
-            <?php if(User::checkBan($banId)): ?>
+            <?php if (User::checkBan($banId)): ?>
                 <div class="banning hidden">
                     <h2>Would you like to ban user <?php echo $user["username"]; ?>?</h2>
                     <button href="#" class="btn secondary__btn secondary__btn-signup ban" data-id="<?php echo $banId; ?>">Ban user</button>

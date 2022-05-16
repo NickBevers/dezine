@@ -1,5 +1,5 @@
 <?php
-    include_once("bootstrap.php");   
+    include_once("bootstrap.php");
     use \Classes\Auth\User;
     use \Classes\Content\Post;
     use \Classes\Actions\Like;
@@ -8,9 +8,10 @@
     use \Helpers\Validate;
     use \Helpers\Security;
     use \Helpers\Cleaner;
+
     Validate::start();
 
-    if(!Security::isLoggedIn()) {
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
@@ -46,8 +47,8 @@
 
     $role = $user["user_role"];
 
-    if(isset($_POST["moderator"])){
-        if($_POST["moderator"] === "assign"){
+    if (isset($_POST["moderator"])) {
+        if ($_POST["moderator"] === "assign") {
             $role = "moderator";
             User::UpdateUserRole($role, $user["id"]);
         } else {
@@ -88,15 +89,15 @@
         <div class="profile__info__details">
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
-                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                <?php if ($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
                     <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
                 <?php endif; ?> 
-                <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                <?php if (intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
                     <form action="#" method="post">
-                        <?php if($user["user_role"] === "user"): ?>
+                        <?php if ($user["user_role"] === "user"): ?>
                             <button name="moderator" value="assign" type="submit" class="moderator__btn">Make moderator</button>
                         <?php endif; ?>
-                        <?php if($user["user_role"] !== "user"): ?>
+                        <?php if ($user["user_role"] !== "user"): ?>
                             <button name="moderator" type="delete" class="moderator__btn">Delete moderator role</button>
                         <?php endif; ?>
                     </form>
@@ -122,7 +123,7 @@
                 <?php endif; ?>
             <?php endif; ?>
             <div class="profile__info__btn">
-                <?php if($_GET["id"] != $_SESSION["id"]): ?>   
+                <?php if ($_GET["id"] != $_SESSION["id"]): ?>   
                     <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
                         Report user
                     </a>
@@ -216,7 +217,7 @@
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>
-                            <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
+                            <?php elseif ($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>      

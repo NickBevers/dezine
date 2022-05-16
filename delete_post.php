@@ -1,4 +1,4 @@
-<?php 
+<?php
     include_once("bootstrap.php");
     use \Helpers\Validate;
     use \Helpers\Security;
@@ -6,7 +6,7 @@
     
     Validate::start();
 
-	if(!Security::isLoggedIn()) {
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
@@ -17,4 +17,3 @@
     }
     
     header("Location: profile.php");
-?>

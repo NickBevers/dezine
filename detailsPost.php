@@ -4,8 +4,7 @@
     use \Helpers\Security;
     use Classes\Content\Post;
     use Classes\Actions\Comment;
-    use Classes\Auth\User;    
-    use phpDocumentor\Reflection\Location;
+    use Classes\Auth\User;
 
     Validate::start();
     
@@ -23,8 +22,8 @@
     
     $visitor = Post::getViewsbyId($_SESSION["id"], $_GET["pid"]);
 
-    if($_SESSION["id"] !== $post["user_id"]){
-        if($visitor === false){
+    if ($_SESSION["id"] !== $post["user_id"]) {
+        if ($visitor === false) {
             Post::addViewbyPost($_GET["pid"], $_SESSION["id"]);
         }
     }
@@ -48,7 +47,7 @@
             <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                 <h3><?php echo $user["username"] ?></h3>         
             </a>
-            <?php if($_SESSION["id"] === $post["user_id"]): ?>
+            <?php if ($_SESSION["id"] === $post["user_id"]): ?>
                 <div class="views">
                     <img src="./assets/eye_icon.svg" alt="eye icon for views count">
                     <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
@@ -70,7 +69,7 @@
                 <?php endif; ?>  
             </div>
         </div>
-        <?php if(intval(User::checkban($_SESSION["id"])) === 0): ?>
+        <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
             <div class="post__comment">
                 <div class="post__comment__form">
                     <?php $user = User::getUserbyId($_SESSION['id']); ?>
@@ -86,7 +85,7 @@
                     </a>
                 </div>
                 <ul class="post__comment__list">
-                    <?php foreach($comments as $comment): ?>
+                    <?php foreach ($comments as $comment): ?>
                         <li>
                             <div class="post__comment--left">
                                 <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
