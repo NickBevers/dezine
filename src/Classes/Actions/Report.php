@@ -9,7 +9,7 @@
         private $reported_user_id;
         private $post_id;
         private $reason;
-       
+        
         public function getPostid()
         {
             return $this->post_id;
@@ -85,7 +85,7 @@
 
         public static function getReports(){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from reports order by timestamp asc");
+            $statement = $conn->prepare("select * from reports order by timestamp desc");
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
