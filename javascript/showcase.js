@@ -49,10 +49,8 @@ function addRemoveShowcase(e){
     });  
 }
 
-let share = document.querySelector(".share");
-share.addEventListener("click", copy());
-
-function copy(){
+let share = document.querySelector(".share__link");
+share.addEventListener("click", () =>{
     copyText = share.value;
     navigator.clipboard.writeText(copyText);
     let p = document.createElement("p");
@@ -61,4 +59,4 @@ function copy(){
     setTimeout(() =>{        
         document.querySelector(".profile__info-share").removeChild(p);
     }, 2000);
-}
+});

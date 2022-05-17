@@ -100,6 +100,14 @@
     }
 }
 
+.profile__info-share{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
 
 @media (max-width: 768px) and (min-width: 600px) {
     .profile__info__btn{

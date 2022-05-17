@@ -65,7 +65,7 @@
                         title="Share by Email" class="btn primary__btn">
                             Share by mail
                     </a>
-                    <button value="localhost/dezine/showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn share">Share by link</button>
+                    <button value="localhost/dezine/showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn share__link">Share by link</button>
                 </div>
             </div>    
             <div class="profile__info-socials">
