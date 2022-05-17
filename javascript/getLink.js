@@ -1,4 +1,3 @@
-let link_input = document.querySelector(".specialRegisterLink");
 let link_button = document.querySelector(".getRegisterLinkBtn");
 
 link_button.addEventListener("click", (e) => {
