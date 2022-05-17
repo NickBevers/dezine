@@ -5,9 +5,8 @@
     use DateTime;
     use PDO;
     use Error;
-    require 'vendor/autoload.php';
     use PHPColorExtractor\PHPColorExtractor;
-    require './../vendor/autoload.php';
+    require 'vendor/autoload.php';
 
 
     class Post {
