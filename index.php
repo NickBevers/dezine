@@ -1,5 +1,7 @@
 <?php  
-    include_once(__DIR__ . "/autoloader.php");
+    include_once("bootstrap.php");
+    use Classes\Content\Post;
+    
     $sorting = "desc";
 
 ?><!DOCTYPE html>
@@ -8,8 +10,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/orj4spc.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <title>Dezine</title>
 </head>
 <body>
@@ -30,17 +32,7 @@
     <?php $posts = POST::getSomePosts($sorting, 0, 6); ?>
     <?php foreach($posts as $post): ?>
         <div class="post post--index">
-            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-            <div class="post__info">
-                <h4><?php echo $post["title"] ?></h4>
-                <p><?php echo $post["description"] ?></p>
-                <?php $tags = json_decode($post["tags"]); ?>
-                <div class="post__info__tags">
-                    <?php foreach($tags as $t): ?>
-                        <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+            <img src="<?php echo $post["image"] ?>" alt="<?php echo $post["title"] ?>" class="post--index__image">
         </div>              
     <?php endforeach; ?>
     </section>

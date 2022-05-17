@@ -1,7 +1,10 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
+    namespace Classes\Content;
+    use Helpers\Cleaner;
+    use Classes\Auth\DB;
+    use DateTime;
+    use PDO;
+    use Error;
     require 'vendor/autoload.php';
     use PHPColorExtractor\PHPColorExtractor;
 
@@ -291,5 +294,43 @@
                     case $l < 10: return "black"; break;
                 }
             }
+        }
+
+        public static function addViewbyPost($postId, $userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("insert into views (user_id, post_id) values (:user_id,:post_id)");
+            $statement->bindValue('user_id', $userId);
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+            // var_dump($statement->execute());
+        }
+
+        public static function getViewsbyPost($postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from views where post_id = :post_id");
+            $statement->bindValue('post_id', $postId);
+            $statement->execute();
+            $res = $statement->rowCount();
+            // var_dump($res + 1);
+            return $res;
+        }
+
+        public static function getViewsbyId($userId, $postId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from views where user_id = :user_id and post_id = :post_id");
+            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('user_id', $userId);
+            $statement->execute();
+            $res = $statement->fetch();
+            // var_dump($res);
+            return $res;
+        }
+
+        public static function getAllPosts(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts");
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
         }
     }
