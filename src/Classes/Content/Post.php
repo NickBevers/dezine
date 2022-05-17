@@ -325,4 +325,12 @@
             // var_dump($res);
             return $res;
         }
+
+        public static function getAllPosts(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts");
+            $statement->execute();
+            $res = $statement->fetchAll();
+            return $res;
+        }
     }

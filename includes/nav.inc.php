@@ -1,6 +1,7 @@
 <?php 
   include_once("bootstrap.php");
   use \Helpers\Security;
+  use Classes\Auth\User;
 ?><nav>
   <div class="nav--full">
     <div class="nav__element nav--left">
@@ -14,6 +15,9 @@
           <a aria-current="page" href="index.php">
             Explore
           </a>
+        <?php endif; ?>
+        <?php if (isset($_SESSION["id"]) && User::checkUserRole($_SESSION["id"]) !== "user"): ?>
+          <a href="moderator.php">Moderate</a>
         <?php endif; ?>
         
       </li>
@@ -42,6 +46,8 @@
       <?php if ($_SERVER['REQUEST_URI'] == "/php/dezine/index.php"): ?>
         <a href="contact.php" class="nav__button">Contact</a>
       <?php endif; ?>
+
+      
 
       <?php if (Security::isLoggedIn()): ?>
         <a href="new_post.php">+ Add post</a>

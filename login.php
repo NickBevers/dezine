@@ -1,32 +1,31 @@
 <?php
-	include_once("bootstrap.php");
+    include_once("bootstrap.php");
     use \Helpers\Security;
-	use \Classes\Auth\User;
+    use \Classes\Auth\User;
 
-
-	if(Security::isLoggedIn()) {
-		header('Location: home.php');
-	}
-	
-	if( !empty($_POST) ) {
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+    if (Security::isLoggedIn()) {
+        header('Location: home.php');
+    }
+    
+    if (!empty($_POST)) {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
         try {
             $user = new User;
             $user->setEmail($email);
-			$user->setPassword($password);
-			$usr = $user->canLogin();
-			var_dump($usr);
-            if($usr) {
+            $user->setPassword($password);
+            $usr = $user->canLogin();
+            var_dump($usr);
+            if ($usr) {
                 session_start();
                 $_SESSION['email'] = $user->getEmail();
-				$_SESSION['id'] = $usr["id"];
+                $_SESSION['id'] = $usr["id"];
                 header("Location: home.php");
             }
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
-	}
+    }
     
 ?><!DOCTYPE html>
 <html>
