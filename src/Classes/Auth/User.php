@@ -172,10 +172,11 @@
                 $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
 
                 $conn = DB::getInstance();
-                $statement = $conn->prepare("insert into users (username, email, password, user_role) values (:username, :email, :password, 'user');");
+                $statement = $conn->prepare("insert into users (username, email, password, user_role, profile_image) values (:username, :email, :password, 'user', :profile_image);");
                 $statement->bindValue(':username', $this->username);
                 $statement->bindValue(':email', $this->email);
                 $statement->bindValue(':password', $password);
+                $statement->bindValue(':profile_image', $this->profile_image);
                 $statement->execute();
                 $res = $conn->lastInsertId();
                 return $res;
@@ -254,8 +255,7 @@
             $statement->execute();
         }
 
-        public function updateUser(){
-            
+        public function updateUser(){            
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
             $statement->bindValue(':username',$this->username);
