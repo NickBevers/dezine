@@ -49,14 +49,16 @@ function addRemoveShowcase(e){
     });  
 }
 
-let share = document.querySelector(".share__link");
-share.addEventListener("click", () =>{
-    copyText = share.value;
-    navigator.clipboard.writeText(copyText);
-    let p = document.createElement("p");
-    p.innerHTML = "Link was copied";
-    document.querySelector(".profile__info-share").appendChild(p);
-    setTimeout(() =>{        
-        document.querySelector(".profile__info-share").removeChild(p);
-    }, 2000);
-});
+if(document.querySelector(".share__link") != undefined || document.querySelector(".share__link") != null){
+    let share = document.querySelector(".share__link");
+    share.addEventListener("click", () =>{
+        copyText = share.value;
+        navigator.clipboard.writeText(copyText);
+        let p = document.createElement("p");
+        p.innerHTML = "Link was copied";
+        document.querySelector(".profile__info-share").appendChild(p);
+        setTimeout(() =>{        
+            document.querySelector(".profile__info-share").removeChild(p);
+        }, 2000);
+    });
+}

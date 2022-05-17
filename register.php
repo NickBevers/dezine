@@ -27,20 +27,15 @@
       
         if ($password === $password_conf) {
             try {
+                $default_image = "assets/default_profile_image.png";          
                 $user = new User();
             
                 // use setters to fill in data for this user
                 $user->setUsername($username);
                 $user->setEmail($email);
                 $user->setPassword($password);
-
-                $default_image = "assets/default_profile_image.png";
-                $fileName = basename($_FILES["profile_image"]["name"]);
-                $fileName = str_replace(" ", "_", $fileName);
-                $targetFilePath = "uploads/profile/" . $fileName;
-                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-                $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');            
                 $user->setProfileImage($default_image);
+
                 
                 if (isset($_SESSION["token"])) {
                     $id = $user->register($_SESSION["token"]);
