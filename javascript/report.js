@@ -3,12 +3,14 @@ let report_input = document.querySelector("#reason");
 document.querySelector("#btn__add__Report").addEventListener("click", function () {
 
     let post_id = this.dataset.post_id;
+    let user_id = this.dataset.user_id;
     let reported_user_id = this.dataset.reported_user_id;
     let reason = document.querySelector("#reason").value;
     let formData = new FormData();
 
     formData.append("reason", reason);
     formData.append("post_id", post_id);
+    formData.append("user_id", user_id);
     formData.append("reported_user_id", reported_user_id);
     console.log(post_id);
 

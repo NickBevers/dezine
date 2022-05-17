@@ -4,7 +4,10 @@
     grid-template-rows: 1fr;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    margin: 0 5rem;
+    padding: 2rem 0 4rem 0;
+
+    border-bottom: 1.5px solid $lightergrey;
 }
 
 .profile__info__img {
@@ -21,6 +24,14 @@
     border-radius: 50%;
 }
 
+.profile__info__block{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
 .profile__info__details {
     display: flex;
     flex-direction: column;
@@ -29,27 +40,11 @@
     gap: 0.5rem;
 }
 
-.profile__info__details button {
-    margin-left: 1rem;
-    background-color: var(--lighterWhite);
-    border-color: var(--accent);
-    border-width: 2px;
-    border-radius: 0.5rem;
-    padding: 0.4rem 0.6rem;
-    font-size: large;
-}
-
-.profile__info__details button:hover {
-    background-color: var(--lighterWhite);
-    padding: 0.5rem 0.7rem;
-    margin-left: 0.9rem;
-    cursor: pointer;
-}
-
 .profile__info__details__username {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1rem;
 }
 
 #profile__verified{
@@ -68,11 +63,63 @@
     gap: 1rem;
 }
 
+.profile__info__moderator{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile__info-socials{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.3rem;
+
+    img{
+        width: 30px;
+        height: 30px;
+        border-radius: 0;
+        object-fit: contain;
+
+        &:hover{
+            filter:invert(77%) sepia(85%) saturate(607%) hue-rotate(19deg) brightness(103%) contrast(103%);
+        }
+    }
+}
+
+.follow p, .unfollow p{
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xxs;
+
+    &:hover{
+        color: $accent;
+        text-decoration: underline double $accent;
+    }
+}
+
+.profile__info-share{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+
 @media (max-width: 768px) and (min-width: 600px) {
     .profile__info__btn{
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+
+    .profile__info {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 3rem;
     }
 }
 
@@ -81,5 +128,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+
+    .profile__info {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 3rem;
     }
 }

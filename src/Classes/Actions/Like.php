@@ -1,6 +1,7 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Classes\Actions;
+    use \Helpers\Cleaner;
+    use Classes\Auth\DB;
     
     class Like {
         private $postId;

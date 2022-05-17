@@ -1,14 +1,17 @@
 <?php
-    include_once("./../autoloader.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Classes\Actions\Like;
 
     if (!empty($_POST)) {
+        // var_dump($_POST);
         $postId = $_POST['postId'];
+        $userId = $_POST["userId"];
     
         try {
             $like = new Like();
             $like->setPostId($postId);
-            $like->setUserId($_SESSION["id"]);
-            if(Like::checkLikes($postId, $_SESSION["id"]) === 0){
+            $like->setUserId($userId);
+            if(Like::checkLikes($postId, $userId) === 0){
                 $like->addLike();
                 $likes = Like::getLikes($postId);
 

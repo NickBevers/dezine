@@ -1,6 +1,11 @@
 <?php 
-    include_once("./../helpers/Cleaner.help.php");
-    include_once("./../autoloader.php");
+    namespace Classes\Content;
+    use Helpers\Cleaner;
+    use Classes\Auth\DB;
+    use DateTime;
+    use PDO;
+    use Error;
+    require 'vendor/autoload.php';
     use PHPColorExtractor\PHPColorExtractor;
     require './../vendor/autoload.php';
 
@@ -319,6 +324,14 @@
             $statement->execute();
             $res = $statement->fetch();
             // var_dump($res);
+            return $res;
+        }
+
+        public static function getAllPosts(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts");
+            $statement->execute();
+            $res = $statement->fetchAll();
             return $res;
         }
     }

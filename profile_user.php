@@ -1,8 +1,12 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-	if(!Security::isLoggedIn()) {
+    include_once(__DIR__ . "/bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Classes\Auth\User;
+
+    Validate::start();
+
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
     $email = $_SESSION['email'];
@@ -20,7 +24,7 @@
         $github = $_POST['github'];
         $second_email = $_POST['second_email'];
         
-        try{
+        try {
             $user->setEmail($email);
             $user->setUsername($username);
             $user->setEducation($education);
@@ -37,18 +41,18 @@
             $fileName = str_replace(" ", "_", $fileName);
             $targetFilePath = "uploads/profile/" . $fileName;
             $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');    
+            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');
            
-            if (isset($_POST['checkbox_name'])){
+            if (isset($_POST['checkbox_name'])) {
                 $user->setProfileImage($default_image);
             } else {
-                if ($_FILES['profile_image']['size'] == 0){
+                if ($_FILES['profile_image']['size'] == 0) {
                     // cover_image is empty (and not an error)
                     $profile_image = $users["profile_image"];
                     $user->setProfileImage($profile_image);
                 } else {
-                    if(in_array($fileType, $allowedFileTypes)){
-                        if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
+                    if (in_array($fileType, $allowedFileTypes)) {
+                        if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)) {
                             $user->setProfileImage($targetFilePath);
                         } else {
                             throw new Exception("The image could not be saved, please try again");
@@ -60,14 +64,14 @@
             }
 
             $users = $user->updateUser();
-            if($users){
+            if ($users) {
                 // header("Refresh:0");
                 $success = "Your profile was successfully updated";
-            } else{
+            } else {
                 $error = "Something has gone wrong, please try again.";
             }
         } catch (Throwable $error) {
-                $error = $error->getMessage();
+            $error = $error->getMessage();
         }
     }
 ?>
@@ -86,11 +90,11 @@
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
-        <?php if(isset($error)): ?>
+        <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <?php if(isset($success)): ?>
+        <?php if (isset($success)): ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
 

@@ -1,28 +1,31 @@
-<?php 
-    
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+<?php
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use Classes\Content\Post;
+    use Classes\Auth\User;
 
-	if(!Security::isLoggedIn()) {
+    Validate::start();
+
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
-    if(User::checkban($_SESSION["id"])){
+    if (User::checkban($_SESSION["id"])) {
         header('Location: home.php');
     }
 
-    if(isset($_GET["pid"])){
-        if($_SESSION["id"] != $_GET["uid"]) {
+    if (isset($_GET["pid"])) {
+        if ($_SESSION["id"] != $_GET["uid"]) {
             header('Location: profile.php');
         }
 
-        $post = POST::getPostByPostId($_GET["pid"]);
-    } else{
+        $post = Post::getPostByPostId($_GET["pid"]);
+    } else {
         header("Location: profile.php");
     }
 
-    if(!empty($_POST)){
+    if (!empty($_POST)) {
         try {
             $post = new Post();
             $post->setTitle($_POST["title"]);
@@ -54,11 +57,11 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
 
     <main>
-        <?php if(isset($_SESSION['flash_error'])): ?>
+        <?php if (isset($_SESSION['flash_error'])): ?>
             <div class="error">
                 <p><?php echo($_SESSION['flash_error']); ?></p>
             </div>
-        <?php 
+        <?php
             unset($_SESSION['flash_error']);
             endif;
         ?>

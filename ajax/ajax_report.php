@@ -1,9 +1,10 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Helpers\Cleaner;
+    use \Classes\Actions\Report;
 
     if (!empty($_POST)) {
-        $user_id = Cleaner::cleanInput($_SESSION['id']);
+        $user_id = $_POST['user_id'];
         $reason = $_POST['reason'];
         $post_id = $_POST['post_id'];
         $reported_user_id = $_POST['reported_user_id'];

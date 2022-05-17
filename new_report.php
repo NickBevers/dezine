@@ -1,27 +1,26 @@
 <?php
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use Classes\Actions\Report;
 
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-	if(!Security::isLoggedIn()) {
+    Validate::start();
+
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
-    if(isset($_GET['postid']))
-    {
+    if (isset($_GET['postid'])) {
         $post_id = Cleaner::cleanInput($_GET['postid']);
-    }
-    else{
-    $post_id = "";
+    } else {
+        $post_id = "";
     }
 
-    if(isset($_GET['userid']))
-    {
+    if (isset($_GET['userid'])) {
         $reported_user_id = Cleaner::cleanInput($_GET['userid']);
-    }
-    else{
-    $reported_user_id = "";
+    } else {
+        $reported_user_id = "";
     }
 
     $user_id = Cleaner::cleanInput($_SESSION['id']);
@@ -47,12 +46,12 @@
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>        
-        <?php if($post_id !== "" && $post_id !== NULL ): ?>
+        <?php if ($post_id !== "" && $post_id !== null): ?>
         <div class="post">
             <img src=<?php echo $reports_post["image"] ?> alt=<?php echo $reports_post["title"] ?>>
             <div class="post__info">
                 <h3><?php echo $reports_post["title"] ?></h3>
-                <?php if(isset($_SESSION["id"])): ?>
+                <?php if (isset($_SESSION["id"])): ?>
                 <p><?php echo $reports_post["description"] ?></p>
 
                 <?php endif; ?>
@@ -98,7 +97,7 @@
             </div>
 
             <div id="report__button"></div>
-            <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>">Submit Report</a>
+            <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>" data-post_user_id="<?php echo $user_id; ?>">Submit Report</a>
         </div>
         <?php include_once("./includes/footer.inc.php"); ?>
     </main>
