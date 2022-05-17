@@ -33,7 +33,7 @@
 
 .primary__btn{
     border: 3px solid $black;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
     color: $black;
     // margin: 0 2rem;
 
@@ -45,7 +45,7 @@
 
 .secondary__btn{
     border: 3px solid $black;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
     color: $secondary;
     border-radius: 20px;
     background-color: $black;
@@ -65,7 +65,7 @@
 
 .secondary__btn-reverse{
     border: 3px solid $secondary;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
     color: $black;
     border-radius: 20px;
     background-color: $secondary;
@@ -80,15 +80,16 @@
 
 .moderator__btn {
     background-color: $lighterWhite;
-    border-color: $accent;
-    border-width: 2px;
-    border-radius: 0.5rem;
+    border: 2px solid $accent;
+    // border-radius: 0.5rem;
     padding: 0.4rem 0.6rem;
-    font-size: large;
+    color: $accent;
 
     &:hover {
-        background-color: $lighterWhite;
-        padding: 0.5rem 0.7rem;
+        background-color: $accent;
+        // border-color: $primary;
+        color: $lighterWhite;
+        // padding: 0.5rem 0.7rem;
         cursor: pointer;
     }
 }
