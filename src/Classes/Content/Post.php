@@ -5,8 +5,8 @@
     use DateTime;
     use PDO;
     use Error;
-    require 'vendor/autoload.php';
     use PHPColorExtractor\PHPColorExtractor;
+    require 'vendor/autoload.php';
 
 
     class Post {
@@ -131,7 +131,7 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
             $statement->execute();
-            $res = $statement->fetchAll();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
         }
         

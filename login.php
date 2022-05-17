@@ -15,9 +15,7 @@
             $user->setEmail($email);
             $user->setPassword($password);
             $usr = $user->canLogin();
-            var_dump($usr);
             if ($usr) {
-                session_start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['id'] = $usr["id"];
                 header("Location: home.php");
