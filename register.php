@@ -1,49 +1,55 @@
 <?php
-    include_once("./helpers/Security.help.php");
-    include_once("./helpers/Cleaner.help.php");
+    include_once("bootstrap.php");
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use Classes\Auth\User;
+    use Classes\Auth\Link;
+
     if (Security::isLoggedIn()) {
         header('Location: home.php');
     }
-    include_once(__DIR__ . "/classes/User.php");
 
     if (!empty($_GET["token"])) {
         $token = Cleaner::cleanInput($_GET["token"]);
-        if(!Link::checkLink($token)){header('Location: register.php'); $error="This link was not valid, please try again.";}
+        if (!Link::checkLink($token)) {
+            header('Location: register.php');
+            $error="This link was not valid, please try again.";
+        }
         $_SESSION["token"] = $token;
         // setcookie("token", $token, time() + 3600);
     }
 
     if (!empty($_POST)) {
-      $email = $_POST["email"];
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-      $password_conf = $_POST["password_conf"];
+        $email = $_POST["email"];
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        $password_conf = $_POST["password_conf"];
       
-      if ($password === $password_conf) {
-          try {
-            $user = new User();
+        if ($password === $password_conf) {
+            try {
+                $user = new User();
             
-            // use setters to fill in data for this user
-            $user->setUsername($username);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            if (isset($_SESSION["token"])) {
-                $id = $user->register($_SESSION["token"]);
-                Link::removeLink($_SESSION["token"]);
-            } else {
-                $id = $user->register();
+                // use setters to fill in data for this user
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPassword($password);
+                if (isset($_SESSION["token"])) {
+                    $id = $user->register($_SESSION["token"]);
+                    Link::removeLink($_SESSION["token"]);
+                } else {
+                    $id = $user->register();
+                }
+                session_start();
+                $_SESSION['email'] = $user->getEmail();
+                $_SESSION['id'] = $id;
+                header("Location: home.php");
+            } catch (Throwable $error) {
+                // if any errors are thrown in the class, they can be caught here
+                $error = $error->getMessage();
             }
-            session_start();
-            $_SESSION['email'] = $user->getEmail();
-            $_SESSION['id'] = $id;
-            header("Location: home.php");
-          } catch (Throwable $error) {
-              // if any errors are thrown in the class, they can be caught here
-              $error = $error->getMessage();
-          }
-      } else {
-          $error = "The passwords don't match";
-      }
+        } else {
+            $error = "The passwords don't match";
+        }
     }
 
 ?>

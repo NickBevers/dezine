@@ -1,25 +1,34 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+    include_once("bootstrap.php");
+    use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Actions\Like;
+    use \Classes\Content\Showcase;
+    use \Classes\Actions\Follow;
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+
+    Validate::start();
+
     if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    
 
     if (empty($_GET["id"])) {
         if (empty($_SESSION["id"])) {
             header('Location: home.php');
         } else {
             $id = $_SESSION["id"];
-            $profileUser = Cleaner::cleanInput($_SESSION["id"]);
+            $profileUser = intval(Cleaner::cleanInput($_SESSION["id"]));
             header("Location: profile.php?id=$id");
         }
     } else {
-        $profileUser = Cleaner::cleanInput($_GET["id"]);
+        $profileUser = intval(Cleaner::cleanInput($_GET["id"]));
     }
 
     $user = User::getUserbyId($profileUser);
+
     if (empty($user)) {
         header('Location: home.php');
     }
@@ -39,8 +48,8 @@
 
     $role = $user["user_role"];
 
-    if(isset($_POST["moderator"])){
-        if($_POST["moderator"] === "assign"){
+    if (isset($_POST["moderator"])) {
+        if ($_POST["moderator"] === "assign") {
             $role = "moderator";
             User::UpdateUserRole($role, $user["id"]);
         } else {
@@ -81,16 +90,16 @@
         <div class="profile__info__details">
             <div class="profile__info__details__username">
                 <h1><?php echo $user["username"]; ?></h1>
-                <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                <?php if ($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
                     <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
                 <?php endif; ?> 
-                <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                <?php if (intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
                     <form action="#" method="post">
-                        <?php if($user["user_role"] === "user"): ?>
-                            <button name="moderator" value="assign" type="submit">Make moderator</button>
+                        <?php if ($user["user_role"] === "user"): ?>
+                            <button name="moderator" value="assign" type="submit" class="moderator__btn">Make moderator</button>
                         <?php endif; ?>
-                        <?php if($user["user_role"] !== "user"): ?>
-                            <button name="moderator" type="delete">Delete moderator role</button>
+                        <?php if ($user["user_role"] !== "user"): ?>
+                            <button name="moderator" type="delete" class="moderator__btn">Delete moderator role</button>
                         <?php endif; ?>
                     </form>
                 <?php endif; ?>
@@ -115,7 +124,7 @@
                 <?php endif; ?>
             <?php endif; ?>
             <div class="profile__info__btn">
-                <?php if($_GET["id"] != $_SESSION["id"]): ?>   
+                <?php if ($_GET["id"] != $_SESSION["id"]): ?>   
                     <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
                         Report user
                     </a>
@@ -133,16 +142,14 @@
                 <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
                     Showcase user
                 </a>
-            </div>            
-        </div>    
-        </div>
-        <?php if (User::checkUserRole($uid) !== "user"): ?>
-        <div class="getRegisterLink">
-            <input type="text" class="specialRegisterLink">
-            <button class="getRegisterLinkBtn">Get Alumni Link</button>
-            <script src="./javascript/getLink.js"></script>
-        </div>
-        <?php endif; ?>
+            </div>             
+            <?php if (User::checkUserRole($uid) !== "user"): ?>
+            <div class="getRegisterLink">
+                <button class="getRegisterLinkBtn moderator__btn">Get Alumni Link</button>
+                <script src="./javascript/getLink.js"></script>
+            </div>
+            <?php endif; ?>         
+        </div>  
     </section>
     
     <section class="posts">
@@ -151,13 +158,13 @@
             <div class="post__img">
                 <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
                     <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                     <?php endif; ?>
                 <?php else: ?>
                     <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>">
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                     <?php endif; ?>
                 <?php endif; ?>
                 <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -202,19 +209,21 @@
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
-                        <?php endif; ?>                    
-                        <?php if ($uid == $_GET["id"]): ?>
-                            <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
-                                <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
-                            </a>  
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>
-                        <?php elseif($uid === $_GET["id"] || User::checkban($_SESSION["id"]) === 0):?>                                    
-                            <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
-                                <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
-                            </a>      
-                        <?php endif; ?> 
+                        <?php endif; ?>  
+                        <div class="post__actions-edit">
+                            <?php if ($uid == $_GET["id"]): ?>
+                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                    <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
+                                </a>  
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>
+                            <?php elseif (User::checkModerator($uid)):?>                                    
+                                <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
+                                    <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
+                                </a>      
+                            <?php endif; ?>
+                        </div>          
                     <?php endif; ?>
                 </div>
                 <?php if ($uid !== $_GET["id"]): ?>

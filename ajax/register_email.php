@@ -1,5 +1,6 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Classes\Auth\User;
 
     if (!empty($_POST)) {
         $email = $_POST['email'];

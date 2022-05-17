@@ -20,9 +20,11 @@ if(dislike !== null){
 function addRemoveLike(e){
     // console.log(e.target.parentElement);
     let postId = e.target.parentElement.dataset.id;
+    let userId = e.target.parentElement.dataset.uid;
     let parent = e.target.parentElement;
     let data = new FormData();
-    data.append("postId", postId);         
+    data.append("postId", postId);    
+    data.append("userId", userId);       
     
     fetch("ajax/save_like.php", {
         method: "POST",

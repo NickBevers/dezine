@@ -1,13 +1,13 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Classes\Actions\Comment;
     
     if (!empty($_POST)) {
         try {
             $comment = new Comment();
             $comment->setPostId($_POST['postId']);
             $comment->setText($_POST['text']);
-            $comment->setUserId($_SESSION['id']);
+            $comment->setUserId($_POST['userId']);
             $comment->save();
 
             $response = [

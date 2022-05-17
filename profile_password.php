@@ -1,13 +1,14 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Security.help.php");
-	if(!Security::isLoggedIn()) {
+    include_once(__DIR__ . "/bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Classes\Auth\User;
+
+    Validate::start();
+
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
-    include_once(__DIR__ . "/helpers/Security.help.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
-
-    //var_dump($_SESSION);
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];
@@ -15,11 +16,11 @@
         $password_conf = $_POST["password_conf"];
         $email = $_SESSION['email'];
 
-        if(CheckEmpty::isNotEmpty($c_password) && CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
-            if($new_password === $password_conf){
+        if (Validate::isNotEmpty($c_password) && Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
+            if ($new_password === $password_conf) {
                 if ($c_password === $new_password) {
                     $error = "New password cannot be the same as the old password";
-                } else{
+                } else {
                     try {
                         User::resetPassword($email, $c_password, $new_password);
                         $success = "Your password was successfully updated";
@@ -28,13 +29,13 @@
                         $error = $error->getMessage();
                     }
                 }
-            } else{
+            } else {
                 $error = "The passwords don't match";
             }
-        } else{
+        } else {
             $error = "Please fill in all fields of the form";
         }
-     }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,11 +51,11 @@
         <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
         
         <main>
-            <?php if(isset($error)): ?>
+            <?php if (isset($error)): ?>
                 <div class="alert alert-danger"><?php echo $error; ?></div>
             <?php endif; ?>
 
-            <?php if(isset($success)): ?>
+            <?php if (isset($success)): ?>
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
 

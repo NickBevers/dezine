@@ -1,5 +1,6 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
+    include_once("./../bootstrap.php");
+    use Classes\Actions\Report;
 
     if (!empty($_POST)) {
         $report_id = $_POST['report_id'];

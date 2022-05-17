@@ -1,10 +1,15 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    include_once("bootstrap.php");
+    use \Helpers\Validate;
+    use \Helpers\Security;
+    use \Helpers\Cleaner;
+    use \Classes\Auth\User;
+    use Classes\Actions\Report;
+    use Classes\Content\Post;
+
+    Validate::start();
+    
+    if(!Security::isLoggedIn()) { header('Location: login.php');}
 
     $uid = Cleaner::cleanInput($_SESSION["id"]);
     if (!User::checkModerator($uid)) {
@@ -34,8 +39,7 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
         <h1>Moderator Overviewpage</h1>
-        <!-- styling nog doen -->
-        <?php if (isset($_GET["id"])): ?>
+        <?php if(isset($_GET["id"])): ?>
         <div class="alert alert-success hidden"></div>
         <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
             <h2>Would you like to ban user <?php echo $user["username"]; ?>?</h2>
