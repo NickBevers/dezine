@@ -248,10 +248,11 @@
             $statement->execute();
 
             // remove posts
-            $stmt = $conn->prepare("select * from comments where user_id = :id");
+            $stmt = $conn->prepare("select * from posts where user_id = :id");
             $stmt->bindValue(':id', $id);
+            $stmt->execute();
             $res = $stmt->fetchAll();
-            foreach($res as $post){UploadImage::remove($post["public_id"]);}
+            foreach($res as $post){var_dump($post["public_id"]); UploadImage::remove($post["public_id"]);}
 
             $statement2 = $conn->prepare("delete from posts where user_id = :id");
             $statement2->bindValue(':id', $id);
@@ -265,10 +266,11 @@
 
         public static function deleteUserByEmail($userEmail) {
             $conn = DB::getInstance();
-            $stmt = $conn->prepare("select * from comments where email = :email");
+            $stmt = $conn->prepare("select * from users where email = :email");
             $stmt->bindValue(':email', $userEmail);
+            $stmt->execute();
             $res = $stmt->fetch();
-            UploadImage::remove($res["public_id"]);
+            UploadImage::remove($res["profile_image_public_id"]);
 
             $statement = $conn->prepare("delete from users where email = :email");
             $statement->bindValue(':email', $userEmail);
