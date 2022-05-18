@@ -101,30 +101,33 @@
 </head>
 <body>
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    HOME
-    <?php if (isset($_SESSION['email'])): ?>
-        <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
-    <?php endif; ?>
+    <div class="search">
+        HOME
+        <?php if (isset($_SESSION['email'])): ?>
+            <h3> Welcome <?php echo $_SESSION['email'] ?></h3>
+        <?php endif; ?>
 
-    <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-        <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-        <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-        <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
-    </select>
+        <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
+            <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+            <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+            <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
+        </select>
 
-    <?php if (isset($_GET["color"])): ?>
-    <a href="home.php">Reset Color filter</a>
-    <?php endif; ?>
+        <?php if (isset($_GET["color"])): ?>
+        <a href="home.php">Reset Color filter</a>
+        <?php endif; ?>
 
-    <section class="search_box">
-        <form action="" method="GET">
-            <input type="text" name="search" placeholder="Search here..." required="required" />
-            <input type="submit" value="submit">
-            <?php if (!empty($_GET["search"])): ?>
-                <a href="home.php">X</a>
-            <?php endif; ?>
-        </form>
-    </section>
+        <section class="search_box">
+            <form action="" method="GET">
+                <input type="text" name="search" placeholder="Search here..." required="required" />
+                <input type="submit" value="submit">
+                <?php if (!empty($_GET["search"])): ?>
+                    <a href="home.php">X</a>
+                <?php endif; ?>
+            </form>
+        </section>
+    </div>
+    
 
     <section class="posts">
     <?php if (empty($posts)): ?>
