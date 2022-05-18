@@ -29,7 +29,7 @@
     </section>
 
     <section class="posts">
-    <?php $posts = POST::getSomePosts($sorting, 0, 6); ?>
+    <?php $posts = Post::getSomePosts($sorting, 0, 6); ?>
     <?php foreach($posts as $post): ?>
         <div class="post post--index">
             <img src="<?php echo $post["image"] ?>" alt="<?php echo $post["title"] ?>" class="post--index__image">

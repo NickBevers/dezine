@@ -12,6 +12,7 @@
         private $education;
         //profile image
         private $profile_image;
+        private $profile_image_public_id;
         //social links
         private $linkedin;
         private $website;
@@ -58,6 +59,14 @@
         {
             $profile_image = Cleaner::cleanInput($profile_image);
             $this->profile_image = $profile_image;
+            return $this;
+        }
+
+        //profile_image_public_id
+        public function getProfileImagePublicId(){return $this->profile_image_public_id;}
+
+        public function setProfileImagePublicId($profile_image_public_id){
+            $this->profile_image_public_id = $profile_image_public_id;
             return $this;
         }
 
@@ -257,9 +266,10 @@
 
         public function updateUser(){            
             $conn = DB::getInstance();
-            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image, profile_image_public_id = :profile_image_public_id where email = :email");
             $statement->bindValue(':username',$this->username);
             $statement->bindValue(':profile_image', $this->profile_image);
+            $statement->bindValue(':profile_image_public_id', $this->profile_image_public_id);
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
             $statement->bindValue(':linkedin',$this->linkedin);
@@ -371,5 +381,4 @@
             $result = $statement->fetch();
             return $result;
         }
-
     }

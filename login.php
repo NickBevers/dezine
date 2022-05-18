@@ -2,6 +2,7 @@
     include_once("bootstrap.php");
     use \Helpers\Security;
     use \Classes\Auth\User;
+	use Helpers\Validate;
 
     if (Security::isLoggedIn()) {
         header('Location: home.php');
@@ -16,6 +17,7 @@
             $user->setPassword($password);
             $usr = $user->canLogin();
             if ($usr) {
+				Validate::start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['id'] = $usr["id"];
                 header("Location: home.php");
