@@ -33,7 +33,7 @@
             return $upload;
         }
 
-        public function remove($public_id)
+        public static function remove($public_id)
         {
             $rApi = new UploadApi();
             $remove = $rApi->destroy($public_id, ['invalidate' => true]);
