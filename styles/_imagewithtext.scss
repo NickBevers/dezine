@@ -121,6 +121,17 @@
         grid-template-rows: 1fr 1fr;
         padding: 3rem;
     }
+
+    .profile__info__block{
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile__info-socials{
+        flex-direction: row;
+    }
 }
 
 @media (max-width: 600px) {
@@ -134,5 +145,16 @@
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
         padding: 3rem;
+    }
+
+    .profile__info__block{
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile__info-socials{
+        flex-direction: row;
     }
 }
