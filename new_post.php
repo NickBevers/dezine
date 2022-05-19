@@ -2,8 +2,9 @@
     include_once(__DIR__ . "/bootstrap.php");
     use \Helpers\Validate;
     use \Helpers\Security;
-    use \Classes\Content\Post;
     use \Classes\Auth\User;
+    use \Classes\Content\Post;
+    use \Classes\Content\UploadImage;
 
     Validate::start();
 
@@ -19,32 +20,22 @@
         $user_id = $_SESSION["id"];
 
         try {
-            $fileName = basename($_FILES["image"]["name"]);
-            $fileName = str_replace(" ", "_", $fileName);
-            $targetFilePath = "uploads/" . $user_id . $fileName;
-            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');
-
-            if (!empty($_FILES["image"]["name"]) && in_array($fileType, $allowedFileTypes)) {
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-                    $project = new Post();
-                    $project->setTitle($title);
-                    $project->setDescription($description);
-                    $project->setTags($tags);
-                    $project->setImage($targetFilePath);
-                    $project->setColors();
-                    if ($project->addPost($user_id)) {
-                        header("Location: home.php");
-                    } else {
-                        $error = "Something has gone wrong, please try again.";
-                    }
-                } else {
-                    $error = "The image could not be saved, please try again";
-                }
+            $image = UploadImage::getImageData($_FILES["image"]["name"], $_FILES["image"]["tmp_name"], $user_id);
+            $uploadedFile = UploadImage::uploadPostPic($image);
+            $project = new Post();
+            $project->setTitle($title);
+            $project->setDescription($description);
+            $project->setTags($tags);
+            $project->setPublic_id($uploadedFile["public_id"]);
+            $project->setImage($uploadedFile["secure_url"]);
+            $project->setColors($image);
+            if($uploadedFile){unlink($image);}
+            if ($project->addPost($user_id)) {
+                header("Location: home.php");
             } else {
-                $error = "Please choose an image for the project.";
+                $error = "Something has gone wrong, please try again.";
             }
-        } catch (\Throwable $error) {
+        } catch (Throwable $error) {
             $error = $error->getMessage();
         }
     }
