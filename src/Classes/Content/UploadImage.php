@@ -10,9 +10,9 @@
     
     Configuration::instance([
         'cloud' => [
-          'cloud_name' => 'd-zine', 
-          'api_key' => '218981663968882', 
-          'api_secret' => 'xltQwLEBRnur7IVbViRrtoG9Bo4'],
+          'cloud_name' => (string) $config["cloud_name"], 
+          'api_key' => (string) $config["cloudinary_api_key"], 
+          'api_secret' => (string) $config["cloudinary_api_secret"]],
         'url' => [
           'secure' => true]]);
 
@@ -48,9 +48,9 @@
             $fileName = $user_id . str_replace(" ", "_", basename($image));
             $fileType = pathinfo($image)["extension"];
             $tempPath = "uploads/" . $fileName;
-            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');
+            $allowedFileTypes = array('jpg', 'png', 'jpeg','gif', 'jfif', 'webp');
 
-            if (!in_array($fileType, $allowedFileTypes)) {
+            if (!in_array(strtolower($fileType), $allowedFileTypes)) {
                 throw new Exception("This file type is not supported, please upload a jpg, png, gif or webp file.");
             }
 
