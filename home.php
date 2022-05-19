@@ -15,11 +15,11 @@
     
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
-    $uid = $_SESSION["id"];
+    $uid = Cleaner::xss($_SESSION["id"]);
     if (empty($_GET["page"])) {
         $pageNum = 0;
     } else {
-        $pageNum  = $_GET["page"];
+        $pageNum  = Cleaner::xss($_GET["page"]);
     }
 
     if (isset($_GET['sort'])) {
@@ -47,9 +47,9 @@
     if ($sorting === '') {
         $posts = Post::getSomePosts("desc", 0, $postsPerPage);
     } elseif (!empty($_GET["search"]) && $sorting !== "follow") {
-        $search_term = Cleaner::cleanInput($_GET["search"]);
+        $search_term = Cleaner::xss($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) {
-            $pageNum  = $_GET["page"];
+            $pageNum  = Cleaner::xss($_GET["page"]);
             $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
@@ -58,7 +58,7 @@
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } elseif (!empty($_GET["search"]) && $sorting === "follow") {
-        $search_term = Cleaner::cleanInput($_GET["search"]);
+        $search_term = Cleaner::xss($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) {
             $pageNum  = $_GET["page"];
             $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
@@ -88,6 +88,7 @@
         $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
     }
 
+    $posts = Cleaner::xss($posts);
 
 ?><!DOCTYPE html>
 <html lang="en">
