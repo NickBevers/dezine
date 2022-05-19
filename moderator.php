@@ -11,7 +11,7 @@
     
     if(!Security::isLoggedIn()) { header('Location: login.php');}
 
-    $uid = Cleaner::cleanInput($_SESSION["id"]);
+    $uid = Cleaner::xss(Cleaner::cleanInput($_SESSION["id"]));
     if (!User::checkModerator($uid)) {
         header('Location: home.php');
     }
@@ -21,8 +21,8 @@
         $user = User::getUserbyId($banId);
     }
 
-    $reports = Report::getReports();
-    $posts = Post::getAllPosts();
+    $reports = Cleaner::xss(Report::getReports());
+    $posts = Cleaner::xss(Post::getAllPosts());
 
 ?>
 <!DOCTYPE html>

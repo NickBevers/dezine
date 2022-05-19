@@ -27,7 +27,7 @@
         $profileUser = intval(Cleaner::cleanInput($_GET["id"]));
     }
 
-    $user = User::getUserbyId($profileUser);
+    $user = Cleaner::xss(User::getUserbyId($profileUser));
 
     if (empty($user)) {
         header('Location: home.php');
@@ -44,8 +44,8 @@
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }
 
+    $posts = Cleaner::xss($posts);
     $uid = Cleaner::cleanInput($_SESSION["id"]);
-
     $role = $user["user_role"];
 
     if (isset($_POST["moderator"])) {

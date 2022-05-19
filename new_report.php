@@ -12,22 +12,22 @@
     }
 
     if (isset($_GET['postid'])) {
-        $post_id = Cleaner::cleanInput($_GET['postid']);
+        $post_id = Cleaner::xss(Cleaner::cleanInput($_GET['postid']));
     } else {
         $post_id = "";
     }
 
     if (isset($_GET['userid'])) {
-        $reported_user_id = Cleaner::cleanInput($_GET['userid']);
+        $reported_user_id = Cleaner::xss(Cleaner::cleanInput($_GET['userid']));
     } else {
         $reported_user_id = "";
     }
 
     $user_id = Cleaner::cleanInput($_SESSION['id']);
-    $report = new Report();
     
-    $reports_post = $report->getReportedPostbyId($post_id);
-    $reports_user = $report->getReportedUserbyId($reported_user_id);
+    $report = new Report();
+    $reports_post = Cleaner::xss($report->getReportedPostbyId($post_id));
+    $reports_user = Cleaner::xss($report->getReportedUserbyId($reported_user_id));
 
 ?>
 <!DOCTYPE html>

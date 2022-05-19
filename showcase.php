@@ -14,7 +14,7 @@
     }
     
     $uid = Cleaner::cleanInput($_SESSION["id"]);
-    $id = Cleaner::cleanInput($_GET["id"]);
+    $id = Cleaner::xss(Cleaner::cleanInput($_GET["id"]));
     if (empty($id)) {
         if (empty($uid)) {
             header('Location: home.php');
@@ -26,7 +26,7 @@
         $profileUser = $id;
     }
 
-    $user = User::getUserbyId($profileUser);
+    $user = Cleaner::xss(User::getUserbyId($profileUser));
     if (empty($user)) {
         header('Location: home.php');
     }
@@ -35,12 +35,13 @@
     $postCount = Post::getPostsCount();
     
     if (isset($_GET["page"]) && $_GET["page"] > 1) {
-        $pageNum  = $_GET["page"];
+        $pageNum  = Cleaner::xss(Cleaner::cleanInput($_GET["page"]));
         $posts = Post::getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
     } else {
         $pageNum  = 1;
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
     }
+    $posts = Cleaner::xss($posts);
 ?>
 <!DOCTYPE html>
 <html lang="en">
