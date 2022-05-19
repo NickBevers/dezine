@@ -692,6 +692,7 @@ footer {
   text-decoration: none;
   cursor: pointer;
   text-align: center;
+  background-color: #fafafa;
 }
 
 .primary__btn {
@@ -741,7 +742,7 @@ footer {
 
 .moderator__btn {
   background-color: #ffffff;
-  border: 2px solid #120CFF;
+  border: 3px solid #120CFF;
   padding: 0.4rem 0.6rem;
   color: #120CFF;
 }

@@ -29,6 +29,7 @@
     text-decoration: none;
     cursor: pointer;
     text-align: center;
+    background-color: $white;
 }
 
 .primary__btn{
@@ -80,7 +81,7 @@
 
 .moderator__btn {
     background-color: $lighterWhite;
-    border: 2px solid $accent;
+    border: 3px solid $accent;
     // border-radius: 0.5rem;
     padding: 0.4rem 0.6rem;
     color: $accent;
