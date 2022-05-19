@@ -1011,6 +1011,7 @@ footer {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
+    gap: 1rem;
   }
 }
 
@@ -1050,6 +1051,7 @@ footer {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
+    gap: 1rem;
   }
 }
 
@@ -1344,7 +1346,7 @@ footer {
 }
 
 .post__comment {
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: #ffffff;
 }
 
@@ -1388,6 +1390,7 @@ footer {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  gap: 1rem;
 }
 
 .post__comment__form img {
@@ -1446,6 +1449,41 @@ footer {
   color: #120CFF;
   font-weight: 700;
   font-size: 1.5rem;
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+  .post--single {
+    margin: 5% 20%;
+    background-color: #FCD7F7;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+  .post--single {
+    margin: 5% 20%;
+    background-color: #FCD7F7;
+  }
+  .views img {
+    width: 40px;
+    height: 40px;
+  }
+  .post__comment__form {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .post--single {
+    margin: 5% 15%;
+    background-color: #FCD7F7;
+  }
+  .views img {
+    width: 30px;
+    height: 30px;
+  }
+  .post__comment__form {
+    gap: 0.5rem;
+  }
 }
 
 .showcase__title {
