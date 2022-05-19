@@ -177,11 +177,17 @@
     .posts{
         grid-template-columns: 1fr 1fr;
     }
+    .posts__bkg{    
+        max-width: 40vw;
+    }
 }
 
 @media (max-width: 768px) and (min-width: 600px) {
     .posts{
         grid-template-columns: 1fr;
+    }
+    .posts__bkg{    
+        max-width: 80vw;
     }
 }
 
@@ -189,4 +195,8 @@
     .posts{
         grid-template-columns: 1fr;
     }
+    .posts__bkg{    
+        max-width: 80vw;
+    }
+    
 }
