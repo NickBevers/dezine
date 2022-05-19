@@ -88,6 +88,9 @@
         $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
     }
 
+    var_dump(Post::getMostUsedTags());
+    die();
+
     $posts = Cleaner::xss($posts);
 
 ?><!DOCTYPE html>

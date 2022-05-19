@@ -207,6 +207,28 @@
             $statement->execute();
         }
 
+        public static function getMostUsedTags(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select tags, count(*) from posts group by tags order by count(*) desc limit 10");
+            $statement->execute();
+            $tags = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return self::getTenTags($tags);
+        }
+
+        private static function getTenTags($tagsPerPost){
+            $tagArr = array();
+            foreach($tagsPerPost as $tags){
+                $tagsArr = json_decode($tags["tags"]);
+                foreach($tagsArr as $tag){
+                    array_push($tagArr, $tag);
+                }
+            }
+            $tagArr = array_count_values($tagArr);
+            foreach($tagArr as $key => $value){$tagArr[$key] = strval($value);}
+            arsort($tagArr);
+            return array_slice($tagArr, 0, 10);
+        }
+
         private function hexToHsl($hex){
             // Taken from https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript and converted to correct php code. 
             $hex = "#" . $hex;
