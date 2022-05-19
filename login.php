@@ -2,7 +2,7 @@
     include_once("bootstrap.php");
     use \Helpers\Security;
     use \Classes\Auth\User;
-	use Helpers\Validate;
+	  use Helpers\Validate;
 
     if (Security::isLoggedIn()) {
         header('Location: home.php');
