@@ -2,6 +2,7 @@
     include_once(__DIR__ . "/bootstrap.php");
     use \Helpers\Validate;
     use \Helpers\Security;
+    use Helpers\Cleaner;
     use \Classes\Auth\User;
 
     Validate::start();
@@ -64,6 +65,7 @@
             }
 
             $users = $user->updateUser();
+            $users = Cleaner::xss($users);
             if ($users) {
                 // header("Refresh:0");
                 $success = "Your profile was successfully updated";

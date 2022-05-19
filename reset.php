@@ -5,6 +5,7 @@
     include_once("./helpers/Validate.help.php");
     use Classes\Auth\Reset;
     use Helpers\Validate;
+    use Helpers\Cleaner;
 
     if (!empty($_POST)) {
         if (Validate::isNotEmpty($_POST['email'])) {
@@ -15,8 +16,10 @@
                 $reset = new Reset();
                 $reset->setEmail($emailId);
                 $message = $reset->resetMail();
+                $message = Cleaner::xss($message);
             } catch (Throwable $e) {
                 $error = $e->getMessage();
+                $error = Cleaner::xss($error);
             }
         }
     }

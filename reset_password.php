@@ -2,6 +2,7 @@
     include_once("bootstrap.php");
     use \Helpers\Validate;
     use Classes\Auth\Reset;
+use Helpers\Cleaner;
 
     if ($_GET['key'] && $_GET['token']) {
         $email = $_GET['key'];
@@ -77,7 +78,7 @@
         </form>
 
         <?php elseif (isset($message)): ?>
-          <h3><?php echo $message; ?></h3>
+          <h3><?php echo Cleaner::xss($message); ?></h3>
       <?php endif; ?>
 
     </main>
