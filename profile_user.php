@@ -4,6 +4,7 @@
     use \Helpers\Security;
     use Helpers\Cleaner;
     use \Classes\Auth\User;
+    use Classes\Content\UploadImage;
 
     Validate::start();
 
@@ -37,30 +38,18 @@
             $user->setSecondEmail($second_email);
 
             $default_image = "assets/default_profile_image.png";
-
-            $fileName = basename($_FILES["profile_image"]["name"]);
-            $fileName = str_replace(" ", "_", $fileName);
-            $targetFilePath = "uploads/profile/" . $fileName;
-            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-            $allowedFileTypes = array('jpg','png','jpeg','gif', 'jfif', 'webp');
-           
             if (isset($_POST['checkbox_name'])) {
                 $user->setProfileImage($default_image);
             } else {
                 if ($_FILES['profile_image']['size'] == 0) {
-                    // cover_image is empty (and not an error)
                     $profile_image = $users["profile_image"];
                     $user->setProfileImage($profile_image);
                 } else {
-                    if (in_array($fileType, $allowedFileTypes)) {
-                        if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)) {
-                            $user->setProfileImage($targetFilePath);
-                        } else {
-                            throw new Exception("The image could not be saved, please try again");
-                        }
-                    } else {
-                        throw new Exception("Only this jpg','png','jpeg','gif', 'jfif', 'webp images allowed");
-                    }
+                    $image = UploadImage::getImageData($_FILES["profile_image"]["name"], $_FILES["profile_image"]["tmp_name"], $_SESSION["id"]);
+                    $uploadedFile = UploadImage::uploadProfilePic($image);
+                    if($uploadedFile){unlink($image);}
+                    $user->setProfileImage($uploadedFile["secure_url"]);
+                    $user->setProfileImagePublicId($uploadedFile["public_id"]);
                 }
             }
 

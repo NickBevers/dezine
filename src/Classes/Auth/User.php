@@ -1,6 +1,7 @@
 <?php
     namespace Classes\Auth;
     use \Helpers\Cleaner;
+    use Classes\Content\UploadImage;
     use Exception;
     use PDO;
 
@@ -12,6 +13,7 @@
         private $education;
         //profile image
         private $profile_image;
+        private $profile_image_public_id;
         //social links
         private $linkedin;
         private $website;
@@ -58,6 +60,14 @@
         {
             $profile_image = Cleaner::cleanInput($profile_image);
             $this->profile_image = $profile_image;
+            return $this;
+        }
+
+        //profile_image_public_id
+        public function getProfileImagePublicId(){return $this->profile_image_public_id;}
+
+        public function setProfileImagePublicId($profile_image_public_id){
+            $this->profile_image_public_id = $profile_image_public_id;
             return $this;
         }
 
@@ -213,7 +223,6 @@
                 $statement->bindValue(':email', $email);
                 $statement->execute();
                 $res = $statement->fetch();
-                // var_dump($res);
 
                 $options = [
                 'cost' => 15
@@ -225,8 +234,6 @@
                     $statement->bindValue(':password', $n_password);
                     $statement->bindValue(':email', $email);
                     $statement->execute();
-                    // $result = $statement->fetch();
-                    // var_dump($result);
                 } else {
                     throw new Exception("The given password does not match the password");
                 }
@@ -234,15 +241,24 @@
         }
 
         public static function deleteUserContentByEmail($id){
+            // remove comments
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from comments where user_id = :id");
             $statement->bindValue(':id', $id);
             $statement->execute();
 
+            // remove posts
+            $stmt = $conn->prepare("select * from posts where user_id = :id");
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            $res = $stmt->fetchAll();
+            foreach($res as $post){var_dump($post["public_id"]); UploadImage::remove($post["public_id"]);}
+
             $statement2 = $conn->prepare("delete from posts where user_id = :id");
             $statement2->bindValue(':id', $id);
             $statement2->execute();
 
+            //remove likes
             $statement3 = $conn->prepare("delete from likes where user_id = :id");
             $statement3->bindValue(':id', $id);
             $statement3->execute();
@@ -250,6 +266,12 @@
 
         public static function deleteUserByEmail($userEmail) {
             $conn = DB::getInstance();
+            $stmt = $conn->prepare("select * from users where email = :email");
+            $stmt->bindValue(':email', $userEmail);
+            $stmt->execute();
+            $res = $stmt->fetch();
+            UploadImage::remove($res["profile_image_public_id"]);
+
             $statement = $conn->prepare("delete from users where email = :email");
             $statement->bindValue(':email', $userEmail);
             $statement->execute();
@@ -257,9 +279,10 @@
 
         public function updateUser(){            
             $conn = DB::getInstance();
-            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image where email = :email");
+            $statement = $conn->prepare("update users set username = :username, education = :education, bio = :bio, linkedin = :linkedin, website = :website, instagram = :instagram, github = :github, second_email =:second_email, profile_image =:profile_image, profile_image_public_id = :profile_image_public_id where email = :email");
             $statement->bindValue(':username',$this->username);
             $statement->bindValue(':profile_image', $this->profile_image);
+            $statement->bindValue(':profile_image_public_id', $this->profile_image_public_id);
             $statement->bindValue(':education', $this->education);
             $statement->bindValue(':bio', $this->bio);
             $statement->bindValue(':linkedin',$this->linkedin);
@@ -305,7 +328,6 @@
             $statement->bindValue(':id', $userId);
             $statement->execute();
             $result = $statement->fetch();
-            // var_dump($result["user_role"]);
             if($result["user_role"] === "moderator" || $result["user_role"] === "admin"){
                 return true;
             }
@@ -320,7 +342,6 @@
             $statement->bindValue(':id', $userId);
             $statement->execute();
             $result = $statement->fetch();
-            // var_dump($result);
             return $result["banned"];
         }
 
@@ -329,10 +350,6 @@
             $statement = $conn->prepare("update users set banned = 1 where id = :id");
             $statement->bindValue(':id', $userId);
             $statement->execute();
-            // var_dump($statement->execute());
-            // $result = $statement->fetch();
-            // var_dump($result["banned"]);
-            // return $result;
             $message = "User has been banned";
             return $message;
         }
@@ -342,7 +359,6 @@
             $statement = $conn->prepare("update users set banned = 0 where id = :id");
             $statement->bindValue(':id', $userId);
             $statement->execute();
-            // var_dump($statement->execute());
             $message = "The ban has been lifted";
             return $message;
         }
@@ -371,5 +387,4 @@
             $result = $statement->fetch();
             return $result;
         }
-
     }
