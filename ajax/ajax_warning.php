@@ -1,24 +1,22 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Auth\User;
+    use Dezine\Auth\Warning;
 
     if (!empty($_POST)) {
-        $username = $_POST['username'];
-        $user = new User();
-        $user->setUsername($username);
-        $user->usernameExists();
-
-        if(!$user->usernameExists()){
+        $warning_id = $_POST['warning_id'];   
+        $warning = new Warning();    
+        
+        if($warning->removeWarning($warning_id)){
             $response = [
                 "status" => "success",
-                "message" => "this username is available."
+                "message" => "You are no longer following this user."
             ];
             echo json_encode($response);
         } else{
             $response = [
                 "status" => "error",
-                "message" => "this username is already in use."
+                "message" => "Something has gone wrong, our apologies."
             ];
             echo json_encode($response);
-        }
+        }        
     }

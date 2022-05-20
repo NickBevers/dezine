@@ -1,7 +1,7 @@
 <?php 
-    include_once(__DIR__ . "./../bootstrap.php");
-    use \Helpers\Cleaner;
-    use \Classes\Actions\Report;
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Actions\Report;
 
     if (!empty($_POST)) {
         $user_id = $_POST['user_id'];
@@ -17,7 +17,7 @@
             if($report->sendReport($user_id)){
                     $response = [ 
                     "status" => "success",
-                    "body" => htmlspecialchars($report->getReason()),
+                    "body" => Cleaner::xss($report->getReason()),
                     "message" => "You have succesfully reported this post or user."
                 ];
                 echo json_encode($response);

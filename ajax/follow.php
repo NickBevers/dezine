@@ -1,6 +1,6 @@
 <?php 
-    include_once("./../bootstrap.php");
-    use \Classes\Actions\Follow;
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Actions\Follow;
 
     if (!empty($_POST)) {
         $follower_id = $_POST['follower_id'];

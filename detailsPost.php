@@ -2,6 +2,7 @@
     require __DIR__ . '/vendor/autoload.php';
     use Dezine\Helpers\Validate;
     use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
     use Dezine\Content\Post;
     use Dezine\Actions\Comment;
     use Dezine\Auth\User;
@@ -13,12 +14,12 @@
     }
 
     if (isset($_GET["pid"])) {
-        $post = Post::getPostbyPostId($_GET["pid"]);
+        $post = Cleaner::xss(Post::getPostbyPostId($_GET["pid"]));
     } else {
         header('Location: home.php');
     }
     
-    $comments = Comment::getCommentsByPostId($_GET["pid"]);
+    Cleaner::xss($comments = Comment::getCommentsByPostId($_GET["pid"]));
     
     $visitor = Post::getViewsbyId($_SESSION["id"], $_GET["pid"]);
 
@@ -27,6 +28,7 @@
             Post::addViewbyPost($_GET["pid"], $_SESSION["id"]);
         }
     }
+    $user = Cleaner::xss(User::getUserbyId($post["user_id"]));
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -42,7 +44,6 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <div class="post--single">                    
         <div class="post--single__user">
-            <?php $user = User::getUserbyId($post["user_id"]); ?>
             <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>" class="posts__user__img">
             <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                 <h3><?php echo $user["username"] ?></h3>         

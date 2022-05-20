@@ -1,5 +1,5 @@
 <?php 
-    use Classes\Content\Post;
+    use Dezine\Content\Post;
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json;charset=utf-8');
     $posts = Post::getSomePosts("desc", 0, 40);

@@ -6,6 +6,7 @@
     use Dezine\Auth\User;
     use Dezine\Actions\Report;
     use Dezine\Content\Post;
+    use Dezine\Actions\Warning;
 
     Validate::start();
     
@@ -19,6 +20,12 @@
     if (isset($_GET["id"])) {
         $banId = Cleaner::cleanInput($_GET["id"]);
         $user = User::getUserbyId($banId);
+    }
+     
+    if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
+        $user_id = Cleaner::cleanInput($_GET["warn_uid"]);
+        $reason = $_POST["warning_reason"];
+        Warning::sendWarning($uid, $user_id, $reason);
     }
 
     $reports = Cleaner::xss(Report::getReports());
@@ -49,9 +56,20 @@
             <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
             <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
         </div>
-        <script src="./javascript/add_remove_ban.js"></script>
-        <?php endif; ?>
-        <?php if (!isset($_GET["id"])): ?>
+        <?php elseif(isset($_GET["warn_uid"])): ?>
+        <div class="warnings">
+            <form action="" method="post">
+                <h2>Would you like to warn a user?</h2>
+                <div class="form__field" id="form__report__reason">
+                    <input type="hidden" name="uid" value="<?php echo $_GET["warn_uid"] ?>">
+                    <label for="warning_reason" class="form__label">Reason</label>
+                    <input type="warning_reason" name="warning_reason" class="form-control" id="warning_reason" required
+                        placeholder="the reason for your report">
+                </div>
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Send</button>
+            </form>
+        </div>
+        <?php else: ?>
         <div class="reports form form--profile"> 
             <?php foreach ($reports as $report): ?>
                 <?php if (intval($report["archived"]) == 0): ?>
@@ -77,7 +95,8 @@
                     </div>
                 <?php endif; ?> 
             <?php endforeach; ?>  
-        </div>
+        </div>        
+        <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
         <?php endif; ?>      
     </main>

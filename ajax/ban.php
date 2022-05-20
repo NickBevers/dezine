@@ -1,6 +1,6 @@
 <?php 
-    include_once("./../bootstrap.php");
-    use \Classes\Auth\User;
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Auth\User;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];

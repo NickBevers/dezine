@@ -1,6 +1,6 @@
 <?php
-    include_once(__DIR__ . "./../bootstrap.php");
-    use \Classes\Actions\Comment;
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Actions\Comment;
     
     if (!empty($_POST)) {
         try {
