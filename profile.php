@@ -62,6 +62,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -70,12 +71,13 @@
     <link rel="stylesheet" href="./styles/style.css">
     <title><?php echo $user["username"]; ?></title>
 </head>
+
 <body>
     <?php if (isset($_SESSION['flash_error'])): ?>
-        <div class="error">
-            <p><?php echo($_SESSION['flash_error']); ?></p>
-        </div>
-    
+    <div class="error">
+        <p><?php echo($_SESSION['flash_error']); ?></p>
+    </div>
+
     <?php
          unset($_SESSION['flash_error']);
         endif;
@@ -170,9 +172,35 @@
             </div>
         </div>
     </section>
+
+    <section class="warning_messages">
+
     
+    <?php if (User::checkWarning($uid)): ?>
+                <?php $warnings = User::checkWarning($uid) ?>
+
+                <div class="warning_user">
+                
+                    <?php foreach ($warnings as $warning):  ?>
+                      
+                        <div class="warning_message">
+                            <p><?php echo $warning["warning"] ; ?></p>
+                            <p><a href="community_guidelines.php">link to community guidlines</a>
+                            <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">
+                        click for agreement</div>
+                        </div>
+                    
+                    <?php endforeach; ?>
+                </div>
+
+                <?php endif; ?>
+
+
+
+    </section>
+
     <section class="posts">
-    <?php foreach ($posts as $post): ?>
+        <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post__img">
                 <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
@@ -191,14 +219,14 @@
             <div class="post__info">
                 <h4><?php echo $post["title"] ?></h4>
                 <?php if (isset($uid)): ?>
-                    <p><?php echo $post["description"] ?></p>
-                    <?php $tags = json_decode($post["tags"]); ?>
-                    <div class="post__info__tags">
-                        <?php foreach ($tags as $t): ?>
-                            <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?> 
+                <p><?php echo $post["description"] ?></p>
+                <?php $tags = json_decode($post["tags"]); ?>
+                <div class="post__info__tags">
+                    <?php foreach ($tags as $t): ?>
+                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
                 <?php $pid = $post["id"]; ?>
                 <div class="post__actions">
                     <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
@@ -246,29 +274,31 @@
                     <?php endif; ?>
                 </div>
                 <?php if ($uid !== $_GET["id"]): ?>
-                    <div class="profile__info__report">
-                        <a href="new_report.php?postid=<?php echo $post['id']; ?>">
-                            <h3>Report post</h3>
-                        </a>
-                    </div>
-                <?php endif; ?> 
+                <div class="profile__info__report">
+                    <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                        <h3>Report post</h3>
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
-        </div>              
-    <?php endforeach; ?>
+        </div>
+        <?php endforeach; ?>
     </section>
 
     <?php if ($postCount > $postsPerPage): ?>
-        <?php if ($pageNum > 1): ?>
-            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
-        <?php endif; ?>
-        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+    <?php if ($pageNum > 1): ?>
+    <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+    <?php endif; ?>
+    <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
 
     <script src="./javascript/like.js"></script>
-    
-  <script src="./javascript/showcase.js"></script>
+
+    <script src="./javascript/showcase.js"></script>
 </body>
 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
 <script src="./javascript/follow_unfollow.js"></script>
 <?php endif; ?>
+<script src="./javascript/remove_warning.js"></script>
+
 </html>
