@@ -1,9 +1,9 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
-    use Classes\Actions\Report;
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Actions\Report;
 
     Validate::start();
 

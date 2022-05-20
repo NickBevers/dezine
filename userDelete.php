@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Classes\Auth\User;
-    use \Helpers\Validate;
+    use Dezine\Auth\User;
+    use Dezine\Helpers\Validate;
 
     Validate::start();
     

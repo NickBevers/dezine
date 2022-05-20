@@ -1,13 +1,11 @@
 <?php 
-    namespace Classes\Content;
-    use Helpers\Cleaner;
-    use Classes\Auth\DB;
+    namespace Dezine\Content;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\DB;
     use DateTime;
     use PDO;
     use Error;
     use PHPColorExtractor\PHPColorExtractor;
-    require 'vendor/autoload.php';
-
 
     class Post {
         private $title;

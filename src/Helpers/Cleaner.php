@@ -1,5 +1,5 @@
 <?php
-    namespace Helpers;
+    namespace Dezine\Helpers;
     abstract class Cleaner {
         public static function cleanInput($input) {
             $input = trim($input);

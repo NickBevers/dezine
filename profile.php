@@ -1,13 +1,13 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use \Classes\Auth\User;
-    use \Classes\Content\Post;
-    use \Classes\Actions\Like;
-    use \Classes\Content\Showcase;
-    use \Classes\Actions\Follow;
-    use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
+    use Dezine\Auth\User;
+    use Dezine\Content\Post;
+    use Dezine\Actions\Like;
+    use Dezine\Content\Showcase;
+    use Dezine\Actions\Follow;
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
 
     Validate::start();
 

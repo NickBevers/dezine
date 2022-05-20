@@ -1,11 +1,8 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    include_once("./helpers/Security.help.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Validate.help.php");
-    use Classes\Auth\Reset;
-    use Helpers\Validate;
-    use Helpers\Cleaner;
+    use Dezine\Auth\Reset;
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         if (Validate::isNotEmpty($_POST['email'])) {

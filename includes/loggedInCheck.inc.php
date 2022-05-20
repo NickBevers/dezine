@@ -1,6 +1,6 @@
 <?php
-    include_once("bootstrap.php");
-    use \Helpers\Security;
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Helpers\Security;
 
     if(!Security::isLoggedIn()) {
         header('Location: login.php');
