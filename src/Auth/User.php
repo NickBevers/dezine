@@ -379,6 +379,26 @@
             $statement->bindValue(':uid', $uid);
             $statement->execute();
         }
+
+        public static function checkWarning($userId){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from warnings where user_id = :id");
+            $statement->bindValue(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+          
+    
+        }
+
+        public static function getAllUsers(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from users");
+            $statement->execute();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $res;
+        }
+
         public static function getProfileImagebyId($id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select profile_image from users where id = :id");
