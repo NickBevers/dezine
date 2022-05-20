@@ -1,6 +1,7 @@
 <?php
-include_once("./helpers/Security.help.php");
+    require __DIR__ . '/../vendor/autoload.php';
+    use Dezine\Helpers\Security;
 
-if(!Security::isLoggedIn()) {
-    header('Location: login.php');
-}
+    if(!Security::isLoggedIn()) {
+        header('Location: login.php');
+    }

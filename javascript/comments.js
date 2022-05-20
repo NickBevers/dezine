@@ -8,6 +8,7 @@ document.querySelector(".post__comment__form__btn").addEventListener("click", fu
     e.preventDefault();
 
     let postId = this.dataset.postid;
+    let userId = this.dataset.uid;
     let inputField = document.querySelector(".post__comment__form__input");
     let comment = inputField.value;
 
@@ -15,6 +16,7 @@ document.querySelector(".post__comment__form__btn").addEventListener("click", fu
 
     formData.append('text', comment);
     formData.append('postId', postId);
+    formData.append('userId', userId);
 
     fetch('ajax/savecomment.php', {
             method: 'POST',

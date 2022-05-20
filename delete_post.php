@@ -1,10 +1,12 @@
-<?php 
+<?php
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Content\Post;
     
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+    Validate::start();
 
-	if(!Security::isLoggedIn()) {
+    if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
 
@@ -15,4 +17,3 @@
     }
     
     header("Location: profile.php");
-?>

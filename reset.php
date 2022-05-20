@@ -1,22 +1,25 @@
 <?php
-  include_once(__DIR__ . "/autoloader.php");
-  include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Auth\Reset;
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Cleaner;
 
-  if(!empty($_POST)) {
-    if(CheckEmpty::isNotEmpty($_POST['email'])){          
-        $emailId = $_POST['email'];
+    if (!empty($_POST)) {
+        if (Validate::isNotEmpty($_POST['email'])) {
+            $emailId = $_POST['email'];
 
-        // echo $emailId;
-        try{
-          $reset = new Reset();
-          $reset->setEmail($emailId);
-          $message = $reset->resetMail();
-        } catch(Throwable $e){
-          $error = $e->getMessage();
+            // echo $emailId;
+            try {
+                $reset = new Reset();
+                $reset->setEmail($emailId);
+                $message = $reset->resetMail();
+                $message = Cleaner::xss($message);
+            } catch (Throwable $e) {
+                $error = $e->getMessage();
+                $error = Cleaner::xss($error);
+            }
         }
-        
     }
-  }
 
 ?>
 <!DOCTYPE html>
@@ -32,11 +35,11 @@
    <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
       <main>         
-        <?php if(!empty($message)): ?>
+        <?php if (!empty($message)): ?>
             <div class="alert alert-success"><?php echo $message; ?></div>
         <?php endif; ?>
 
-        <?php if(!empty($error)): ?>
+        <?php if (!empty($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 

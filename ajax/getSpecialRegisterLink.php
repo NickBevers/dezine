@@ -1,9 +1,12 @@
 <?php
-    include_once("./../autoloader.php");
+    include_once(__DIR__ . "./../bootstrap.php");
+    use \Classes\Auth\Link;
+    use \Helpers\Validate;
+
+    Validate::start();
     
     if(!empty($_POST)){
         try {
-            // $specialLink = 
             $link = New Link();
             $link->setUser($_SESSION["id"]);
             $specialLink = $link->generateLink();

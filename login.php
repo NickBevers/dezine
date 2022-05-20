@@ -1,30 +1,31 @@
 <?php
-	include_once("./helpers/Security.help.php");
-	if(Security::isLoggedIn()) {
-		header('Location: home.php');
-	}
-    include_once("./classes/User.php");
-	
-	if( !empty($_POST) ) {
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Security;
+    use Dezine\Auth\User;
+	use Dezine\Helpers\Validate;
+
+    if (Security::isLoggedIn()) {
+        header('Location: home.php');
+    }
+    
+    if (!empty($_POST)) {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
         try {
             $user = new User;
             $user->setEmail($email);
-			$user->setPassword($password);
-			$usr = $user->canLogin();
-            if($usr) {
-				
- 				session_start();
+            $user->setPassword($password);
+            $usr = $user->canLogin();
+            if ($usr) {
+				Validate::start();
                 $_SESSION['email'] = $user->getEmail();
-				$_SESSION['id'] = $usr["id"];
-				header("Location: home.php");
-		     
+                $_SESSION['id'] = $usr["id"];
+                header("Location: home.php");
             }
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
-	}
+    }
     
 ?>
 <!DOCTYPE html>
@@ -69,9 +70,6 @@
 			</div>
 		</form>
 	</main>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>

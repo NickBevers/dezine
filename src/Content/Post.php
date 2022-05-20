@@ -1,15 +1,17 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
-
-    require 'vendor/autoload.php';
+    namespace Dezine\Content;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\DB;
+    use DateTime;
+    use PDO;
+    use Error;
     use PHPColorExtractor\PHPColorExtractor;
-
 
     class Post {
         private $title;
         private $description;
         private $tags;
+        private $public_id;
         private $image;
         private $colors;
         private $color_groups;
@@ -43,33 +45,40 @@
             return $this;
         }
 
+        public function getPublic_id(){return $this->public_id;}
+
+        public function setPublic_id($public_id)
+        {
+            // $public_id = Cleaner::cleanInput($public_id);
+            $this->public_id = $public_id;
+            return $this;
+        }
+
         public function getImage(){return $this->image;}
 
         public function setImage($image)
         {
-            $image = Cleaner::cleanInput($image);
+            // $image = Cleaner::cleanInput($image);
             $this->image = $image;
             return $this;
         }
         
         public function getColors(){return $this->colors;}
 
-        public function setColors(){
+        public function setColors($file_path){
             $extractor = new PHPColorExtractor();
-            $extractor->setImage($this->getImage())->setTotalColors(5)->setGranularity(10);
+            $extractor->setImage($file_path)->setTotalColors(5)->setGranularity(10);
             $palette = $extractor->extractPalette();
             $colours = [];
             $color_groups = [];
+            
             foreach($palette as $color) {
                 $hslVal = $this->hexToHsl($color);
                 $color_group = $this->getColorGroupFromColor($hslVal);
-                // var_dump($color_group);
                 array_push($color_groups, $color_group);
                 array_push($colours, $hslVal);
             }
-            // exit();
-            // var_dump($color_groups);
-            // exit();
+            
             $this->colors = json_encode($colours);
             $this->color_groups = json_encode($color_groups);
             return $this;
@@ -95,11 +104,11 @@
 
         public function addPost($user_id){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("insert into posts (title, user_id, image, colors, color_group, description, tags, creation_date) values (:title, :user_id, :image, :colors, :color_group, :description, :tags, :creation_date);");
-            // $statement = $conn->prepare("insert into posts (title, user_id, image, description, tags) values (:title, :user_id, :image, :description, :tags);");
+            $statement = $conn->prepare("insert into posts (title, user_id, image, public_id, colors, color_group, description, tags, creation_date) values (:title, :user_id, :image, :public_id, :colors, :color_group, :description, :tags, :creation_date);");
             $statement->bindValue(':title', $this->title);
             $statement->bindValue(':user_id', $user_id);
             $statement->bindValue(':image', $this->image);
+            $statement->bindValue(':public_id', $this->public_id);
             $statement->bindValue(':colors', $this->colors);
             $statement->bindValue(':color_group', $this->color_groups);
             $statement->bindValue(':description', $this->description);
@@ -128,7 +137,7 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
             $statement->execute();
-            $res = $statement->fetchAll();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
         }
         
@@ -194,6 +203,28 @@
             $statement->bindValue('tags', $this->getTags());
             $statement->bindValue('post_id', $postId);
             $statement->execute();
+        }
+
+        public static function getMostUsedTags(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select tags, count(*) from posts group by tags order by count(*) desc limit 10");
+            $statement->execute();
+            $tags = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return self::getTenTags($tags);
+        }
+
+        private static function getTenTags($tagsPerPost){
+            $tagArr = array();
+            foreach($tagsPerPost as $tags){
+                $tagsArr = json_decode($tags["tags"]);
+                foreach($tagsArr as $tag){
+                    array_push($tagArr, $tag);
+                }
+            }
+            $tagArr = array_count_values($tagArr);
+            foreach($tagArr as $key => $value){$tagArr[$key] = strval($value);}
+            arsort($tagArr);
+            return array_slice($tagArr, 0, 10);
         }
 
         private function hexToHsl($hex){
@@ -320,6 +351,14 @@
             $statement->execute();
             $res = $statement->fetch();
             // var_dump($res);
+            return $res;
+        }
+
+        public static function getAllPosts(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts");
+            $statement->execute();
+            $res = $statement->fetchAll();
             return $res;
         }
     }

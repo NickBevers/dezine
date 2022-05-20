@@ -1,5 +1,7 @@
-<?php 
-    session_start();
-    session_destroy();
+<?php
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+
+    Validate::start();
+    Validate::end();
     header("Location: index.php");
-?>

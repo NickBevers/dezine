@@ -1,10 +1,13 @@
 <?php
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Content\Post;
+    use Dezine\Actions\Comment;
+    use Dezine\Auth\User;
 
-use phpDocumentor\Reflection\Location;
-
-    include_once(__DIR__ . "/autoloader.php");
-
-    include_once("./helpers/Security.help.php");
+    Validate::start();
+    
     if (!Security::isLoggedIn()) {
         header('Location: login.php');
     }
@@ -19,8 +22,8 @@ use phpDocumentor\Reflection\Location;
     
     $visitor = Post::getViewsbyId($_SESSION["id"], $_GET["pid"]);
 
-    if($_SESSION["id"] !== $post["user_id"]){
-        if($visitor === false){
+    if ($_SESSION["id"] !== $post["user_id"]) {
+        if ($visitor === false) {
             Post::addViewbyPost($_GET["pid"], $_SESSION["id"]);
         }
     }
@@ -38,14 +41,14 @@ use phpDocumentor\Reflection\Location;
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <div class="post--single">                    
-        <div class="posts__user">
+        <div class="post--single__user">
             <?php $user = User::getUserbyId($post["user_id"]); ?>
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
+            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>" class="posts__user__img">
             <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
                 <h3><?php echo $user["username"] ?></h3>         
             </a>
-            <?php if($_SESSION["id"] === $post["user_id"]): ?>
-                <div>
+            <?php if ($_SESSION["id"] === $post["user_id"]): ?>
+                <div class="views">
                     <img src="./assets/eye_icon.svg" alt="eye icon for views count">
                     <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
                 </div>
@@ -66,7 +69,7 @@ use phpDocumentor\Reflection\Location;
                 <?php endif; ?>  
             </div>
         </div>
-        <?php if(User::checkban($_SESSION["id"]) === 0): ?>
+        <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
             <div class="post__comment">
                 <div class="post__comment__form">
                     <?php $user = User::getUserbyId($_SESSION['id']); ?>
@@ -74,14 +77,15 @@ use phpDocumentor\Reflection\Location;
                     <input type="text" placeholder="What are your thoughts on this project?" class="post__comment__form__input">
                     <a class="post__comment__form__btn" 
                         data-pfplink="<?php echo $user["profile_image"]; ?>" 
-                        data-postid="<?php echo $post["id"];?>" 
+                        data-postid="<?php echo $post["id"];?>"
+                        data-uid="<?php echo $_SESSION["id"];?>" 
                         data-username="<?php echo $user["username"]; ?>"
                     >
                         Add
                     </a>
                 </div>
                 <ul class="post__comment__list">
-                    <?php foreach($comments as $comment): ?>
+                    <?php foreach ($comments as $comment): ?>
                         <li>
                             <div class="post__comment--left">
                                 <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">

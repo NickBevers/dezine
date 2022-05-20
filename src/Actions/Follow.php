@@ -1,6 +1,7 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Dezine\Actions;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\DB;
 
     class Follow{
         private $follower_id;

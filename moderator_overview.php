@@ -1,7 +1,12 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once("./helpers/Cleaner.help.php");
-    include_once("./helpers/Security.help.php");
+require __DIR__. '/vendor/autoload.php';
+use Dezine\Helpers\Validate;
+use Dezine\Helpers\Security;
+use Dezine\Helpers\Cleaner;
+use Dezine\Auth\User;
+use Dezine\Actions\Report;
+use Dezine\Content\Post;
+
     if(!Security::isLoggedIn()) { header('Location: login.php');}
 
     $uid = Cleaner::cleanInput($_SESSION["id"]);

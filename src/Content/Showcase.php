@@ -1,6 +1,7 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Dezine\Content;
+    use Dezine\Auth\DB; 
+    use Dezine\Helpers\Cleaner;
 
     class Showcase{
         private $postId;
@@ -29,6 +30,7 @@
             $statement = $conn->prepare("insert into showcase (post_id, user_id) values (:post_id, :user_id)");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
+            // var_dump($statement->execute());
             return $statement->execute();
         }
 
@@ -37,6 +39,7 @@
             $statement = $conn->prepare("delete from showcase where post_id = :post_id and user_id = :user_id");
             $statement->bindValue(":post_id", $this->getPostId());
             $statement->bindValue(":user_id", $this->getUserId());
+            // var_dump($statement->execute());
             return $statement->execute();
         }
 

@@ -1,14 +1,16 @@
 <?php
-    include_once("./../autoloader.php");
+    include_once("./../bootstrap.php");
+    use \Classes\Content\Showcase;
 
     if (!empty($_POST)) {
         $postId = $_POST['postId'];
+        $userId = $_POST["userId"];
     
         try {
             $showcase = new Showcase();
             $showcase->setPostId($postId);
-            $showcase->setUserId($_SESSION["id"]);
-            if(Showcase::checkShowcase($postId, $_SESSION["id"])){
+            $showcase->setUserId($userId);
+            if(Showcase::checkShowcase($postId, $userId)){
                 $showcase->removeFromShowcase();
                 $response = [
                     "status" => "success",

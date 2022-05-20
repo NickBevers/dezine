@@ -1,6 +1,9 @@
 <?php
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Dezine\Auth;
+    use Dezine\Auth\DB;
+    use Dezine\Helpers\Cleaner;
+    use PDO;
+    use DateTime;
 
     class Link{
         private $user;

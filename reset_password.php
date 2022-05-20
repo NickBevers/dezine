@@ -1,8 +1,10 @@
 <?php
-    include_once(__DIR__ . "/autoloader.php");
-    include_once(__DIR__ . "/helpers/CheckEmpty.help.php");
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Auth\Reset;
+    use Dezine\Helpers\Cleaner;
 
-    if($_GET['key'] && $_GET['token']){    
+    if ($_GET['key'] && $_GET['token']) {
         $email = $_GET['key'];
         $token = $_GET['token'];
 
@@ -13,26 +15,26 @@
         // var_dump($returned);
 
         if (!empty($_POST)) {
-          $new_password = $_POST["new_password"];
-          $password_conf = $_POST["password_conf"];
-          $email = $returned;
+            $new_password = $_POST["new_password"];
+            $password_conf = $_POST["password_conf"];
+            $email = $returned;
  
-          if(CheckEmpty::isNotEmpty($new_password) && CheckEmpty::isNotEmpty($password_conf)){
-             if($new_password === $password_conf){
-                try {
-                    Reset::resetPassword($email, $new_password);
-                    $success = "Your password was successfully updated";
-                } catch (Throwable $error) {
-                    // if any errors are thrown in the class, they can be caught here
-                    $error = $error->getMessage();
+            if (Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
+                if ($new_password === $password_conf) {
+                    try {
+                        Reset::resetPassword($email, $new_password);
+                        $success = "Your password was successfully updated";
+                    } catch (Throwable $error) {
+                        // if any errors are thrown in the class, they can be caught here
+                        $error = $error->getMessage();
+                    }
+                } else {
+                    $error = "The passwords don't match";
                 }
-             } else{
-             $error = "The passwords don't match";
-             }
-           } else{
-             $error = "Please fill in all fields of the form";
-           }
-      }
+            } else {
+                $error = "Please fill in all fields of the form";
+            }
+        }
     }
 ?>
 <!doctype html>
@@ -47,11 +49,11 @@
    <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>            
-      <?php if(isset($error)): ?>
+      <?php if (isset($error)): ?>
           <div class="alert alert-danger"><?php echo $error; ?></div>
       <?php endif; ?>
 
-      <?php if(isset($success)): ?>
+      <?php if (isset($success)): ?>
           <div class="alert alert-success"><?php echo $success; ?></div>
       <?php endif; ?>
 
@@ -75,8 +77,8 @@
           <button type="submit" class="btn secondary__btn secondary__btn-signup">Reset password</button>
         </form>
 
-        <?php elseif(isset($message)): ?>
-          <h3><?php echo $message; ?></h3>
+        <?php elseif (isset($message)): ?>
+          <h3><?php echo Cleaner::xss($message); ?></h3>
       <?php endif; ?>
 
     </main>

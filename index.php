@@ -1,7 +1,11 @@
 <?php  
-    include_once(__DIR__ . "/autoloader.php");
-    $sorting = "desc";
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Content\Post;
+    use Dezine\Helpers\Cleaner;
 
+    $posts = POST::getSomePosts("desc", 0, 6);
+    $posts = Cleaner::xss($posts);
+    
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,20 +31,9 @@
     </section>
 
     <section class="posts">
-    <?php $posts = POST::getSomePosts($sorting, 0, 6); ?>
     <?php foreach($posts as $post): ?>
         <div class="post post--index">
-            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-            <div class="post__info">
-                <h4><?php echo $post["title"] ?></h4>
-                <p><?php echo $post["description"] ?></p>
-                <?php $tags = json_decode($post["tags"]); ?>
-                <div class="post__info__tags">
-                    <?php foreach($tags as $t): ?>
-                        <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+            <img src="<?php echo $post["image"] ?>" alt="<?php echo $post["title"] ?>" class="post--index__image">
         </div>              
     <?php endforeach; ?>
     </section>
