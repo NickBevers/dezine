@@ -1,7 +1,7 @@
 <?php
-    include_once("bootstrap.php");
-    use Classes\Auth\User;
-    use \Helpers\Validate;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Auth\User;
+    use Dezine\Helpers\Validate;
 
     Validate::start();
     

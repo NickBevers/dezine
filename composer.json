@@ -5,5 +5,10 @@
         "cloudinary/cloudinary_php": "^2",
         "sendgrid/sendgrid": "~7",
         "mailjet/mailjet-apiv3-php": "^1.5"
+    },
+    "autoload":{
+        "psr-4": {
+            "Dezine\\": "src/"
+        }
     }
 }

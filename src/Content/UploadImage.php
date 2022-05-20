@@ -1,11 +1,9 @@
 <?php
-    namespace Classes\Content;
-
+    namespace Dezine\Content;
     use Exception;
     use Cloudinary\Api\Upload\UploadApi;
     use \Cloudinary\Configuration\Configuration;
 
-    require "vendor/autoload.php";
     $config = parse_ini_file(__DIR__ . "/../../../config/config.ini");
     
     Configuration::instance([

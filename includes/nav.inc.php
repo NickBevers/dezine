@@ -1,7 +1,8 @@
 <?php 
-  include_once("bootstrap.php");
-  use \Helpers\Security;
-  use Classes\Auth\User;
+  require __DIR__ . '/../vendor/autoload.php';
+  // require dirname(__DIR__, 1 ( '/../vendor/autoload.php'));
+  use Dezine\Helpers\Security;
+  use Dezine\Auth\User;
 ?><nav class="nav--full">
     <div class="nav__element nav--left">
       <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>

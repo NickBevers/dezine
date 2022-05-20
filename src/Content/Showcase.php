@@ -1,7 +1,7 @@
 <?php
-    namespace Classes\Content;
-    use Classes\Auth\DB; 
-    use \Helpers\Cleaner;
+    namespace Dezine\Content;
+    use Dezine\Auth\DB; 
+    use Dezine\Helpers\Cleaner;
 
     class Showcase{
         private $postId;

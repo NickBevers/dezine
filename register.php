@@ -1,9 +1,9 @@
 <?php
-    include_once("bootstrap.php");
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
-    use Classes\Auth\User;
-    use Classes\Auth\Link;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\User;
+    use Dezine\Auth\Link;
 
     if (Security::isLoggedIn()) {
         header('Location: home.php');

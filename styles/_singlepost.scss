@@ -23,7 +23,7 @@
 }
 
 .post__comment {
-    padding: 2rem;
+    padding: 1.5rem;
     background-color: $lighterWhite;
 }
 
@@ -51,6 +51,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
 }
 
 .post__comment__form img{
@@ -100,5 +101,44 @@
         color: $accent;
         font-weight: $font-weight-bold;
         font-size: $font-size-sm;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+    .post--single {
+        margin: 5% 20%;
+        background-color: $primary;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+    .post--single {
+        margin: 5% 20%;
+        background-color: $primary;
+    }
+
+    .views img{
+        width: 40px;
+        height: 40px;
+    }
+
+    .post__comment__form{
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .post--single {
+        margin: 5% 15%;
+        background-color: $primary;
+    }
+
+    .views img{
+        width: 30px;
+        height: 30px;
+    }
+
+    .post__comment__form{
+        gap: 0.5rem;
     }
 }

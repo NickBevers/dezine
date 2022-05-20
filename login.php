@@ -1,8 +1,8 @@
 <?php
-    include_once("bootstrap.php");
-    use \Helpers\Security;
-    use \Classes\Auth\User;
-	  use Helpers\Validate;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Security;
+    use Dezine\Auth\User;
+	use Dezine\Helpers\Validate;
 
     if (Security::isLoggedIn()) {
         header('Location: home.php');

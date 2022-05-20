@@ -1,6 +1,6 @@
 <?php
-    include_once(__DIR__ . "/bootstrap.php");
-    use \Helpers\Validate;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
 
     Validate::start();
     Validate::end();

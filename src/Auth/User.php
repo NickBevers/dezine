@@ -1,7 +1,7 @@
 <?php
-    namespace Classes\Auth;
-    use \Helpers\Cleaner;
-    use Classes\Content\UploadImage;
+    namespace Dezine\Auth;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Content\UploadImage;
     use Exception;
     use PDO;
 

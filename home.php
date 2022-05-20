@@ -1,11 +1,11 @@
 <?php
-    include_once("bootstrap.php");
-    use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
-    use \Classes\Auth\User;
-    use \Classes\Content\Post;
-    use \Classes\Actions\Like;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\User;
+    use Dezine\Content\Post;
+    use Dezine\Actions\Like;
 
     Validate::start();
 
@@ -88,8 +88,8 @@
         $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
     }
 
-    var_dump(Post::getMostUsedTags());
-    die();
+    // var_dump(Post::getMostUsedTags());
+    // die();
 
     $posts = Cleaner::xss($posts);
 

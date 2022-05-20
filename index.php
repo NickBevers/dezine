@@ -1,7 +1,7 @@
 <?php  
-    include_once("bootstrap.php");
-    use Classes\Content\Post;
-use Helpers\Cleaner;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Content\Post;
+    use Dezine\Helpers\Cleaner;
 
     $posts = POST::getSomePosts("desc", 0, 6);
     $posts = Cleaner::xss($posts);

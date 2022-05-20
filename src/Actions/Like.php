@@ -1,7 +1,7 @@
 <?php
-    namespace Classes\Actions;
-    use \Helpers\Cleaner;
-    use Classes\Auth\DB;
+    namespace Dezine\Actions;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\DB;
     
     class Like {
         private $postId;

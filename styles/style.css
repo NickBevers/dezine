@@ -692,6 +692,7 @@ footer {
   text-decoration: none;
   cursor: pointer;
   text-align: center;
+  background-color: #fafafa;
 }
 
 .primary__btn {
@@ -741,7 +742,7 @@ footer {
 
 .moderator__btn {
   background-color: #ffffff;
-  border: 2px solid #120CFF;
+  border: 3px solid #120CFF;
   padding: 0.4rem 0.6rem;
   color: #120CFF;
 }
@@ -993,6 +994,26 @@ footer {
         grid-template-rows: 1fr 1fr;
     padding: 3rem;
   }
+  .profile__info__block {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 2rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .profile__info-socials {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1012,6 +1033,26 @@ footer {
     -ms-grid-rows: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
     padding: 3rem;
+  }
+  .profile__info__block {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 2rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .profile__info-socials {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    gap: 1rem;
   }
 }
 
@@ -1271,6 +1312,9 @@ footer {
   .posts__bkg {
     max-width: 80vw;
   }
+  #post__img-showcase {
+    left: 77%;
+  }
 }
 
 .post--single {
@@ -1303,7 +1347,7 @@ footer {
 }
 
 .post__comment {
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: #ffffff;
 }
 
@@ -1347,6 +1391,7 @@ footer {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  gap: 1rem;
 }
 
 .post__comment__form img {
@@ -1405,6 +1450,41 @@ footer {
   color: #120CFF;
   font-weight: 700;
   font-size: 1.5rem;
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+  .post--single {
+    margin: 5% 20%;
+    background-color: #FCD7F7;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+  .post--single {
+    margin: 5% 20%;
+    background-color: #FCD7F7;
+  }
+  .views img {
+    width: 40px;
+    height: 40px;
+  }
+  .post__comment__form {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .post--single {
+    margin: 5% 15%;
+    background-color: #FCD7F7;
+  }
+  .views img {
+    width: 30px;
+    height: 30px;
+  }
+  .post__comment__form {
+    gap: 0.5rem;
+  }
 }
 
 .showcase__title {

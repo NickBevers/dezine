@@ -1,5 +1,5 @@
 <?php
-    namespace Helpers;
+    namespace Dezine\Helpers;
     abstract class Validate {
         public static function isNotEmpty($field) {
             if(!empty($field)){

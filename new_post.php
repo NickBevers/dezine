@@ -1,10 +1,10 @@
 <?php
-    include_once(__DIR__ . "/bootstrap.php");
-    use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Classes\Auth\User;
-    use \Classes\Content\Post;
-    use \Classes\Content\UploadImage;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Auth\User;
+    use Dezine\Content\Post;
+    use Dezine\Content\UploadImage;
 
     Validate::start();
 

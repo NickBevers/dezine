@@ -1,11 +1,11 @@
 <?php
-    include_once("bootstrap.php");
-    use \Helpers\Validate;
-    use \Helpers\Security;
-    use \Helpers\Cleaner;
-    use \Classes\Auth\User;
-    use Classes\Actions\Report;
-    use Classes\Content\Post;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\User;
+    use Dezine\Actions\Report;
+    use Dezine\Content\Post;
 
     Validate::start();
     
