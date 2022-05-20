@@ -1,5 +1,5 @@
 <?php
-    include_once("bootstrap.php");
+    require __DIR__ . '/vendor/autoload.php';
     include_once("./helpers/Security.help.php");
     include_once("./helpers/Cleaner.help.php");
     include_once("./helpers/Validate.help.php");

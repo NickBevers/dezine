@@ -1,8 +1,8 @@
 <?php
-    include_once("bootstrap.php");
+    require __DIR__ . '/vendor/autoload.php';
     use \Helpers\Validate;
     use Classes\Auth\Reset;
-use Helpers\Cleaner;
+    use Helpers\Cleaner;
 
     if ($_GET['key'] && $_GET['token']) {
         $email = $_GET['key'];

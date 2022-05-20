@@ -1,5 +1,5 @@
 <?php
-    include_once(__DIR__ . "/bootstrap.php");
+    require __DIR__ . '/vendor/autoload.php';
     use \Helpers\Validate;
     use \Helpers\Security;
     use \Classes\Auth\User;

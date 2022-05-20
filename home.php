@@ -1,5 +1,5 @@
 <?php
-    include_once("bootstrap.php");
+    require __DIR__ . '/vendor/autoload.php';
     use \Helpers\Validate;
     use \Helpers\Security;
     use \Helpers\Cleaner;
@@ -88,8 +88,8 @@
         $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
     }
 
-    var_dump(Post::getMostUsedTags());
-    die();
+    // var_dump(Post::getMostUsedTags());
+    // die();
 
     $posts = Cleaner::xss($posts);
 
