@@ -1,7 +1,7 @@
 <?php 
     namespace Dezine\Auth;
     use Dezine\Helpers\Cleaner;
-    use Classes\Auth\DB;
+    use Dezine\Auth\DB;
     use DateTime;
 
     class Warning{

@@ -1,11 +1,7 @@
 let agreement_button = document.querySelectorAll(".agreement_button");
 let warning_message = document.querySelectorAll(".warning_message");
 
-
-
 if (agreement_button) {
-
-
     for (i = 0; i < agreement_button.length; i++) {
         agreement_button[i].addEventListener("click", (e) => {
           

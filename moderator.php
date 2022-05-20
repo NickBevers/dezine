@@ -26,9 +26,9 @@
         $warning_reason = $_POST['warning_reason'];
         try {        
         $warning->setReasonWarning($warning_reason);
-        $warning->sendWarning($uid, $user_id);         
+        $warning->sendWarning($uid, $user_id);  
         } catch (Throwable $error) {
-            $error = $error->getMessage();
+            $error = $error->getMessage();    
         }
     }
 
@@ -111,7 +111,6 @@
         </div>        
         <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
-    <script src="./javascript/remove_warning.js"></script>
         <?php endif; ?>      
     </main>
 </body>
