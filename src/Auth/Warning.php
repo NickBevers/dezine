@@ -1,37 +1,20 @@
 <?php 
-    include_once(__DIR__ . "/../autoloader.php");
-    include_once(__DIR__ . "/../helpers/Cleaner.help.php");
+    namespace Dezine\Auth;
+    use Dezine\Helpers\Cleaner;
+    use Classes\Auth\DB;
+    use DateTime;
 
-    class Warning
-    {
-
+    class Warning{
         private $username;
         private $warning_reason;
 
-
-
-        //usernames
-
-     
-        //
-
-        public function getReasonWarning()
-        {
-            return $this->warning_reason;
-        }
+        public function getReasonWarning(){return $this->warning_reason;}
         
-        public function setReasonWarning($warning_reason)
-        {
+        public function setReasonWarning($warning_reason){
             $warning_reason = Cleaner::cleanInput($warning_reason);
             $this->warning_reason = $warning_reason;
             return $this;
         }
-
-        //
-
-
-        //
-
 
         public function sendWarning($uid, $user_id){
             $conn = DB::getInstance();
@@ -54,10 +37,8 @@
         public function removeWarning($warning_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from warnings where id = :warning_id");
-            $statement->bindValue(":warning_id", $warning_id);
-            
+            $statement->bindValue(":warning_id", $warning_id);            
             return $statement->execute();
         }
-
         
     }

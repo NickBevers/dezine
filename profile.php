@@ -146,7 +146,7 @@
                         </div>
                     <?php endif; ?>   
                     <?php if (User::checkModerator($uid)): ?>
-                        <a href="moderator_overview.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
+                        <a href="moderator.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
                             <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
                                 Retract ban
                             <?php else: ?>

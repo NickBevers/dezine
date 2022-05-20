@@ -1,9 +1,8 @@
 <?php
-    include_once(__DIR__ . "./../bootstrap.php");
+    require __DIR__ . '/../vendor/autoload.php';
     use Dezine\Actions\Like;
 
     if (!empty($_POST)) {
-        // var_dump($_POST);
         $postId = $_POST['postId'];
         $userId = $_POST["userId"];
     
