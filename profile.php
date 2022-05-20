@@ -144,6 +144,8 @@
                             <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
                             <script src="./javascript/getLink.js"></script>
                         </div>
+
+                        <a href="moderator.php?warn_uid=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">Warn user</a>
                     <?php endif; ?>   
                     <?php if (User::checkModerator($uid)): ?>
                         <a href="moderator.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">

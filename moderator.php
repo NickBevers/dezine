@@ -6,7 +6,7 @@
     use Dezine\Auth\User;
     use Dezine\Actions\Report;
     use Dezine\Content\Post;
-    use Dezine\Auth\Warning;
+    use Dezine\Actions\Warning;
 
     Validate::start();
     
@@ -17,24 +17,15 @@
         header('Location: home.php');
     }
 
-    $warning = new Warning();
-    $usr= new User();
-    $users = $usr->getAllUsers();
-     
-    if (!empty($_POST)) {
-        $user_id = $_POST['id'];
-        $warning_reason = $_POST['warning_reason'];
-        try {        
-        $warning->setReasonWarning($warning_reason);
-        $warning->sendWarning($uid, $user_id);  
-        } catch (Throwable $error) {
-            $error = $error->getMessage();    
-        }
-    }
-
     if (isset($_GET["id"])) {
         $banId = Cleaner::cleanInput($_GET["id"]);
         $user = User::getUserbyId($banId);
+    }
+     
+    if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
+        $user_id = Cleaner::cleanInput($_GET["warn_uid"]);
+        $reason = $_POST["warning_reason"];
+        Warning::sendWarning($uid, $user_id, $reason);
     }
 
     $reports = Cleaner::xss(Report::getReports());
@@ -65,16 +56,12 @@
             <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
             <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
         </div>
-        <?php endif; ?>
+        <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="warnings">
             <form action="" method="post">
-            <h2>Would you like to warn a user?</h2>
-                <select name="id" id="">
-                    <?php foreach($users as $usr): ?>
-                    <option value="<?php echo $usr['id'];?>"><?php echo $usr['username'];?></option>
-                    <?php endforeach; ?>
-                </select>
+                <h2>Would you like to warn a user?</h2>
                 <div class="form__field" id="form__report__reason">
+                    <input type="hidden" name="uid" value="<?php echo $_GET["warn_uid"] ?>">
                     <label for="warning_reason" class="form__label">Reason</label>
                     <input type="warning_reason" name="warning_reason" class="form-control" id="warning_reason" required
                         placeholder="the reason for your report">
@@ -82,7 +69,7 @@
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Send</button>
             </form>
         </div>
-        <?php if (!isset($_GET["id"])): ?>
+        <?php else: ?>
         <div class="reports form form--profile"> 
             <?php foreach ($reports as $report): ?>
                 <?php if (intval($report["archived"]) == 0): ?>
