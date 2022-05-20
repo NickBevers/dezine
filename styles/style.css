@@ -1284,6 +1284,25 @@ footer {
   cursor: pointer;
 }
 
+.like__text,
+.liked__text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.like__text img,
+.liked__text img {
+  width: 20px;
+  height: 20px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
   .posts {
     -ms-grid-columns: 1fr 1fr;

@@ -204,26 +204,26 @@
                     <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
                         <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
                             <div class="like hidden" data-id="<?php echo $pid; ?>">
-                                <p class="like__text">❤ Like</p>
+                                <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                                 <?php if ($uid === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                             <div class="liked" data-id="<?php echo $pid; ?>">
-                                <p class="liked__text">❤ Liked</p>
+                                <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                                 <?php if ($uid === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                         <?php else: ?>
                             <div class="like" data-id="<?php echo $pid; ?>">
-                                <p class="like__text">❤ Like</p>
+                                <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                                 <?php if ($uid === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                             <div class="liked hidden" data-id="<?php echo $pid; ?>">
-                                <p class="liked__text">❤ Liked</p>
+                                <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                                 <?php if ($uid === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>

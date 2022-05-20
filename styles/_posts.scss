@@ -173,6 +173,18 @@
     cursor: pointer;
 }
 
+.like__text,
+.liked__text{
+    display: flex;
+    flex-direction: row;
+
+    img{
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
     .posts{
         grid-template-columns: 1fr 1fr;
