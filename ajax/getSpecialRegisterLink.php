@@ -1,7 +1,7 @@
 <?php
     include_once(__DIR__ . "./../bootstrap.php");
-    use \Classes\Auth\Link;
-    use \Helpers\Validate;
+    use Dezine\Auth\Link;
+    use Dezine\Helpers\Validate;
 
     Validate::start();
     

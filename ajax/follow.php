@@ -1,6 +1,6 @@
 <?php 
     include_once("./../bootstrap.php");
-    use \Classes\Actions\Follow;
+    use Dezine\Actions\Follow;
 
     if (!empty($_POST)) {
         $follower_id = $_POST['follower_id'];

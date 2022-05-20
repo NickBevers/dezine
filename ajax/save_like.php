@@ -1,6 +1,6 @@
 <?php
     include_once(__DIR__ . "./../bootstrap.php");
-    use \Classes\Actions\Like;
+    use Dezine\Actions\Like;
 
     if (!empty($_POST)) {
         // var_dump($_POST);

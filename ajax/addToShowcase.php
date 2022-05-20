@@ -1,6 +1,6 @@
 <?php
     include_once("./../bootstrap.php");
-    use \Classes\Content\Showcase;
+    use Dezine\Content\Showcase;
 
     if (!empty($_POST)) {
         $postId = $_POST['postId'];

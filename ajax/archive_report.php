@@ -1,6 +1,6 @@
 <?php 
     include_once("./../bootstrap.php");
-    use Classes\Actions\Report;
+    use Dezine\Actions\Report;
 
     if (!empty($_POST)) {
         $report_id = $_POST['report_id'];

@@ -1,6 +1,6 @@
 <?php 
     include_once("./../bootstrap.php");
-    use \Classes\Auth\User;
+    use Dezine\Auth\User;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];

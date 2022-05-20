@@ -89,6 +89,7 @@
     }
 
     // var_dump(Post::getMostUsedTags());
+    // var_dump($uihzduizqhidqz);
     // die();
 
     $posts = Cleaner::xss($posts);
