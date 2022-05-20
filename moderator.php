@@ -68,7 +68,7 @@
         <?php endif; ?>
         <div class="warnings">
             <form action="" method="post">
-            <h2>Would you like to report a user?</h2>
+            <h2>Would you like to warn a user?</h2>
                 <select name="id" id="">
                     <?php foreach($users as $usr): ?>
                     <option value="<?php echo $usr['id'];?>"><?php echo $usr['username'];?></option>
@@ -111,7 +111,7 @@
         </div>        
         <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
-    <script src="./javascript/warning.js"></script>
+    <script src="./javascript/remove_warning.js"></script>
         <?php endif; ?>      
     </main>
 </body>
