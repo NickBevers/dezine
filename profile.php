@@ -145,7 +145,9 @@
                             <script src="./javascript/getLink.js"></script>
                         </div>
 
+                        <?php if(intval($uid) !== intval(Cleaner::xss($_GET["id"]))): ?>
                         <a href="moderator.php?warn_uid=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">Warn user</a>
+                        <?php endif; ?>
                     <?php endif; ?>   
                     <?php if (User::checkModerator($uid)): ?>
                         <a href="moderator.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
