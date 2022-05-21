@@ -45,17 +45,21 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
-        <h1>Moderator Overviewpage</h1>
+        <h1 class="mod__title">Moderator Overviewpage</h1>
         <?php if(isset($_GET["id"])): ?>
-        <div class="alert alert-success hidden"></div>
-        <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
-            <h2>Would you like to ban user <?php echo $user["username"]; ?>?</h2>
-            <button href="#" class="btn secondary__btn secondary__btn-signup ban" data-id="<?php echo $banId; ?>">Ban user</button>
+            <div class="alert alert-success hidden"></div>
+            <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
+                <div class="mod__ban">
+                    <h2>Would you like to ban user <?php echo $user["username"]; ?>?</h2>
+                    <button href="#" class="btn secondary__btn secondary__btn-signup ban" data-id="<?php echo $banId; ?>">Ban user</button>
+                </div>
+            </div>
+            <div class="banned <?php if (!User::checkBan($banId)) { echo "hidden"; } ?>">
+                <div class="mod__ban">
+                    <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
+                    <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
         </div>
-        <div class="banned <?php if (!User::checkBan($banId)) { echo "hidden"; } ?>">
-            <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
-            <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
-        </div>
+            </div>
         <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="warnings">
             <form action="" method="post">
@@ -96,9 +100,9 @@
                 <?php endif; ?> 
             <?php endforeach; ?>  
         </div>        
+        <?php endif; ?>      
         <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
-        <?php endif; ?>      
     </main>
 </body>
 </html>
