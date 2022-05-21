@@ -162,14 +162,6 @@
             </div>
         </div>
     </section>    
-    <?php if(empty($posts)): ?>
-        <div class="showcase__empty">
-            <h2 class="showcase__title-h2">Your haven't added any posts!</h2>
-            <div class="showcase__empty-message">
-                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
-            </div>
-        </div>
-    <?php endif; ?>
     <section class="warning_messages">    
     <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
         <div class="warning_user">
@@ -183,6 +175,14 @@
         </div>
     <?php endif; ?>
     </section>
+    <?php if(empty($posts)): ?>
+        <div class="showcase__empty">
+            <h2 class="showcase__title-h2">Your haven't added any posts!</h2>
+            <div class="showcase__empty-message">
+                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
+            </div>
+        </div>
+    <?php else: ?>
     <section class="posts">
         <?php foreach ($posts as $post): ?>
         <div class="post">
@@ -267,7 +267,8 @@
             </div>
         </div>
         <?php endforeach; ?>
-    </section>
+    </section>    
+    <?php endif; ?>
     <?php if ($postCount > $postsPerPage): ?>
     <?php if ($pageNum > 1): ?>
         <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
