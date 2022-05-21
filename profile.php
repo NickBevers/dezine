@@ -68,10 +68,7 @@
     <div class="error">
         <p><?php echo($_SESSION['flash_error']); ?></p>
     </div>
-    <?php
-        unset($_SESSION['flash_error']);
-        endif;
-     ?>
+    <?php unset($_SESSION['flash_error']); endif; ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
         <div class="profile__info__img">
@@ -134,7 +131,9 @@
                             <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
                             <script src="./javascript/getLink.js"></script>
                         </div>
+                        <?php if(intval($uid) !== intval(Cleaner::xss($_GET["id"]))): ?>
                         <a href="moderator.php?warn_uid=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">Warn user</a>
+                        <?php endif; ?>
                     <?php endif; ?>   
                     <?php if (User::checkModerator($uid)): ?>
                         <a href="moderator.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
@@ -162,20 +161,6 @@
                 <?php endif; ?>
             </div>
         </div>
-    </section>
-    <section class="warning_messages">    
-        <?php if (User::checkWarning($uid)): ?>
-        <?php $warnings = User::checkWarning($uid) ?>
-            <div class="warning_user">
-                <?php foreach ($warnings as $warning):  ?>                      
-                    <div class="warning_message">
-                        <p><?php echo $warning["warning"] ; ?></p>
-                        <p><a href="community_guidelines.php">link to community guidlines</a>
-                        <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
-                    </div>                    
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
     </section>    
     <?php if(empty($posts)): ?>
         <div class="showcase__empty">
@@ -185,6 +170,19 @@
             </div>
         </div>
     <?php endif; ?>
+    <section class="warning_messages">    
+    <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
+        <div class="warning_user">
+            <?php foreach ($warnings as $warning):  ?>
+                <div class="warning_message">
+                    <p><?php echo $warning["warning"] ; ?></p>
+                    <p><a href="community_guidelines.php">link to community guidlines</a>
+                    <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    </section>
     <section class="posts">
         <?php foreach ($posts as $post): ?>
         <div class="post">
