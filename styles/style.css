@@ -1551,6 +1551,7 @@ footer {
       -ms-flex-align: center;
           align-items: center;
   gap: 2rem;
+  margin-top: 1rem;
 }
 
 @media (max-width: 600px) {
