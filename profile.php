@@ -163,17 +163,25 @@
         </div>
     </section>    
     <section class="warning_messages">    
-    <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
-        <div class="warning_user">
-            <?php foreach ($warnings as $warning):  ?>
-                <div class="warning_message">
-                    <p><?php echo $warning["warning"] ; ?></p>
-                    <p><a href="community_guidelines.php">link to community guidlines</a>
-                    <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+        <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
+            <div class="warning_user">
+                <?php foreach ($warnings as $warning):  ?>
+                    <div class="warning_message">
+                        <p><?php echo $warning["warning"] ; ?></p>
+                        <p><a href="community_guidelines.php">link to community guidlines</a>
+                        <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>
+    <section class="ban__message">
+        <?php if (intval(User::checkban($_SESSION["id"])) === 1):  ?>
+            <h3>You have been banned!</h3>
+            <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have been limited on the platform.</p>
+            <p>If you want to get your ban revoked, please make an appointment with the platform moderators to discuss your case.</p>
+            <a href="mailto:dezine@thomasmore.be" class="btn primary__btn">Make appointment</a>
+        <?php endif; ?>
     </section>
     <?php if(empty($posts)): ?>
         <div class="showcase__empty">
