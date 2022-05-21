@@ -1,6 +1,6 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Auth\Warning;
+    use Dezine\Actions\Warning;
 
     if (!empty($_POST)) {
         $warning_id = $_POST['warning_id'];   

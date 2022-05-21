@@ -169,7 +169,7 @@
                     <div class="warning_message">
                         <p><?php echo $warning["warning"] ; ?></p>
                         <p><a href="community_guidelines.php">link to community guidlines</a>
-                        <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
+                        <div class="btn primary__btn agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -285,9 +285,9 @@
     <?php endif; ?>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>
+<script src="./javascript/remove_warning.js"></script> 
 </body>
 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
     <script src="./javascript/follow_unfollow.js"></script>
 <?php endif; ?>
-<script src="./javascript/remove_warning.js"></script> 
 </html>
