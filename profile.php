@@ -10,10 +10,7 @@
     use Dezine\Helpers\Cleaner;
 
     Validate::start();
-
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     if (empty($_GET["id"])) {
         if (empty($_SESSION["id"])) {
@@ -28,10 +25,7 @@
     }
 
     $user = Cleaner::xss(User::getUserbyId($profileUser));
-
-    if (empty($user)) {
-        header('Location: home.php');
-    }
+    if (empty($user)) {header('Location: home.php');}
 
     $postsPerPage = 18;
     $postCount = Post::getPostsCount();
@@ -58,11 +52,9 @@
         }
         header("Refresh:0");
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,15 +63,13 @@
     <link rel="stylesheet" href="./styles/style.css">
     <title><?php echo $user["username"]; ?></title>
 </head>
-
 <body>
     <?php if (isset($_SESSION['flash_error'])): ?>
     <div class="error">
         <p><?php echo($_SESSION['flash_error']); ?></p>
     </div>
-
     <?php
-         unset($_SESSION['flash_error']);
+        unset($_SESSION['flash_error']);
         endif;
      ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
@@ -144,7 +134,6 @@
                             <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
                             <script src="./javascript/getLink.js"></script>
                         </div>
-
                         <a href="moderator.php?warn_uid=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">Warn user</a>
                     <?php endif; ?>   
                     <?php if (User::checkModerator($uid)): ?>
@@ -174,33 +163,28 @@
             </div>
         </div>
     </section>
-
-    <section class="warning_messages">
-
-    
-    <?php if (User::checkWarning($uid)): ?>
-                <?php $warnings = User::checkWarning($uid) ?>
-
-                <div class="warning_user">
-                
-                    <?php foreach ($warnings as $warning):  ?>
-                      
-                        <div class="warning_message">
-                            <p><?php echo $warning["warning"] ; ?></p>
-                            <p><a href="community_guidelines.php">link to community guidlines</a>
-                            <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">
-                        click for agreement</div>
-                        </div>
-                    
-                    <?php endforeach; ?>
-                </div>
-
-                <?php endif; ?>
-
-
-
-    </section>
-
+    <section class="warning_messages">    
+        <?php if (User::checkWarning($uid)): ?>
+        <?php $warnings = User::checkWarning($uid) ?>
+            <div class="warning_user">
+                <?php foreach ($warnings as $warning):  ?>                      
+                    <div class="warning_message">
+                        <p><?php echo $warning["warning"] ; ?></p>
+                        <p><a href="community_guidelines.php">link to community guidlines</a>
+                        <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
+                    </div>                    
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>    
+    <?php if(empty($posts)): ?>
+        <div class="showcase__empty">
+            <h2 class="showcase__title-h2">Your haven't added any posts!</h2>
+            <div class="showcase__empty-message">
+                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
+            </div>
+        </div>
+    <?php endif; ?>
     <section class="posts">
         <?php foreach ($posts as $post): ?>
         <div class="post">
@@ -286,21 +270,17 @@
         </div>
         <?php endforeach; ?>
     </section>
-
     <?php if ($postCount > $postsPerPage): ?>
     <?php if ($pageNum > 1): ?>
-    <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+        <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
     <?php endif; ?>
-    <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-
     <script src="./javascript/like.js"></script>
-
     <script src="./javascript/showcase.js"></script>
 </body>
 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
-<script src="./javascript/follow_unfollow.js"></script>
+    <script src="./javascript/follow_unfollow.js"></script>
 <?php endif; ?>
-<script src="./javascript/remove_warning.js"></script>
-
+<script src="./javascript/remove_warning.js"></script> 
 </html>
