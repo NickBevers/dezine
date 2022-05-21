@@ -78,10 +78,7 @@
         <p><?php echo($_SESSION['flash_error']); ?></p>
     </div>
 
-    <?php
-         unset($_SESSION['flash_error']);
-        endif;
-     ?>
+    <?php unset($_SESSION['flash_error']); endif; ?>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <section class="profile__info">
         <div class="profile__info__img">
@@ -180,27 +177,18 @@
     <section class="warning_messages">
 
     
-    <?php if (User::checkWarning($uid)): ?>
-                <?php $warnings = User::checkWarning($uid) ?>
-
-                <div class="warning_user">
-                
-                    <?php foreach ($warnings as $warning):  ?>
-                      
-                        <div class="warning_message">
-                            <p><?php echo $warning["warning"] ; ?></p>
-                            <p><a href="community_guidelines.php">link to community guidlines</a>
-                            <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">
-                        click for agreement</div>
-                        </div>
-                    
-                    <?php endforeach; ?>
+    <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
+        <div class="warning_user">
+            <?php foreach ($warnings as $warning):  ?>
+                <div class="warning_message">
+                    <p><?php echo $warning["warning"] ; ?></p>
+                    <p><a href="community_guidelines.php">link to community guidlines</a>
+                    <div class="agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
                 </div>
+            <?php endforeach; ?>
+        </div>
 
-                <?php endif; ?>
-
-
-
+        <?php endif; ?>
     </section>
 
     <section class="posts">
