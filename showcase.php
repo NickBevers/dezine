@@ -61,7 +61,10 @@
         </div>
         <div class="profile__info__block">
             <div class="profile__info__details">
-                <h1><?php echo $user["username"]; ?></h1>
+                <div class="profile__info__details__username">
+                    <h1><?php echo $user["username"]; ?></h1>
+                    <img src="./assets/hearts_full_icon.svg" id="profile__verified" alt="hearts icon showcase">
+                </div>
                 <h4><?php echo $user["education"]; ?></h4>
                 <p><?php echo $user["bio"]; ?></p>
                 <div class="profile__info-share">
@@ -88,16 +91,13 @@
             </div>
         </div>
     </section>
-
-    <h1 class="showcase__title"><?php echo $user["username"]; ?>'s Showcase</h1>
-
     <section>
         <?php if (Showcase::userHasShowcase($id) === false && $uid === $id): ?>
             <div class="showcase__empty">
                 <h2 class="showcase__title-h2">Your showcase is still empty!</h2>
                 <div class="showcase__empty-message">
                     <p>Add posts to your showcase by clicking on the hearts!</p>   
-                    <img src="./assets/hearts_icon.svg" alt="hearts icon showcase">
+                    <img src="./assets/hearts_full_icon.svg" alt="hearts icon showcase">
                 </div>
             </div>
         <?php else: ?>

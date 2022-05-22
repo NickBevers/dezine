@@ -81,6 +81,5 @@
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
             </form>
         </main>
-        <?php include_once("./includes/footer.inc.php"); ?>
     </body>    
 </html>

@@ -1,6 +1,5 @@
 <?php 
   require __DIR__ . '/../vendor/autoload.php';
-  // require dirname(__DIR__, 1 ( '/../vendor/autoload.php'));
   use Dezine\Helpers\Security;
   use Dezine\Auth\User;
 ?><nav class="nav--full">

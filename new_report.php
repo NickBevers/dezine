@@ -99,7 +99,6 @@
             <div id="report__button"></div>
             <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>" data-post_user_id="<?php echo $user_id; ?>">Submit Report</a>
         </div>
-        <?php include_once("./includes/footer.inc.php"); ?>
     </main>
     <script src="./javascript/report.js"></script>
 </body>
