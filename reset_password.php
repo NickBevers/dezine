@@ -75,11 +75,7 @@
           
           <button type="submit" class="btn secondary__btn secondary__btn-signup">Reset password</button>
         </form>
-
-        <?php elseif (isset($message)): ?>
-          <h3><?php echo Cleaner::xss($message); ?></h3>
         <?php endif; ?>
-
     </main>
     <?php include_once("./includes/footer.inc.php"); ?>
    </body>
