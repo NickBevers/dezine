@@ -5,7 +5,6 @@
     use \Mailjet\Resources;
     use Exception;
     
-    require 'vendor/autoload.php';
     class Reset{
         private $email;
         private $token;
@@ -85,7 +84,7 @@
 
                 try {
                     $response = $mj->post(Resources::$Email, ['body' => $body]);
-                    if($response->success()){$message = "The email was sent. PLease check your inbox and spam.";}
+                    if($response->success()){$message = "The email was sent. Please check your inbox and spam.";}
                     return $message;
                 } catch (Exception $e) {                    
                     $error = "Message could not be sent:". $e->getMessage() ."\n";

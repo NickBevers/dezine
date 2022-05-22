@@ -12,7 +12,6 @@
         $reset->setEmail($email);
         $reset->setToken($token);
         $returned = $reset->resetLink();
-        // var_dump($returned);
 
         if (!empty($_POST)) {
             $new_password = $_POST["new_password"];
@@ -50,15 +49,15 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>            
       <?php if (isset($error)): ?>
-          <div class="alert alert-danger"><?php echo $error; ?></div>
+          <div class="alert alert-danger"><?php echo Cleaner::xss($error); ?></div>
       <?php endif; ?>
 
       <?php if (isset($success)): ?>
-          <div class="alert alert-success"><?php echo $success; ?></div>
+          <div class="alert alert-success"><?php echo Cleaner::xss($success); ?></div>
       <?php endif; ?>
 
       <?php if ($returned): ?>
-        <form action="" method="post" class="form form--register">
+        <form action="" method="post" class="form form--profile">
           <h2>Reset password</h2>
           <input type="hidden" name="email" value="<?php echo $returned;?>">
           <!-- <input type="hidden" name="reset_link_token" value="<//?php echo $tok;?>"> -->
@@ -79,7 +78,7 @@
 
         <?php elseif (isset($message)): ?>
           <h3><?php echo Cleaner::xss($message); ?></h3>
-      <?php endif; ?>
+        <?php endif; ?>
 
     </main>
     <?php include_once("./includes/footer.inc.php"); ?>

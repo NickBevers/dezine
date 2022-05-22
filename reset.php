@@ -36,14 +36,14 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
       <main>         
         <?php if (!empty($message)): ?>
-            <div class="alert alert-success"><?php echo $message; ?></div>
+            <div class="alert alert-success"><?php echo Cleaner::xss($message); ?></div>
         <?php endif; ?>
 
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
+            <div class="alert alert-danger"><?php echo Cleaner::xss($error); ?></div>
         <?php endif; ?>
 
-        <form action="" method="post" class="form form--register">
+        <form action="" method="post" class="form form--profile">
           <h2>Reset password</h2>
           <div class="form__field">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
