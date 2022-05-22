@@ -285,7 +285,7 @@
     <?php endif; ?>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>
-<script src="./javascript/remove_warning.js"></script> 
+    <script src="./javascript/remove_warning.js"></script> 
 </body>
 <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
     <script src="./javascript/follow_unfollow.js"></script>
