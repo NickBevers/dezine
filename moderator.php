@@ -61,14 +61,15 @@
         </div>
             </div>
         <?php elseif(isset($_GET["warn_uid"])): ?>
-        <div class="warnings">
+        <div class="mod__warnings">
             <form action="" method="post">
                 <h2>Would you like to warn a user?</h2>
                 <div class="form__field" id="form__report__reason">
                     <input type="hidden" name="uid" value="<?php echo $_GET["warn_uid"] ?>">
                     <label for="warning_reason" class="form__label">Reason</label>
-                    <input type="warning_reason" name="warning_reason" class="form-control" id="warning_reason" required
-                        placeholder="the reason for your report">
+                    <textarea type="warning_reason" name="warning_reason" class="form-control" id="warning_reason" required
+                        placeholder="the reason for your report" row="10" cols="60"
+                    ></textarea>
                 </div>
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Send</button>
             </form>
