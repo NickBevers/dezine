@@ -2070,4 +2070,11 @@ input[type="file"] {
   margin: 2rem;
   text-align: center;
 }
+
+.profile__info__followers {
+  border-left: 2px solid #a09191;
+  border-right: 2px solid #a09191;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 /*# sourceMappingURL=style.css.map */

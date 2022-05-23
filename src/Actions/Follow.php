@@ -48,4 +48,13 @@
             $statement->bindValue(':user_id', $this->user_id);
             return $statement->execute();
         }
+
+        public static function getFollowCount(){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from follows");
+            $statement->execute();
+            // $res = $statement->fetchAll();
+            $res = $statement->rowCount();
+            return $res;
+        }
     }

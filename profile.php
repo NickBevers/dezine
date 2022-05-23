@@ -42,6 +42,8 @@
     $uid = Cleaner::cleanInput($_SESSION["id"]);
     $role = $user["user_role"];
 
+    $followCount = Follow::getFollowCount();
+
     if (isset($_POST["moderator"])) {
         if ($_POST["moderator"] === "assign") {
             $role = "moderator";
@@ -123,6 +125,13 @@
                         <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
                             Report user
                         </a>
+                    <?php endif; ?> 
+                </div>
+                <div class="profile__info__followers">
+                    <?php if($_GET["id"] == $_SESSION["id"]): ?>   
+                        <p>Followers <?php echo $followCount ?></p>
+                      
+                       
                     <?php endif; ?> 
                 </div>   
                 <div class="profile__info__moderator">
