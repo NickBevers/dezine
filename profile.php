@@ -185,10 +185,14 @@
     <?php endif; ?>
     <?php if(empty($posts) && $uid === Cleaner::xss($_GET["id"])): ?>
         <div class="showcase__empty">
-            <h2 class="showcase__title-h2">Your haven't added any posts!</h2>
+            <h2 class="showcase__title-h2">You haven't added any posts!</h2>
             <div class="showcase__empty-message">
                 <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
             </div>
+        </div>
+    <?php elseif(empty($posts)): ?>
+        <div class="showcase__empty">
+            <h2 class="showcase__title-h2"><?php echo Cleaner::xss($user["username"]); ?> hasn't yet added any posts!</h2>
         </div>
     <?php else: ?>
     <section class="posts">
