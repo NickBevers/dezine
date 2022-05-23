@@ -175,15 +175,15 @@
             </div>
         <?php endif; ?>
     </section>
+    <?php if (intval(User::checkban($_SESSION["id"])) === 1 && $uid === Cleaner::xss($_GET["id"])): ?>
     <section class="ban__message">
-        <?php if (intval(User::checkban($_SESSION["id"])) === 1):  ?>
-            <h3>You have been banned!</h3>
-            <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have been limited on the platform.</p>
-            <p>If you want to get your ban revoked, please make an appointment with the platform moderators to discuss your case.</p>
-            <a href="mailto:dezine@thomasmore.be" class="btn primary__btn">Make appointment</a>
-        <?php endif; ?>
+        <h3>You have been banned!</h3>
+        <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have been limited on the platform.</p>
+        <p>If you want to get your ban revoked, please make an appointment with the platform moderators to discuss your case.</p>
+        <a href="mailto:dezine@thomasmore.be" class="btn primary__btn">Make appointment</a>
     </section>
-    <?php if(empty($posts)): ?>
+    <?php endif; ?>
+    <?php if(empty($posts) && $uid === Cleaner::xss($_GET["id"])): ?>
         <div class="showcase__empty">
             <h2 class="showcase__title-h2">Your haven't added any posts!</h2>
             <div class="showcase__empty-message">
