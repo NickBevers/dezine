@@ -170,14 +170,21 @@
         }
 
         public static function getSearchPosts($search, $sort, $start, $amount){
-            var_dump($sort);
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date :sort limit $start, $amount");
+            switch($sort){
+                case "desc":
+                    $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount");
+                break;
+                case "asc":
+                    $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date asc limit $start, $amount");
+                break;
+                default:
+                    $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount");
+                break;
+            }
             $statement->bindValue(':search', '%' . $search . '%'); //, PDO::PARAM_STR
-            $statement->bindValue(':sort', $sort);
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-            var_dump($res);
             return $res;
         }
 

@@ -56,9 +56,8 @@
                 $pageNum  = 1;
 
                 $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
-                var_dump($posts);
                 // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
-            };  
+            };              
         }        
     } elseif (!empty($_GET["search"]) && $sorting !== "follow") {
         $search_term = Cleaner::xss($_GET["search"]);
@@ -69,7 +68,6 @@
             $pageNum  = 1;
 
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
-            var_dump($posts);
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } elseif (!empty($_GET["search"]) && $sorting === "follow") {
@@ -97,7 +95,6 @@
             }
         };
     }
-    var_dump($_GET["search"]);
 
     if (isset($_GET["color"])) {
         $getColor = Cleaner::cleanInput($_GET["color"]);
