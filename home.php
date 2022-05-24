@@ -46,6 +46,20 @@
     }
     if ($sorting === '') {
         $posts = Post::getSomePosts("desc", 0, $postsPerPage);
+        if(!empty($_GET["search"])){
+            $sorting = "desc";
+            $search_term = Cleaner::xss($_GET["search"]);
+            if (isset($_GET["page"]) && $_GET["page"] > 1) {
+                $pageNum  = Cleaner::xss($_GET["page"]);
+                $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+            } else {
+                $pageNum  = 1;
+
+                $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
+                var_dump($posts);
+                // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
+            };  
+        }        
     } elseif (!empty($_GET["search"]) && $sorting !== "follow") {
         $search_term = Cleaner::xss($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) {
@@ -55,6 +69,7 @@
             $pageNum  = 1;
 
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
+            var_dump($posts);
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } elseif (!empty($_GET["search"]) && $sorting === "follow") {
@@ -82,6 +97,7 @@
             }
         };
     }
+    var_dump($_GET["search"]);
 
     if (isset($_GET["color"])) {
         $getColor = Cleaner::cleanInput($_GET["color"]);
