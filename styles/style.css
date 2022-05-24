@@ -2112,7 +2112,7 @@ input[type="file"] {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: auto;
+  margin: 30px auto 0 auto;
   padding: 10px;
   border-style: solid;
   border-color: red;

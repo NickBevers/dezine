@@ -23,9 +23,24 @@
     }
      
     if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
+
+
         $user_id = Cleaner::cleanInput($_GET["warn_uid"]);
         $reason = $_POST["warning_reason"];
-        Warning::sendWarning($uid, $user_id, $reason);
+
+        try {
+             $warning_message =  Warning::sendWarning($uid, $user_id, $reason);
+            if ($warning_message) {
+              
+                $success = "Your warning is send successfully";
+            } else {
+                $error = "Something has gone wrong, please try again.";
+            }
+
+        } catch (Throwable $error) {
+
+            $error = $error->getMessage();
+        }
     }
 
     $reports = Cleaner::xss(Report::getReports());
@@ -45,6 +60,15 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
+
+    <?php if (isset($error)): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($success)): ?>
+        <div class="alert alert-success"><?php echo $success; ?></div>
+        <?php endif; ?>
+
         <h1 class="mod__title">Moderator Overviewpage</h1>
         <?php if(isset($_GET["id"])): ?>
             <div class="alert alert-success hidden"></div>
