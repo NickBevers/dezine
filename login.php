@@ -51,19 +51,14 @@
 			<h2>Login</h2>
 			<div class="form__field">
 				<label for="exampleInputEmail1" class="form-label">Email address</label>
-				<input name="email" placeholder="Email" type="email" class="form-control register--email" />
+				<input name="email" placeholder="Email" type="email" class="form-control register--email" required />
 				<div id="passwordHelp" class="form-text">Please login with your Thomas More email</div>
 			</div>
 			<div class="form__field">
 				<label for="exampleInputPassword1" class="form-label">Password</label>
-				<input name="password" placeholder="Password" type="password" class="form-control" />
+				<input name="password" placeholder="Password" type="password" class="form-control" required />
 				<div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
 			</div>
-			<!-- <div>
-				<label for="exampleInputbtn-toggle-1" class="form-label">Remember</label>
-				<input class="btn-toggle btn-toggle-round" id="btn-toggle-1" name="remember" type="checkbox" />
-				<label for="btn-toggle-1"></label>
-			</div>			 -->
 			<div class="form__submit">
 				<button type="submit" class="btn secondary__btn secondary__btn-signup">Login</button>
 				<a href="reset.php" class="btn secondary__btn-reverse secondary__btn-signup">Forgot password?</a>

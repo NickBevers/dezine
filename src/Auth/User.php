@@ -159,6 +159,9 @@
             $statement->execute();
             $res = $statement->fetch(PDO::FETCH_ASSOC);
 
+            $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
+            if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to log in");}
+
             if(!$res){
                 throw new Exception("No user was found with this email");
             }
