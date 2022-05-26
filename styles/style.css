@@ -102,7 +102,7 @@ h4 {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
-  width: 50%;
+  width: 60%;
 }
 
 .nav--right a {
@@ -113,7 +113,7 @@ h4 {
   display: none;
 }
 
-@media (max-width: 1400px) and (min-width: 950px) {
+@media (max-width: 1500px) and (min-width: 950px) {
   .nav--right {
     width: 80%;
   }
@@ -1448,6 +1448,9 @@ footer {
   border-color: #666565;
   border-width: 1.5px;
   border-radius: 8px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  resize: vertical;
 }
 
 .post__comment__form__btn {
@@ -1509,6 +1512,11 @@ footer {
   }
   .post__comment__form {
     gap: 0.5rem;
+  }
+  .post__comment__form__input {
+    height: 3rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
   }
 }
 
@@ -2001,7 +2009,9 @@ input[type="file"] {
 .search_box select {
   border-color: #120CFF;
   border-radius: 0.2rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
+  height: 2rem;
+  padding: 0rem 0.3rem;
 }
 
 .search_box button {
@@ -2014,6 +2024,40 @@ input[type="file"] {
   width: 2.5rem;
   height: 2.5rem;
   margin: 0 0.5rem;
+}
+
+.tags__buttons {
+  margin-top: 1rem;
+  background-color: #FCD7F7;
+  border-radius: 0.2rem;
+  border: none;
+  padding: 0.2rem 0.4rem;
+  color: #000000;
+}
+
+.tags__buttons a {
+  text-decoration: none;
+}
+
+.tags__buttons a:active {
+  color: #120CFF;
+}
+
+.search__cross {
+  margin-left: 1rem;
+  background-color: #FCD7F7;
+  border-radius: 0.2rem;
+  border: none;
+  padding: 0.2rem 0.4rem;
+  color: #000000;
+}
+
+.search__cross a {
+  text-decoration: none;
+}
+
+.search__cross a:active {
+  color: #120CFF;
 }
 
 @media (max-width: 600px) {

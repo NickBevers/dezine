@@ -69,6 +69,8 @@
     border-color: $grey;
     border-width: 1.5px;
     border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
 }
 
 .post__comment__form__btn{
@@ -124,6 +126,11 @@
 
     .post__comment__form{
         gap: 0.5rem;
+    }
+    .post__comment__form__input{
+        height: 3rem;
+        box-sizing: border-box;
+
     }
 }
 

@@ -26,7 +26,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
-    width: 50%;
+    width: 60%;
     a {
         margin: 0.5rem;
     }
@@ -36,7 +36,7 @@
     display: none;
 }
 
-@media (max-width: 1400px) and (min-width: 950px) {
+@media (max-width: 1500px) and (min-width: 950px) {
 
     .nav--right {
         width: 80%;

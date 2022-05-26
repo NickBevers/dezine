@@ -88,9 +88,7 @@
         $posts = Post::getPostsByColor($getColor, 0, $postsPerPage);
     }
 
-    // var_dump(Post::getMostUsedTags());
-    // var_dump($uihzduizqhidqz);
-    // die();
+    $mostUsedTags = Post::getMostUsedTags();
 
     $posts = Cleaner::xss($posts);
 
@@ -116,9 +114,6 @@
             <form action="" method="GET">
                 <input type="text" name="search" placeholder="Search here..." required="required" />
                 <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
-                <?php if (!empty($_GET["search"])): ?>
-                    <a href="home.php">X</a>
-                <?php endif; ?>
             </form>
 
             <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
@@ -126,11 +121,22 @@
                 <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
                 <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
             </select>
+
+            <?php if (!empty($_GET["search"])): ?>
+                <a class="search__cross" href="home.php">X</a>
+            <?php endif; ?>
         </section>
 
-
+        <section class="tags">
+            <h3>Most used tags:</h3>
+            <ul>
+                <?php foreach($mostUsedTags as $key => $tag): ?>
+                    <button class="tags__buttons"><a href="home.php?search=<?php echo $key; ?>">#<?php echo $key; ?></a></button>
+                <?php endforeach; ?>
+            </ul>
+        </section>
         <?php if (isset($_GET["color"])): ?>
-        <a href="home.php">Reset Color filter</a>
+            <a href="home.php">Reset Color filter</a>
         <?php endif; ?>
 
     </div>
@@ -138,8 +144,13 @@
 
     <section class="posts">
     <?php if (empty($posts)): ?>
-    <img src="assets/noposts.png ">
-    <?php endif; ?>       
+        <div class="showcase__empty">
+            <h2 class="showcase__title-h2">There are no posts yet!</h2>
+            <div class="showcase__empty-message">
+                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
+            </div>
+        </div>
+    <?php endif; ?>
     <?php foreach ($posts as $post): ?>
         <div class="posts__bkg">                
             <div class="posts__user">
@@ -154,7 +165,9 @@
 
             </div>               
             <div class="post">
-                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?> class="post__img">
+                <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?> class="post__img">
+                </a>
                 <div class="post__colors">
                     <?php $colors = json_decode($post["colors"]); $color_groups = json_decode($post["color_group"]); ?>
                     <?php for ($i = 0; $i < sizeof($colors); $i++): ?>
