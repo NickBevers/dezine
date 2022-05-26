@@ -95,14 +95,15 @@
     }
 }
 
-@media (max-width: 1116px) and (min-width: 768px) {
+@media (max-width: 1180px) and (min-width: 950px) {
     .nav--right a {
         padding: 0.5rem;
         margin: 0.1rem;
+        
     }
 }
 
-@media (max-width: 768px) and (min-width: 600px) {
+@media (max-width: 850px) and (min-width: 600px) {
     .nav--right a {
         background-color: transparent;
         border: none;

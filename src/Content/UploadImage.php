@@ -4,7 +4,7 @@
     use Cloudinary\Api\Upload\UploadApi;
     use \Cloudinary\Configuration\Configuration;
 
-    $config = parse_ini_file(__DIR__ . "/../../../config/config.ini");
+    $config = parse_ini_file(__DIR__ . "/../../config/config.ini");
     
     Configuration::instance([
         'cloud' => [
