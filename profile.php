@@ -126,7 +126,7 @@
                 <?php endif; ?>
                 <?php endif; ?>
 
-                <?php endif; ?>
+                
                 <div class="profile__info__followers">
                     <?php if($_GET["id"] == $_SESSION["id"]): ?>   
                         <p>Followers : <?php echo $followCount ?></p>
@@ -220,7 +220,7 @@
     <?php if (intval(User::checkban($_SESSION["id"])) === 1 && $uid === Cleaner::xss($_GET["id"])): ?>
     <section class="ban__message">
 
-        <?php if (intval(User::checkban($_SESSION["id"])) === 1):  ?>
+        
         <h3>You have been banned!</h3>
         <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have
             been limited on the platform.</p>

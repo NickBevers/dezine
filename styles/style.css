@@ -2117,7 +2117,6 @@ input[type="file"] {
   text-align: center;
 }
 
-
 #form__report__reason {
   display: -ms-grid;
   display: grid;
@@ -2163,7 +2162,8 @@ input[type="file"] {
   padding: 10px;
   border-style: solid;
   border-color: red;
-=======
+}
+
 .profile__info__followers {
   font-size: 1rem;
   font-weight: 700;
@@ -2172,6 +2172,5 @@ input[type="file"] {
   padding: 0.4rem 0.6rem;
   text-align: center;
   background-color: #fafafa;
-
 }
 /*# sourceMappingURL=style.css.map */
