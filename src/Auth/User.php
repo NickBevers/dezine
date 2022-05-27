@@ -218,24 +218,24 @@
 
         public static function resetPassword($email, $c_password, $new_password){
 
-            if(strlen($new_password) < self::PASSWORD_MIN_LENGTH){
+            if(strlen(Cleaner::cleanInput($new_password)) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             } else{
                 $conn = DB::getInstance();
                 $statement = $conn->prepare("select * from users where email = :email");
-                $statement->bindValue(':email', $email);
+                $statement->bindValue(':email', Cleaner::cleanInput($email));
                 $statement->execute();
                 $res = $statement->fetch();
 
                 $options = [
                 'cost' => 15
                 ];
-                $n_password = password_hash($new_password, PASSWORD_DEFAULT, $options);
+                $n_password = password_hash(Cleaner::cleanInput($new_password), PASSWORD_DEFAULT, $options);
 
                 if (password_verify($c_password, $res["password"])) {
                     $statement = $conn->prepare("update users set password = :password where email = :email");
                     $statement->bindValue(':password', $n_password);
-                    $statement->bindValue(':email', $email);
+                    $statement->bindValue(':email', Cleaner::cleanInput($email));
                     $statement->execute();
                 } else {
                     throw new Exception("The given password does not match the password");

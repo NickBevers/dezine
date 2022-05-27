@@ -12,10 +12,10 @@
     }
 
     if (!empty($_POST)) {
-        $c_password = Cleaner::cleanInput($_POST["c_password"]);
-        $new_password = Cleaner::cleanInput($_POST["new_password"]);
-        $password_conf = Cleaner::cleanInput($_POST["password_conf"]);
-        $email = Cleaner::cleanInput($_SESSION['email']);
+        $c_password = $_POST["c_password"];
+        $new_password = $_POST["new_password"];
+        $password_conf = $_POST["password_conf"];
+        $email = $_SESSION['email'];
 
         if (Validate::isNotEmpty($c_password) && Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
             if ($new_password === $password_conf) {

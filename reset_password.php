@@ -14,8 +14,8 @@
         $returned = $reset->resetLink();
 
         if (!empty($_POST)) {
-            $new_password = Cleaner::cleanInput($_POST["new_password"]);
-            $password_conf = Cleaner::cleanInput($_POST["password_conf"]);
+            $new_password = $_POST["new_password"];
+            $password_conf = $_POST["password_conf"];
             $email = $returned;
  
             if (Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
