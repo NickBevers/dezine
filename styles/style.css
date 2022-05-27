@@ -2116,4 +2116,14 @@ input[type="file"] {
   margin: 2rem;
   text-align: center;
 }
+
+.profile__info__followers {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  background-color: #fafafa;
+}
 /*# sourceMappingURL=style.css.map */
