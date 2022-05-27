@@ -159,6 +159,9 @@
             $statement->execute();
             $res = $statement->fetch(PDO::FETCH_ASSOC);
 
+            // $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
+            // if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to log in");}
+
             if(!$res){
                 throw new Exception("No user was found with this email");
             }
@@ -240,26 +243,38 @@
             }
         }
 
-        public static function deleteUserContentByEmail($id){
+        public static function deleteUserContentById($id){
             // remove comments
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from comments where user_id = :id");
             $statement->bindValue(':id', $id);
             $statement->execute();
 
-            // remove posts
             $stmt = $conn->prepare("select * from posts where user_id = :id");
             $stmt->bindValue(':id', $id);
             $stmt->execute();
-            $res = $stmt->fetchAll();
-            foreach($res as $post){var_dump($post["public_id"]); UploadImage::remove($post["public_id"]);}
-
+            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($res);
+            // die();
+            foreach($res as $post){if(!empty($post["public_id"])){UploadImage::remove($post["public_id"]);}}
+            
+            // remove posts
             $statement2 = $conn->prepare("delete from posts where user_id = :id");
             $statement2->bindValue(':id', $id);
             $statement2->execute();
 
             //remove likes
             $statement3 = $conn->prepare("delete from likes where user_id = :id");
+            $statement3->bindValue(':id', $id);
+            $statement3->execute();
+
+            //remove follows
+            $statement3 = $conn->prepare("delete from follows where user_id = :id");
+            $statement3->bindValue(':id', $id);
+            $statement3->execute();
+
+            //remove showcase posts
+            $statement3 = $conn->prepare("delete from showcase where user_id = :id");
             $statement3->bindValue(':id', $id);
             $statement3->execute();
         }
@@ -269,8 +284,10 @@
             $stmt = $conn->prepare("select * from users where email = :email");
             $stmt->bindValue(':email', $userEmail);
             $stmt->execute();
-            $res = $stmt->fetch();
-            UploadImage::remove($res["profile_image_public_id"]);
+            $res = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(!empty($res["profile_image_public_id"])){
+                UploadImage::remove($res["profile_image_public_id"]);
+            }
 
             $statement = $conn->prepare("delete from users where email = :email");
             $statement->bindValue(':email', $userEmail);
@@ -387,8 +404,6 @@
             $statement->execute();
             $result = $statement->fetchAll();
             return $result;
-          
-    
         }
 
         public static function getAllUsers(){

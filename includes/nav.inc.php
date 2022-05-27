@@ -60,11 +60,15 @@
   <nav class="nav--mobile">
     <div class="nav--left">
       <a href="index.php">
-        <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+      <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+        <a href="home.php">
           <img src="./assets/dezine.svg" alt="D-zine logo">
-        <?php else: ?>
+        </a>
+      <?php else: ?>
+        <a href="index.php">
           <img src="./assets/imd.svg" alt="IMD logo">
-        <?php endif; ?>
+        </a>
+      <?php endif; ?>
 
       </a>
       </div>
@@ -74,16 +78,19 @@
           <span class="navicon"></span>
         </label>
         <div class="nav--right">
-
-          <a aria-current="page" href="home.php">
-            <?php if (Security::isLoggedIn()): ?>
+          <?php if (Security::isLoggedIn()): ?>
+            <a aria-current="page" href="home.php">
               Home
-            <?php endif; ?>
-            <?php if (!Security::isLoggedIn()): ?>
+            </a>
+          <?php endif; ?>
+          <?php if (!Security::isLoggedIn()): ?>
+            <a aria-current="page" href="index.php">
               Explore
-            <?php endif; ?>
-          </a>
-          
+            </a>
+          <?php endif; ?>
+          <?php if (isset($_SESSION["id"]) && User::checkUserRole($_SESSION["id"]) !== "user"): ?>
+              <a href="moderator.php">Moderate</a>
+          <?php endif; ?>
           <?php if (!Security::isLoggedIn()): ?>
             <a href="login.php" class="nav__button">Log in</a>
             <a href="register.php" class="nav__button">Register</a>

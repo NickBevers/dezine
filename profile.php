@@ -42,6 +42,8 @@
     $uid = Cleaner::cleanInput($_SESSION["id"]);
     $role = $user["user_role"];
 
+    $followCount = Follow::getFollowCount($uid);
+
     if (isset($_POST["moderator"])) {
         if ($_POST["moderator"] === "assign") {
             $role = "moderator";
@@ -119,19 +121,35 @@
                         <p>Unfollow</p>
                     </div>
                     <?php endif; ?>
+
                 </div>
                 <?php endif; ?>
                 <?php endif; ?>
+
+                <?php endif; ?>
+                <div class="profile__info__followers">
+                    <?php if($_GET["id"] == $_SESSION["id"]): ?>   
+                        <p>Followers : <?php echo $followCount ?></p>
+                      
+                       
+                    <?php endif; ?> 
+                </div>   
+                
+
+
                 <div class="profile__info__btn">
                     <a href="showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn">
                         Showcase user
                     </a>
-                    <?php if($_GET["id"] != $_SESSION["id"]): ?>
-                    <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
-                        Report user
-                    </a>
-                    <?php endif; ?>
+
+               
+                    <?php if($_GET["id"] != $_SESSION["id"]): ?>   
+                        <a href="new_report.php?userid=<?php echo $user['id'] ; ?>" class="btn primary__btn">
+                            Report user
+                        </a>
+                    <?php endif; ?> 
                 </div>
+
                 <div class="profile__info__moderator">
                     <?php if (User::checkUserRole($uid) !== "user"): ?>
                     <div class="getRegisterLink">
@@ -199,7 +217,9 @@
             <?php endif; ?>
         </div>
     </section>
+    <?php if (intval(User::checkban($_SESSION["id"])) === 1 && $uid === Cleaner::xss($_GET["id"])): ?>
     <section class="ban__message">
+
         <?php if (intval(User::checkban($_SESSION["id"])) === 1):  ?>
         <h3>You have been banned!</h3>
         <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have
@@ -216,6 +236,7 @@
             <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>
         </div>
     </div>
+
     <?php else: ?>
     <section class="posts">
         <?php foreach ($posts as $post): ?>
@@ -236,10 +257,14 @@
                     class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                 <?php endif; ?>
                 <?php endif; ?>
-                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                </a>
             </div>
             <div class="post__info">
-                <h4><?php echo $post["title"] ?></h4>
+                <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                    <h3 class="post__title"><?php echo $post["title"] ?></h3>
+                </a>
                 <?php if (isset($uid)): ?>
                 <p><?php echo $post["description"] ?></p>
                 <?php $tags = json_decode($post["tags"]); ?>
