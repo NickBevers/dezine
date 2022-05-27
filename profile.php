@@ -180,21 +180,23 @@
     </section>
     <section class="warning__messages">
         <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
-            <div class="warning__message">
+            <div>
                 <?php foreach ($warnings as $warning):  ?>
-                    <h3>You have received a warning!</h3>
-                    <p>Our content monitors have determined that your behavior at Dzine has been in violation of our 
-                        <a href="terms_of_use.php">Terms of Use</a>.
-                    </p>
-                    <p>Moderator Note: <?php echo $warning["warning"] ; ?></p>
-                    <p>Please abide by the 
-                        <a href="community_guidelines.php">Community Guidlines</a> 
-                        so that Dzine can be a fun place for everyone!
-                    </p>
-                    <p>Close this message by agreeing to our 
-                        <a href="terms_of_use.php">Terms of Use</a> 
-                    </p>
-                    <div class="btn primary__btn agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement
+                    <div class="warning__message">
+                        <h3>You have received a warning!</h3>
+                        <p>Our content monitors have determined that your behavior at Dzine has been in violation of our 
+                            <a href="terms_of_use.php">Terms of Use</a>.
+                        </p>
+                        <p>Moderator Note: <?php echo $warning["warning"] ; ?></p>
+                        <p>Please abide by the 
+                            <a href="community_guidelines.php">Community Guidlines</a> 
+                            so that Dzine can be a fun place for everyone!
+                        </p>
+                        <p>Close this message by agreeing to our 
+                            <a href="terms_of_use.php">Terms of Use</a> 
+                        </p>
+                        <div class="btn primary__btn agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
