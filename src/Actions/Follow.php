@@ -49,9 +49,10 @@
             return $statement->execute();
         }
 
-        public static function getFollowCount(){
+        public static function getFollowCount($user_id){
             $conn = DB::getInstance();
-            $statement = $conn->prepare("select * from follows");
+            $statement = $conn->prepare("select * from follows where user_id = :user_id");
+            $statement->bindValue(':user_id', $user_id);
             $statement->execute();
             // $res = $statement->fetchAll();
             $res = $statement->rowCount();

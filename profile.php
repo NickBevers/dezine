@@ -42,7 +42,7 @@
     $uid = Cleaner::cleanInput($_SESSION["id"]);
     $role = $user["user_role"];
 
-    $followCount = Follow::getFollowCount();
+    $followCount = Follow::getFollowCount($uid);
 
     if (isset($_POST["moderator"])) {
         if ($_POST["moderator"] === "assign") {
