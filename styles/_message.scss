@@ -6,4 +6,18 @@
     justify-content: center;
     align-items: center;
     margin: auto;
+    margin-top: 1rem;
+}
+
+.warning__message { 
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto 0 auto;
+    padding: 10px;
+    border-style: solid;
+    border-color: red;
 }

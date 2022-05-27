@@ -108,6 +108,10 @@
     align-items: center;
 }
 
+.profile__info__followers { 
+    font-size: $font-size-xxs;
+    font-weight: $font-weight-bold;
+}
 
 @media (max-width: 768px) and (min-width: 600px) {
     .profile__info__btn{
