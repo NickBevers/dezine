@@ -409,8 +409,12 @@ footer {
   padding: 1rem;
   bottom: 0;
   width: 100%;
-  position: relative;
+  position: absolute;
   gap: 2rem;
+}
+
+.footer--index {
+  position: relative;
 }
 
 @media (max-height: 768px) {
