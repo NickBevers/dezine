@@ -409,7 +409,7 @@ footer {
   padding: 1rem;
   bottom: 0;
   width: 100%;
-  position: absolute;
+  position: relative;
   gap: 2rem;
 }
 
