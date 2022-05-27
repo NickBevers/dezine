@@ -62,7 +62,7 @@
             </div>
         <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="warnings">
-            <form action="" method="post">
+            <form action="" method="post" class="form form--profile">
                 <h2>Would you like to warn a user?</h2>
                 <div class="form__field" id="form__report__reason">
                     <input type="hidden" name="uid" value="<?php echo $_GET["warn_uid"] ?>">
