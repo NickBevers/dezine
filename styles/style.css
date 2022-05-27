@@ -410,6 +410,7 @@ footer {
   bottom: 0;
   width: 100%;
   position: absolute;
+  gap: 2rem;
 }
 
 @media (max-height: 768px) {
@@ -430,6 +431,7 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 1rem;
 }
 
 .footer__info img {
@@ -462,9 +464,14 @@ footer {
   width: 2rem;
 }
 
+.footer__socials img:hover {
+  -webkit-filter: invert(14%) sepia(62%) saturate(7482%) hue-rotate(246deg) brightness(87%) contrast(138%);
+          filter: invert(14%) sepia(62%) saturate(7482%) hue-rotate(246deg) brightness(87%) contrast(138%);
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
   footer {
-    gap: 1rem;
+    gap: 3rem;
   }
 }
 
@@ -487,7 +494,7 @@ footer {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     padding: 3rem;
     bottom: 0;
     position: inherit;
