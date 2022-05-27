@@ -20,7 +20,14 @@
 				Validate::start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['id'] = $usr["id"];
-                header("Location: home.php");
+				$userId = $usr["id"];
+				if(User::checkWarning($userId)){
+				header("Location: profile.php");
+				}
+				else{
+				header("Location: home.php");
+				}
+                
             }
         } catch (Exception $e) {
             $error = $e->getMessage();
