@@ -4,9 +4,7 @@
     use Dezine\Auth\User;
 	use Dezine\Helpers\Validate;
 
-    if (Security::isLoggedIn()) {
-        header('Location: home.php');
-    }
+    if (Security::isLoggedIn()) {header('Location: home.php');}
     
     if (!empty($_POST)) {
         $email = $_POST["email"];
@@ -16,28 +14,24 @@
             $user->setEmail($email);
             $user->setPassword($password);
             $usr = $user->canLogin();
-            if ($usr) {
+            
+			if ($usr) {
 				Validate::start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['id'] = $usr["id"];
 				$userId = $usr["id"];
 				if(User::checkWarning($userId)){
 				header("Location: profile.php");
-				}
-				else{
+				} else{
 				header("Location: home.php");
-				}
-                
+				}                
             }
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
-    }
-    
-?>
-<!DOCTYPE html>
+    }    
+?><!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,7 +40,6 @@
 	<link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
 	<title>Login</title>
 </head>
-
 <body class="container">
 	<?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
 	<main>
@@ -74,5 +67,4 @@
 	</main>
 	<?php include_once("./includes/footer.inc.php"); ?>
 </body>
-
 </html>
