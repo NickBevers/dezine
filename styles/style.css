@@ -2072,9 +2072,12 @@ input[type="file"] {
 }
 
 .profile__info__followers {
-  border-left: 2px solid #a09191;
-  border-right: 2px solid #a09191;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  background-color: #fafafa;
 }
 /*# sourceMappingURL=style.css.map */

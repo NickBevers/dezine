@@ -1,7 +1,11 @@
 .profile__info__followers {
-    border-left: 2px solid rgb(160, 145, 145);
-    border-right: 2px solid rgb(160, 145, 145);
-    padding-left: 10px;
-    padding-right: 10px;
+ 
+    font-size: $font-size-xxs;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+    text-align: center;
+    background-color: $white;
 }
 
