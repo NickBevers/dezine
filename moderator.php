@@ -82,8 +82,9 @@
                 <div class="mod__ban">
                     <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
                     <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
-        </div>
-            </div>
+                </div>
+            </div>            
+        <script src="./javascript/add_remove_ban.js"></script>
         <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="mod__warnings">
             <form action="" method="post">
@@ -126,7 +127,6 @@
             <?php endforeach; ?>  
         </div>        
         <?php endif; ?>      
-        <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
     </main>
 </body>
