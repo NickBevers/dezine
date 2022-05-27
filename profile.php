@@ -225,19 +225,19 @@
         <div class="post">
             <div class="post__img">
                 <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
-                <?php if ($uid === $post["user_id"]): ?>
-                <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden"
-                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull"
-                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                <?php endif; ?>
+                    <?php if ($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden"
+                            data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull"
+                            data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                    <?php endif; ?>
                 <?php else: ?>
-                <?php if ($uid === $post["user_id"]): ?>
-                <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts"
-                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase"
-                    class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                <?php endif; ?>
+                    <?php if ($uid === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts"
+                            data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase"
+                            class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                    <?php endif; ?>
                 <?php endif; ?>
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
                     <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -248,13 +248,13 @@
                     <h3 class="post__title"><?php echo $post["title"] ?></h3>
                 </a>
                 <?php if (isset($uid)): ?>
-                <p><?php echo $post["description"] ?></p>
-                <?php $tags = json_decode($post["tags"]); ?>
-                <div class="post__info__tags">
-                    <?php foreach ($tags as $t): ?>
-                    <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                    <?php endforeach; ?>
-                </div>
+                    <p><?php echo $post["description"] ?></p>
+                    <?php $tags = json_decode($post["tags"]); ?>
+                    <div class="post__info__tags">
+                        <?php foreach ($tags as $t): ?>
+                        <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
                 <?php $pid = $post["id"]; ?>
                 <div class="post__actions">
@@ -263,26 +263,46 @@
                     <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                         <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                         <?php if ($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> 
+                        <?php if(Like::getLikes($pid) === 0): ?>No one likes this yet
+                            <?php elseif(Like::getLikes($pid) > 1): ?>users like this
+                            <?php else: ?>user likes this
+                            <?php endif;?>
+                            </span>
                         <?php endif; ?>
                     </div>
                     <div class="liked" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                         <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                         <?php if ($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> 
+                        <?php if(Like::getLikes($pid) === 0): ?>No one likes this yet
+                            <?php elseif(Like::getLikes($pid) > 1): ?>users like this
+                            <?php else: ?>user likes this
+                            <?php endif;?>
+                            </span>
                         <?php endif; ?>
                     </div>
                     <?php else: ?>
                     <div class="like" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                         <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                         <?php if ($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> 
+                            <?php if(Like::getLikes($pid) === 0): ?>No one likes this yet
+                            <?php elseif(Like::getLikes($pid) > 1): ?>users like this
+                            <?php else: ?>user likes this
+                            <?php endif;?>
+                            </span>
                         <?php endif; ?>
                     </div>
                     <div class="liked hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                         <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                         <?php if ($uid === $post["user_id"]): ?>
-                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
+                        <span class="likes_count"><?php echo Like::getLikes($pid); ?> 
+                        <?php if(Like::getLikes($pid) === 0): ?>No one likes this yet
+                            <?php elseif(Like::getLikes($pid) > 1): ?>users like this
+                            <?php else: ?>user likes this
+                            <?php endif;?>
+                            </span>
                         <?php endif; ?>
                     </div>
                     <?php endif; ?>
