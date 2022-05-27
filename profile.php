@@ -222,10 +222,14 @@
                         <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
                     <?php endif; ?>
                 <?php endif; ?>
-                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                    <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                </a>
             </div>
             <div class="post__info">
-                <h4><?php echo $post["title"] ?></h4>
+                <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
+                    <h3 class="post__title"><?php echo $post["title"] ?></h3>
+                </a>
                 <?php if (isset($uid)): ?>
                 <p><?php echo $post["description"] ?></p>
                 <?php $tags = json_decode($post["tags"]); ?>

@@ -6,7 +6,7 @@
     Validate::start();
     
     $userEmail = $_SESSION['email'];
-    User::deleteUserContentByEmail($_SESSION["id"]);
+    User::deleteUserContentById($_SESSION["id"]);
     User::deleteUserByEmail($userEmail);
 
     Validate::end();
