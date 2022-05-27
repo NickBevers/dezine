@@ -82,25 +82,25 @@
       <div class="form__field">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input type="email" name="email" placeholder="Email" class="form-control register--email" id="exampleInputEmail1"
-          aria-describedby="emailHelp" required>
+          aria-describedby="emailHelp">
         <div class="message message--email"></div>
       </div>
 
       <div class="form__field">
         <label for="exampleInputUsername1" class="form-label">Username</label>
-        <input type="text" name="username" placeholder="Username" class="form-control register--username" id="exampleInputUsername1" required>
+        <input type="text" name="username" placeholder="Username" class="form-control register--username" id="exampleInputUsername1">
         <div class="message message--username"></div>
       </div>
 
       <div class="form__field">
         <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" name="password" placeholder="Password" class="form-control" id="exampleInputPassword1" required>
+        <input type="password" name="password" placeholder="Password" class="form-control" id="exampleInputPassword1">
         <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
       </div>
 
       <div class="form__field">
         <label for="password_conf" class="form-label">Password confirmation</label>
-        <input type="password" name="password_conf" placeholder="Password confirmation" class="form-control" id="password_conf" required>
+        <input type="password" name="password_conf" placeholder="Password confirmation" class="form-control" id="password_conf">
         <div id="passwordHelp" class="form-text">Passwords must match password above</div>
       </div>
 
