@@ -106,7 +106,7 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into posts (title, user_id, image, public_id, colors, color_group, description, tags, creation_date) values (:title, :user_id, :image, :public_id, :colors, :color_group, :description, :tags, :creation_date);");
             $statement->bindValue(':title', $this->title);
-            $statement->bindValue(':user_id', $user_id);
+            $statement->bindValue(':user_id', Cleaner::cleanInput($user_id));
             $statement->bindValue(':image', $this->image);
             $statement->bindValue(':public_id', $this->public_id);
             $statement->bindValue(':colors', $this->colors);

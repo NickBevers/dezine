@@ -3,6 +3,7 @@
     use Exception;
     use Cloudinary\Api\Upload\UploadApi;
     use \Cloudinary\Configuration\Configuration;
+    use Dezine\Helpers\Cleaner;
 
     $config = parse_ini_file(__DIR__ . "/../../config/config.ini");
     
@@ -43,8 +44,8 @@
             if (empty($image)) {
                 throw new Exception("Please upload an image before submitting");
             }
-            $fileName = $user_id . str_replace(" ", "_", basename($image));
-            $fileType = pathinfo($image)["extension"];
+            $fileName = Cleaner::cleanInput($user_id) . str_replace(" ", "_", basename(Cleaner::cleanInput($image)));
+            $fileType = pathinfo(Cleaner::cleanInput($image))["extension"];
             $tempPath = "uploads/" . $fileName;
             $allowedFileTypes = array('jpg', 'png', 'jpeg','gif', 'jfif', 'webp');
 
@@ -52,7 +53,7 @@
                 throw new Exception("This file type is not supported, please upload a jpg, png, gif or webp file.");
             }
 
-            if (!move_uploaded_file($tmpName, $tempPath)) {
+            if (!move_uploaded_file(Cleaner::cleanInput($tmpName), $tempPath)) {
                 throw new Exception("The file could not be uploaded, please try again");
             } else {
                 return $tempPath;

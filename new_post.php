@@ -38,9 +38,7 @@
         } catch (Throwable $error) {
             $error = $error->getMessage();
         }
-    }
-    
-      
+    } 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
