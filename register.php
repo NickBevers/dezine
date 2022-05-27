@@ -77,11 +77,11 @@
     <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
 
-    <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> class="form form--profile">
+    <form method="post" action="" class="form form--profile">
     <h2>Register</h2>
       <div class="form__field">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" name="email" placeholder="Email" class="form-control register--email">
+        <input type="text" name="email" placeholder="Email" class="form-control register--email">
         <div class="message message--email"></div>
       </div>
 

@@ -47,16 +47,16 @@
 		<div class="alert alert-danger"><?php echo $error; ?></div>
 		<?php endif; ?>
 
-		<form method="post" action class="form form--profile">
+		<form method="post" action="" class="form form--profile">
 			<h2>Login</h2>
 			<div class="form__field">
-				<label for="exampleInputEmail1" class="form-label">Email address</label>
-				<input name="email" placeholder="Email" type="email" class="form-control register--email" required />
+				<label for="email" class="form-label">Email address</label>
+				<input name="email" placeholder="Email" type="text" class="form-control register--email" />
 				<div id="passwordHelp" class="form-text">Please login with your Thomas More email</div>
 			</div>
 			<div class="form__field">
-				<label for="exampleInputPassword1" class="form-label">Password</label>
-				<input name="password" placeholder="Password" type="password" class="form-control" required />
+				<label for="password" class="form-label">Password</label>
+				<input name="password" placeholder="Password" type="password" class="form-control" />
 				<div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
 			</div>
 			<div class="form__submit form__field">

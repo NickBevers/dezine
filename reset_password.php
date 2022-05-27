@@ -14,8 +14,8 @@
         $returned = $reset->resetLink();
 
         if (!empty($_POST)) {
-            $new_password = $_POST["new_password"];
-            $password_conf = $_POST["password_conf"];
+            $new_password = Cleaner::cleanInput($_POST["new_password"]);
+            $password_conf = Cleaner::cleanInput($_POST["password_conf"]);
             $email = $returned;
  
             if (Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
@@ -63,8 +63,8 @@
             <!-- <input type="hidden" name="reset_link_token" value="<//?php echo $tok;?>"> -->
 
             <div class="form__field">
-                <label for="exampleInputPassword1" class="form-label">New Password</label>
-                <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
+                <label for="password" class="form-label">New Password</label>
+                <input type="password" name="new_password" class="form-control">
                 <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
             </div>
             <div class="form__field">

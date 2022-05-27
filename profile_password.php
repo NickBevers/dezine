@@ -3,6 +3,7 @@
     use Dezine\Helpers\Validate;
     use Dezine\Helpers\Security;
     use Dezine\Auth\User;
+    use Dezine\Helpers\Cleaner;
 
     Validate::start();
 
@@ -11,10 +12,10 @@
     }
 
     if (!empty($_POST)) {
-        $c_password = $_POST["c_password"];
-        $new_password = $_POST["new_password"];
-        $password_conf = $_POST["password_conf"];
-        $email = $_SESSION['email'];
+        $c_password = Cleaner::cleanInput($_POST["c_password"]);
+        $new_password = Cleaner::cleanInput($_POST["new_password"]);
+        $password_conf = Cleaner::cleanInput($_POST["password_conf"]);
+        $email = Cleaner::cleanInput($_SESSION['email']);
 
         if (Validate::isNotEmpty($c_password) && Validate::isNotEmpty($new_password) && Validate::isNotEmpty($password_conf)) {
             if ($new_password === $password_conf) {
@@ -59,16 +60,16 @@
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> class="form form--register">
+            <form method="post" action="" class="form form--register">
             <h2>Change password</h2>
                 <div class="form__field">
-                    <label for="exampleInputUsername1" class="form-label">Current Password</label>
-                    <input type="password" name="c_password" class="form-control" id="exampleInputUsername1">
+                    <label for="c_password" class="form-label">Current Password</label>
+                    <input type="password" name="c_password" class="form-control">
                 </div>
 
                 <div class="form__field">
-                    <label for="exampleInputPassword1" class="form-label">New Password</label>
-                    <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
+                    <label for="password" class="form-label">New Password</label>
+                    <input type="password" name="new_password" class="form-control">
                     <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
                 </div>
 

@@ -8,13 +8,13 @@
 
     Validate::start();
 
-    if (!Security::isLoggedIn()) {
+    if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
     $email = $_SESSION['email'];
     $user = new User();
-    $user->setEmail($email);
-    $users = $user->getUser();
+    $users = User::getUser($email);    
+    $users = Cleaner::xss($users);
     
     if (!empty($_POST)) {
         $username = $_POST['username'];
@@ -54,7 +54,6 @@
             }
 
             $users = $user->updateUser();
-            $users = Cleaner::xss($users);
             if ($users) {
                 // header("Refresh:0");
                 $success = "Your profile was successfully updated";
@@ -68,7 +67,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,7 +75,6 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
 </head>
-
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
@@ -89,7 +86,7 @@
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> enctype='multipart/form-data' class="form form--profile">
+        <form method="post" action="" enctype='multipart/form-data' class="form form--profile">
             <h2>Update Profile</h2>
             <div class="form__field form__field-image">
                 <div class="form__field">
@@ -108,7 +105,7 @@
 
             <div class="form__field">
                 <label for="username" class="form-label">Username</label>
-                <input type="username" name="username" class="form-control" id="username" required
+                <input type="username" name="username" class="form-control" id="username"
                     value="<?php echo $users["username"]; ?>">
             </div>
 
