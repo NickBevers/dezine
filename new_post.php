@@ -81,8 +81,11 @@
           <input type="file" name="image" class="form__image-input" id="image" required>
         </label>
       </div>
+
+      <div class="form__field">
+        <button type="submit" class="btn secondary__btn secondary__btn-signup">Create new post</button>        
+      </div>
       
-      <button type="submit" class="btn secondary__btn secondary__btn-signup">Create new post</button>
     </form> 
   </main>
 </body>

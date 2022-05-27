@@ -84,7 +84,7 @@
                 <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
             </div>
 
-            <div class="form__submit">
+            <div class="form__submit form__field">
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Save changes</button>
                 <a href="profile.php" class="btn secondary__btn-reverse secondary__btn-signup">Cancel</a>
             </div>

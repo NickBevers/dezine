@@ -104,7 +104,9 @@
         <div id="passwordHelp" class="form-text">Passwords must match password above</div>
       </div>
 
-      <button type="submit" class="btn secondary__btn secondary__btn-signup">Sign me up</button>
+      <div class="form__field">        
+         <button type="submit" class="btn secondary__btn secondary__btn-signup">Sign me up</button>
+      </div>
     </form>
   </main>
 

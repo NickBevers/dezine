@@ -59,7 +59,7 @@
 
   <nav class="nav--mobile">
     <div class="nav--left">
-      <a href="index.php">
+      <!-- <a href="index.php"> -->
       <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
         <a href="home.php">
           <img src="./assets/dezine.svg" alt="D-zine logo">

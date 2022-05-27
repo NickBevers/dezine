@@ -59,7 +59,7 @@
 				<input name="password" placeholder="Password" type="password" class="form-control" required />
 				<div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
 			</div>
-			<div class="form__submit">
+			<div class="form__submit form__field">
 				<button type="submit" class="btn secondary__btn secondary__btn-signup">Login</button>
 				<a href="reset.php" class="btn secondary__btn-reverse secondary__btn-signup">Forgot password?</a>
 			</div>

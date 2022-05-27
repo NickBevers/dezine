@@ -154,6 +154,10 @@
 .posts__user__name {
     display: flex;
     flex-direction: row;
+
+    h3:hover{
+        text-decoration: underline solid $accent;
+    }
 }
 
 .posts__user__verified {

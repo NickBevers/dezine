@@ -44,12 +44,14 @@
         <?php endif; ?>
 
         <form action="" method="post" class="form form--profile">
-          <h2>Reset password</h2>
-          <div class="form__field">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" name="email" placeholder="Email" class="form-control" id="email">
-          </div>
-          <button type="submit" name="reset-token" class="btn secondary__btn secondary__btn-signup">Reset</button>
+            <h2>Reset password</h2>
+            <div class="form__field">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" name="email" placeholder="Email" class="form-control" id="email">
+            </div>
+            <div class="form__field">
+                <button type="submit" name="reset-token" class="btn secondary__btn secondary__btn-signup">Reset</button>
+            </div>          
         </form>
       </main>
       <?php include_once("./includes/footer.inc.php"); ?>

@@ -78,7 +78,9 @@
                     <div id="passwordHelp" class="form-text">Passwords must match password above</div>
                 </div>
                 
-                <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
+                <div class="form__field">
+                    <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
+                </div>
             </form>
         </main>
     </body>    

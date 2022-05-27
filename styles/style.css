@@ -748,7 +748,7 @@ footer {
 }
 
 .secondary__btn-signup {
-  width: 37vw;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -1294,6 +1294,11 @@ footer {
           flex-direction: row;
 }
 
+.posts__user__name h3:hover {
+  -webkit-text-decoration: underline solid #120CFF;
+          text-decoration: underline solid #120CFF;
+}
+
 .posts__user__verified {
   width: 1.5rem;
   padding-left: 0.5rem;
@@ -1383,6 +1388,15 @@ footer {
   padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
+.post--single__user a {
+  text-decoration: none;
+}
+
+.post--single__user h3:hover {
+  -webkit-text-decoration: underline solid #120CFF;
+          text-decoration: underline solid #120CFF;
+}
+
 .post--single__content img {
   height: 100%;
   border: 5px solid #BFFD00;
@@ -1467,6 +1481,7 @@ footer {
   border-radius: 8px;
   padding: .5rem;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .post__comment__form__btn:hover {
@@ -1852,6 +1867,12 @@ input[type="file"] {
 
 .form__field-btn {
   margin-top: 2rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #form__report__message {

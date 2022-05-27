@@ -10,6 +10,14 @@
     justify-items: flex-start;
     align-items: center;
     padding: 0.5rem 1rem 0.5rem 1rem;  
+
+    a{
+        text-decoration: none;
+    }
+
+    h3:hover{
+        text-decoration: underline solid $accent;
+    }
 }
 
 .post--single__content img {
@@ -79,6 +87,7 @@
     border-radius: 8px;
     padding: .5rem;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .post__comment__form__btn:hover{
