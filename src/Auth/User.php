@@ -391,15 +391,15 @@
         public static function UpdateUserRole($role, $uid){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set user_role = :role where id = :uid");
-            $statement->bindValue(':role', $role);
-            $statement->bindValue(':uid', $uid);
+            $statement->bindValue(':role', Cleaner::cleanInput($role));
+            $statement->bindValue(':uid', Cleaner::cleanInput($uid));
             $statement->execute();
         }
 
         public static function checkWarning($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from warnings where user_id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $result = $statement->fetchAll();
             return $result;

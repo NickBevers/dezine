@@ -17,11 +17,11 @@
             header('Location: home.php');
         } else {
             $id = $_SESSION["id"];
-            $profileUser = intval(Cleaner::cleanInput($_SESSION["id"]));
+            $profileUser = intval($_SESSION["id"]);
             header("Location: profile.php?id=$id");
         }
     } else {
-        $profileUser = intval(Cleaner::cleanInput($_GET["id"]));
+        $profileUser = intval($_GET["id"]);
     }
 
     $user = Cleaner::xss(User::getUserbyId($profileUser));
@@ -39,7 +39,6 @@
     }
 
     $posts = Cleaner::xss($posts);
-    $uid = Cleaner::cleanInput($_SESSION["id"]);
     $role = $user["user_role"];
 
     if (isset($_POST["moderator"])) {
@@ -78,10 +77,10 @@
             <div class="profile__info__details">
                 <div class="profile__info__details__username">
                     <h1><?php echo $user["username"]; ?></h1>
-                    <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                    <?php if($user["user_role"] !== "user" && User::checkUserRole($profileUser) !== "user"): ?>
                         <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
                     <?php endif; ?> 
-                    <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
+                    <?php if(intval($user["id"]) !== intval($profileUser) && User::checkUserRole($profileUser) === "admin"): ?> 
                         <form action="#" method="post">
                             <?php if($user["user_role"] === "user"): ?>
                                 <button name="moderator" value="assign" type="submit" class="btn moderator__btn">Make moderator</button>
@@ -97,7 +96,7 @@
                 <?php if (intval(User::checkban($_SESSION["id"])) === 0):  ?>
                     <?php if (!empty($_GET["id"]) && $_GET["id"] !== $_SESSION["id"]): ?>
                         <div class="profile__info-follow">
-                            <?php if(Follow::isFollowing(Cleaner::cleanInput($_GET["id"]), Cleaner::cleanInput($_SESSION["id"]))): ?>
+                            <?php if(Follow::isFollowing($_GET["id"], $_SESSION["id"])): ?>
                                 <div class="follow" data-profile_id="<?php echo Cleaner::cleanInput($_GET["id"]) ?>" data-user_id="<?php echo Cleaner::cleanInput($_SESSION["id"]); ?>" style="display: none;">
                                     <p>Follow</p>
                                 </div>
@@ -126,16 +125,16 @@
                     <?php endif; ?> 
                 </div>   
                 <div class="profile__info__moderator">
-                    <?php if (User::checkUserRole($uid) !== "user"): ?>
+                    <?php if (User::checkUserRole($profileUser) !== "user"): ?>
                         <div class="getRegisterLink">
                             <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
                             <script src="./javascript/getLink.js"></script>
                         </div>
-                        <?php if(intval($uid) !== intval(Cleaner::xss($_GET["id"]))): ?>
+                        <?php if(intval($profileUser) !== intval(Cleaner::xss($_GET["id"]))): ?>
                         <a href="moderator.php?warn_uid=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">Warn user</a>
                         <?php endif; ?>
                     <?php endif; ?>   
-                    <?php if (User::checkModerator($uid)): ?>
+                    <?php if (User::checkModerator($profileUser)): ?>
                         <a href="moderator.php?id=<?php echo Cleaner::cleanInput($_GET["id"]) ?>" class="btn moderator__btn">
                             <?php if (User::checkBan(Cleaner::cleanInput($_GET["id"]))): ?>
                                 Retract ban
@@ -163,7 +162,7 @@
         </div>
     </section>    
     <section class="warning_messages">    
-        <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($_GET["id"])): ?>
+        <?php $warnings = User::checkWarning($profileUser); if($warnings && $profileUser === Cleaner::xss($_GET["id"])): ?>
             <div class="warning_user">
                 <?php foreach ($warnings as $warning):  ?>
                     <div class="warning_message">
@@ -175,7 +174,7 @@
             </div>
         <?php endif; ?>
     </section>
-    <?php if (intval(User::checkban($_SESSION["id"])) === 1 && $uid === Cleaner::xss($_GET["id"])): ?>
+    <?php if (intval(User::checkban($_SESSION["id"])) === 1 && $profileUser === Cleaner::xss($_GET["id"])): ?>
     <section class="ban__message">
         <h3>You have been banned!</h3>
         <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have been limited on the platform.</p>
@@ -183,7 +182,7 @@
         <a href="mailto:dezine@thomasmore.be" class="btn primary__btn">Make appointment</a>
     </section>
     <?php endif; ?>
-    <?php if(empty($posts) && $uid === Cleaner::xss($_GET["id"])): ?>
+    <?php if(empty($posts) && $profileUser === Cleaner::xss($_GET["id"])): ?>
         <div class="showcase__empty">
             <h2 class="showcase__title-h2">You haven't added any posts!</h2>
             <div class="showcase__empty-message">
@@ -199,15 +198,15 @@
         <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post__img">
-                <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
-                    <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                <?php if (Showcase::checkShowcase($post["id"], $profileUser)): ?>
+                    <?php if ($profileUser === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $profileUser; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $profileUser; ?>">
                     <?php endif; ?>
                 <?php else: ?>
-                    <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                    <?php if ($profileUser === $post["user_id"]): ?>
+                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $profileUser; ?>">
+                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $profileUser; ?>">
                     <?php endif; ?>
                 <?php endif; ?>
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
@@ -218,7 +217,7 @@
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
                     <h3 class="post__title"><?php echo $post["title"] ?></h3>
                 </a>
-                <?php if (isset($uid)): ?>
+                <?php if (isset($profileUser)): ?>
                 <p><?php echo $post["description"] ?></p>
                 <?php $tags = json_decode($post["tags"]); ?>
                 <div class="post__info__tags">
@@ -230,42 +229,42 @@
                 <?php $pid = $post["id"]; ?>
                 <div class="post__actions">
                     <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
-                        <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
+                        <?php if (Like::getLikesbyPostandUser($pid, $profileUser)): ?>
                             <div class="like hidden" data-id="<?php echo $pid; ?>">
                                 <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
-                                <?php if ($uid === $post["user_id"]): ?>
+                                <?php if ($profileUser === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                             <div class="liked" data-id="<?php echo $pid; ?>">
                                 <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
-                                <?php if ($uid === $post["user_id"]): ?>
+                                <?php if ($profileUser === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                         <?php else: ?>
                             <div class="like" data-id="<?php echo $pid; ?>">
                                 <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
-                                <?php if ($uid === $post["user_id"]): ?>
+                                <?php if ($profileUser === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                             <div class="liked hidden" data-id="<?php echo $pid; ?>">
                                 <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
-                                <?php if ($uid === $post["user_id"]): ?>
+                                <?php if ($profileUser === $post["user_id"]): ?>
                                     <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>  
                         <div class="post__actions-edit">
-                            <?php if ($uid == $_GET["id"]): ?>
-                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                            <?php if ($profileUser == $_GET["id"]): ?>
+                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo $profileUser; ?>">
                                     <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
                                 </a>  
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>
-                            <?php elseif (User::checkModerator($uid)):?>                                    
+                            <?php elseif (User::checkModerator($profileUser)):?>                                    
                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>      
@@ -273,7 +272,7 @@
                         </div>          
                     <?php endif; ?>
                 </div>
-                <?php if ($uid !== $_GET["id"]): ?>
+                <?php if ($profileUser !== $_GET["id"]): ?>
                 <div class="profile__info__report">
                     <a href="new_report.php?postid=<?php echo $post['id']; ?>">
                         <h3>Report post</h3>

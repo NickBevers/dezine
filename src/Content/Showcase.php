@@ -46,8 +46,8 @@
         public static function checkShowcase($postId, $userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from showcase where post_id = :post_id and user_id = :user_id");
-            $statement->bindValue(":post_id", $postId);
-            $statement->bindValue(":user_id", $userId);
+            $statement->bindValue(":post_id", Cleaner::cleanInput($postId));
+            $statement->bindValue(":user_id", Cleaner::cleanInput($userId));
             $statement->execute();
             // var_dump($statement->fetch());
             return $statement->fetch();
