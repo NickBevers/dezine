@@ -60,23 +60,23 @@
       <h2>New Post</h2>
       <div class="form__field">
         <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" required>
+        <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle">
       </div>
 
       <div class="form__field">
         <label for="description" class="form-label">Description</label>
-        <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required style="resize: none;"></textarea>
+        <textarea type="text" name="description" class="form-control" id="description" maxlength="250" style="resize: none;"></textarea>
       </div>
 
       <div class="form__field">
         <label for="tags" class="form-label">Tags</label>
-        <input type="text" name="tags" class="form-control" id="tags" required>
+        <input type="text" name="tags" class="form-control" id="tags">
         <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
       </div>
 
       <div class="form__field">
         <label for="image" class="btn secondary__btn-reverse">Add image
-          <input type="file" name="image" class="form__image-input" id="image" required>
+          <input type="file" name="image" class="form__image-input" id="image">
         </label>
       </div>
 
