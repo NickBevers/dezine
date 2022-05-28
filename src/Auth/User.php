@@ -332,7 +332,7 @@
         public static function getUserNamebyId($id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select username from users where id = :id");
-            $statement->bindValue(':id', $id);
+            $statement->bindValue(':id', Cleaner::cleanInput($id));
             $statement->execute();
             $result = $statement->fetch();
             return $result;
@@ -382,7 +382,7 @@
         public static function checkUserRole($uid){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
-            $statement->bindValue(':id', $uid);
+            $statement->bindValue(':id', Cleaner::cleanInput($uid));
             $statement->execute();
             $result = $statement->fetch();
             return $result["user_role"];

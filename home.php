@@ -51,7 +51,6 @@
             $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
-
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
@@ -87,7 +86,6 @@
     }
 
     $mostUsedTags = Post::getMostUsedTags();
-
     $posts = Cleaner::xss($posts);
 
 ?><!DOCTYPE html>

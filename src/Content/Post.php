@@ -145,7 +145,7 @@
         public static function getFollowedPosts($uid, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount");
-            $statement->bindValue(":user_id", $uid);
+            $statement->bindValue(":user_id", Cleaner::cleanInput($uid));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -163,7 +163,7 @@
         public static function getPostsByColor($color, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where color_group like :color order by creation_date desc limit $start, $amount");
-            $statement->bindValue(':color', "%" . $color . "%", PDO::PARAM_STR);
+            $statement->bindValue(':color', "%" . Cleaner::cleanInput($color) . "%", PDO::PARAM_STR);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -182,7 +182,7 @@
                     $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount");
                 break;
             }
-            $statement->bindValue(':search', '%' . $search . '%'); //, PDO::PARAM_STR
+            $statement->bindValue(':search', '%' . Cleaner::cleanInput($search) . '%'); //, PDO::PARAM_STR
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
@@ -191,8 +191,8 @@
         public static function getFollowedSearchPosts($uid, $search, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search and where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount ");
-            $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
-            $statement->bindValue(':user_id', $uid);
+            $statement->bindValue(':search', '%' . Cleaner::cleanInput($search) . '%' , PDO::PARAM_STR);
+            $statement->bindValue(':user_id', Cleaner::cleanInput($uid));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
