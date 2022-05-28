@@ -364,7 +364,7 @@
         public static function addBan($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set banned = 1 where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $message = "User has been banned";
             return $message;
@@ -373,7 +373,7 @@
         public static function removeBan($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set banned = 0 where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $message = "The ban has been lifted";
             return $message;

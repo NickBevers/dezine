@@ -52,8 +52,8 @@
             $reason = $this->getReason();
             $statement->bindValue(':post_id', $this->post_id);
             $statement->bindValue(':reported_user_id', $this->reported_user_id);
-            $statement->bindValue(':user_id', $user_id);
-            $statement->bindValue(':reason', $reason);
+            $statement->bindValue(':user_id', Cleaner::cleanInput($user_id));
+            $statement->bindValue(':reason', Cleaner::cleanInput($reason));
             $statement->bindValue(':timestamp', $this->getDateTime());
             $res = $statement->execute();
             return $res;
@@ -94,7 +94,7 @@
         public static function archiveReport($report_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update reports set archived = 1 where id = :report_id");
-            $statement->bindValue(':report_id', $report_id);
+            $statement->bindValue(':report_id', Cleaner::cleanInput($report_id));
             $statement->execute();
             $message = "Report has been archived";
             return $message;
@@ -103,7 +103,7 @@
         public static function checkReport($report_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select archived from reports where id = :id");
-            $statement->bindValue(':id', $report_id);
+            $statement->bindValue(':id', Cleaner::cleanInput($report_id));
             $statement->execute();
             $result = $statement->fetch();
             return $result["archived"];
@@ -112,7 +112,7 @@
         public static function removeArchive($report_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update reports set archived = 0 where id = :id");
-            $statement->bindValue(':id', $report_id);
+            $statement->bindValue(':id', Cleaner::cleanInput($report_id));
             $statement->execute();
             $message = "The report has been unarchived";
             return $message;
