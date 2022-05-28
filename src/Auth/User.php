@@ -341,7 +341,7 @@
         public static function checkModerator($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select user_role from users where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $result = $statement->fetch();
             if($result["user_role"] === "moderator" || $result["user_role"] === "admin"){
@@ -416,7 +416,7 @@
         public static function getProfileImagebyId($id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select profile_image from users where id = :id");
-            $statement->bindValue(':id', $id);
+            $statement->bindValue(':id', Cleaner::cleanInput($id));
             $statement->execute();
             $result = $statement->fetch();
             return $result;

@@ -12,27 +12,25 @@
     
     if(!Security::isLoggedIn()) { header('Location: login.php');}
 
-    $uid = Cleaner::xss(Cleaner::cleanInput($_SESSION["id"]));
+    $uid = Cleaner::xss($_SESSION["id"]);
     if (!User::checkModerator($uid)) {
         header('Location: home.php');
     }
 
     if (isset($_GET["id"])) {
-        $banId = Cleaner::cleanInput($_GET["id"]);
+        $banId = $_GET["id"];
         $user = User::getUserbyId($banId);
     }
      
     if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
-        $user_id = Cleaner::cleanInput($_GET["warn_uid"]);
+        $user_id = $_GET["warn_uid"];
         $reason = $_POST["warning_reason"];
         Warning::sendWarning($uid, $user_id, $reason);
     }
 
     $reports = Cleaner::xss(Report::getReports());
     $posts = Cleaner::xss(Post::getAllPosts());
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
