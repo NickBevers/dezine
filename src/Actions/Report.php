@@ -68,7 +68,7 @@
         public static function getReportedPostbyId($post_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where id = :id");
-            $statement->bindValue(':id', $post_id);
+            $statement->bindValue(':id', Cleaner::cleanInput($post_id));
             $statement->execute();
             $res = $statement->fetch();
             return $res;
@@ -77,7 +77,7 @@
         public static function getReportedUserbyId($reported_user_id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
-            $statement->bindValue(':id', $reported_user_id);
+            $statement->bindValue(':id', Cleaner::cleanInput($reported_user_id));
             $statement->execute();
             $res = $statement->fetch();
             return $res;

@@ -12,27 +12,24 @@
     }
 
     if (isset($_GET['postid'])) {
-        $post_id = Cleaner::xss(Cleaner::cleanInput($_GET['postid']));
+        $post_id = Cleaner::xss($_GET['postid']);
     } else {
         $post_id = "";
     }
 
     if (isset($_GET['userid'])) {
-        $reported_user_id = Cleaner::xss(Cleaner::cleanInput($_GET['userid']));
+        $reported_user_id = Cleaner::xss($_GET['userid']);
     } else {
         $reported_user_id = "";
     }
 
-    $user_id = Cleaner::cleanInput($_SESSION['id']);
+    $user_id = $_SESSION['id'];
     
     $report = new Report();
     $reports_post = Cleaner::xss($report->getReportedPostbyId($post_id));
     $reports_user = Cleaner::xss($report->getReportedUserbyId($reported_user_id));
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,9 +37,7 @@
     <title>Dezine</title>
     <link rel="stylesheet" href="./styles/style.css">    
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
-
 </head>
-
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>        
@@ -53,19 +48,15 @@
                 <h3><?php echo $reports_post["title"] ?></h3>
                 <?php if (isset($_SESSION["id"])): ?>
                 <p><?php echo $reports_post["description"] ?></p>
-
                 <?php endif; ?>
             </div>
         </div>
-
         <?php else: ?>
-
         <section class="profile__info">
             <div class="profile__info__img">
                 <img src="<?php echo $reports_user["profile_image"]; ?>"
                     alt="profile image <?php echo $reports_user["username"]; ?>">
             </div>
-
             <div class="profile__info__details">
                 <h1><?php echo $reports_user["username"]; ?></h1>
                 <h4><?php echo $reports_user["education"]; ?></h4>
@@ -73,7 +64,6 @@
             </div>
         </section>
         <?php endif; ?>
-
 
         <div class="form form--profile">
             <h2>Send Report</h2>
@@ -95,7 +85,6 @@
                         team</p>
                 </div>
             </div>
-
             <div id="report__button"></div>
             <a href="#" class="btn secondary__btn secondary__btn-signup" id="btn__add__Report" data-reported_user_id="<?php echo $reported_user_id; ?>" data-post_id="<?php echo $post_id; ?>" data-post_user_id="<?php echo $user_id; ?>">Submit Report</a>
         </div>
