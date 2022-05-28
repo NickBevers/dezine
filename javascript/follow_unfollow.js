@@ -14,7 +14,7 @@ follow_button.addEventListener("click", (e) => {
     })
     .then(response => response.json())
     .then(res => {
-        if(res.status === "success"){
+        if(res.status === "success" && res.action === "follow"){
             follow_button.style.display = "none";
             unfollow_button.style.display = "block";
         } else{
@@ -33,13 +33,13 @@ unfollow_button.addEventListener("click", (e) => {
     data.append("follower_id", profile_id);
     data.append("user_id", user_id);
 
-    fetch("ajax/unfollow.php", {
+    fetch("ajax/follow.php", {
         method: "POST",
         body: data,
     })
     .then(response => response.json())
     .then(res => {
-        if(res.status === "success"){
+        if(res.status === "success" && res.action === "unfollow"){
             unfollow_button.style.display = "none";
             follow_button.style.display = "block";
         } else{

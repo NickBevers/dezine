@@ -9,16 +9,33 @@
         $follow->setFollower_id($follower_id);
         $follow->setUser_id($user_id);
         
-        if($follow->followUser()){
-            $response = [
-                "status" => "success",
-                "message" => "You are now following this user."
-            ];
+        if(count(Follow::isFollowing($follower_id, $user_id)) > 0){
+            if($follow->unfollowUser()){
+                $response = [
+                    "status" => "success",
+                    "action" => "unfollow",
+                    "message" => "You are no longer following this user."
+                ];
+    
+            } else{
+                $response = [
+                    "status" => "error",
+                    "message" => "Something has gone wrong, our apologies."
+                ];
+            }
         } else{
-            $response = [
-                "status" => "error",
-                "message" => "Something has gone wrong, our apologies."
-            ];
+            if($follow->followUser()){
+                $response = [
+                    "status" => "success",
+                    "action" => "follow",
+                    "message" => "You are now following this user."
+                ];
+            } else{
+                $response = [
+                    "status" => "error",
+                    "message" => "Something has gone wrong, our apologies."
+                ];
+            }
         }
-        echo json_encode($response);        
+        echo json_encode($response);
     }
