@@ -5,18 +5,15 @@
     use Dezine\Auth\User;
     use Dezine\Auth\Link;
 
-    if (Security::isLoggedIn()) {
-        header('Location: home.php');
-    }
+    if (Security::isLoggedIn()) {header('Location: home.php');}
 
     if (!empty($_GET["token"])) {
-        $token = Cleaner::cleanInput($_GET["token"]);
+        $token = $_GET["token"];
         if (!Link::checkLink($token)) {
             header('Location: register.php');
             $error="This link was not valid, please try again.";
         }
         $_SESSION["token"] = $token;
-        // setcookie("token", $token, time() + 3600);
     }
 
     if (!empty($_POST)) {
@@ -29,13 +26,10 @@
             try {
                 $default_image = "assets/default_profile_image.png";          
                 $user = new User();
-            
-                // use setters to fill in data for this user
                 $user->setUsername($username);
                 $user->setEmail($email);
                 $user->setPassword($password);
                 $user->setProfileImage($default_image);
-
                 
                 if (isset($_SESSION["token"])) {
                     $id = $user->register($_SESSION["token"]);
@@ -55,11 +49,8 @@
             $error = "The passwords don't match";
         }
     }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,10 +59,8 @@
   <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
   <title>Dezine</title>
 </head>
-
 <body class="container">
   <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-
   <main>
     <?php if (isset($error)) : ?>
     <div class="alert alert-danger"><?php echo $error; ?></div>

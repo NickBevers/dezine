@@ -175,7 +175,7 @@
 
         public function register($referLink = "") {
             if(!$this->userExists()){
-                if(strlen($referLink) === 0){
+                if(strlen(Cleaner::cleanInput($referLink)) === 0){
                     $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
                     if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
                 }
