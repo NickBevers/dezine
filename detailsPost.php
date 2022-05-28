@@ -9,9 +9,7 @@
 
     Validate::start();
     
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     if (isset($_GET["pid"])) {
         $post = Cleaner::xss(Post::getPostbyPostId($_GET["pid"]));

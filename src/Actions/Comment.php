@@ -77,7 +77,7 @@
         {
             $conn = DB::getInstance();
             $statement = $conn->prepare("SELECT comments.comment, comments.user_id, users.username, users.profile_image FROM comments INNER JOIN users ON users.id = comments.user_id WHERE comments.post_id = :postId");
-            $statement->bindValue(':postId', $postId);
+            $statement->bindValue(':postId', Cleaner::cleanInput($postId));
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;

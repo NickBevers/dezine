@@ -323,7 +323,7 @@
         public static function getUserbyId($id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where id = :id");
-            $statement->bindValue(':id', $id);
+            $statement->bindValue(':id', Cleaner::cleanInput($id));
             $statement->execute();
             $result = $statement->fetch();
             return $result;
@@ -355,7 +355,7 @@
         public static function checkBan($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select banned from users where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $result = $statement->fetch();
             return $result["banned"];
