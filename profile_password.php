@@ -3,13 +3,10 @@
     use Dezine\Helpers\Validate;
     use Dezine\Helpers\Security;
     use Dezine\Auth\User;
-    use Dezine\Helpers\Cleaner;
 
     Validate::start();
 
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];
@@ -37,8 +34,7 @@
             $error = "Please fill in all fields of the form";
         }
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
