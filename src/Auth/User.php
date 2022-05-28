@@ -175,7 +175,7 @@
 
         public function register($referLink = "") {
             if(!$this->userExists()){
-                if(strlen($referLink) === 0){
+                if(strlen(Cleaner::cleanInput($referLink)) === 0){
                     $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
                     if(!preg_match($regex, $this->email)){throw new Exception("Please use your Thomas More account to register");}
                 }
@@ -245,6 +245,7 @@
 
         public static function deleteUserContentById($id){
             // remove comments
+            $id = Cleaner::cleanInput($id);
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from comments where user_id = :id");
             $statement->bindValue(':id', $id);
@@ -254,8 +255,6 @@
             $stmt->bindValue(':id', $id);
             $stmt->execute();
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            // var_dump($res);
-            // die();
             foreach($res as $post){if(!empty($post["public_id"])){UploadImage::remove($post["public_id"]);}}
             
             // remove posts
@@ -280,6 +279,7 @@
         }
 
         public static function deleteUserByEmail($userEmail) {
+            $userEmail = Cleaner::cleanInput($userEmail);
             $conn = DB::getInstance();
             $stmt = $conn->prepare("select * from users where email = :email");
             $stmt->bindValue(':email', $userEmail);
@@ -364,7 +364,7 @@
         public static function addBan($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set banned = 1 where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $message = "User has been banned";
             return $message;
@@ -373,7 +373,7 @@
         public static function removeBan($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("update users set banned = 0 where id = :id");
-            $statement->bindValue(':id', $userId);
+            $statement->bindValue(':id', Cleaner::cleanInput($userId));
             $statement->execute();
             $message = "The ban has been lifted";
             return $message;

@@ -45,14 +45,14 @@
         public static function removeLink($token){
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from links where link_code = :link");
-            $statement->bindValue(':link', $token);
+            $statement->bindValue(':link', Cleaner::cleanInput($token));
             $statement->execute();
         }
 
         public static function checkLink($token){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from links where link_code = :link");
-            $statement->bindValue(':link', $token);
+            $statement->bindValue(':link', Cleaner::cleanInput($token));
             $statement->execute();
             return $statement->fetch();
         }

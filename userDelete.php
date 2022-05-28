@@ -3,11 +3,9 @@
     use Dezine\Auth\User;
     use Dezine\Helpers\Validate;
 
-    Validate::start();
-    
-    $userEmail = $_SESSION['email'];
+    Validate::start();    
     User::deleteUserContentById($_SESSION["id"]);
-    User::deleteUserByEmail($userEmail);
+    User::deleteUserByEmail($_SESSION['email']);
 
     Validate::end();
     header("Location: login.php");

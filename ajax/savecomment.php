@@ -8,22 +8,25 @@
             $comment->setPostId($_POST['postId']);
             $comment->setText($_POST['text']);
             $comment->setUserId($_POST['userId']);
-            $comment->save();
-
-            $response = [
-                'status' => 'success',
-                'postId' => $comment->getPostId(),
-                'text' => $comment->getText(),
-                'userId' => $comment->getUserId(),
-                'message' => 'comment saved'
-            ];
+            if($comment->save()){
+                $response = [
+                    'status' => 'success',
+                    'postId' => $comment->getPostId(),
+                    'text' => $comment->getText(),
+                    'userId' => $comment->getUserId(),
+                    'message' => 'comment saved'
+                ];
+            } else{
+                $response = [
+                    'status' => 'error',
+                    'message' => "Something went wrong"
+                ];
+            }            
         } catch (exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => $e->getMessage()
             ];
         }
-
-        header('Content-Type: application/json');
         echo json_encode($response);
     };

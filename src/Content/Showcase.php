@@ -56,7 +56,7 @@
         public static function userHasShowcase($userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from showcase where user_id = :user_id");
-            $statement->bindValue(":user_id", $userId);
+            $statement->bindValue(":user_id", Cleaner::cleanInput($userId));
             $statement->execute();
             $res = $statement->fetch();
             // var_dump($res);

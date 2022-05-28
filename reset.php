@@ -7,7 +7,6 @@
     if (!empty($_POST)) {
         if (Validate::isNotEmpty($_POST['email'])) {
             $emailId = $_POST['email'];
-
             // echo $emailId;
             try {
                 $reset = new Reset();
@@ -20,9 +19,7 @@
             }
         }
     }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
