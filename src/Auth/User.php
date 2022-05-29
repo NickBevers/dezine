@@ -404,6 +404,7 @@
             $statement->bindValue(':id', Cleaner::cleanInput($id));
             $statement->execute();
             $result = $statement->fetch();
+            // var_dump($result);
             return $result;
         }
     }
