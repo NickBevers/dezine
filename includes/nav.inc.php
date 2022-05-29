@@ -4,7 +4,7 @@
   use Dezine\Auth\User;
 ?><nav class="nav--full">
     <div class="nav__element nav--left">
-      <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+      <?php if(basename($_SERVER['PHP_SELF']) !== "index.php"): ?>
         <a href="home.php">
           <img src="./assets/dezine.svg" alt="D-zine logo">
         </a>
@@ -60,7 +60,7 @@
   <nav class="nav--mobile">
     <div class="nav--left">
       <!-- <a href="index.php"> -->
-      <?php if ($_SERVER['REQUEST_URI'] !== "/php/dezine/index.php"): ?>
+      <?php if(basename($_SERVER['PHP_SELF']) !== "index.php"): ?>
         <a href="home.php">
           <img src="./assets/dezine.svg" alt="D-zine logo">
         </a>

@@ -179,6 +179,8 @@ a {
     padding: 0;
     text-decoration: none;
     margin: 1.2rem;
+    border: none;
+    color: #120CFF;
   }
   /* menu */
   .nav--right {
