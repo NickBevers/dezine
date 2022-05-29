@@ -38,7 +38,7 @@ function addRemoveShowcase(e){
             sibling.classList.add("hidden");
         } else if(sibling.classList.contains("heartsfull")){
             sibling.previousElementSibling.classList.remove("hidden"); 
-            console.log(post);                  
+            // console.log(post);                  
             sibling.classList.add("hidden");
             if(post.classList.contains("post__showcase")){
                 post.classList.add("hidden");

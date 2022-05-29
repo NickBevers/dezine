@@ -1022,6 +1022,11 @@ footer {
           align-items: center;
 }
 
+.profile__info__followers {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 @media (max-width: 768px) and (min-width: 600px) {
   .profile__info__btn {
     -webkit-box-orient: vertical;
@@ -2262,6 +2267,29 @@ input[type="file"] {
       -ms-flex-align: center;
           align-items: center;
   margin: auto;
+  margin-top: 1rem;
+}
+
+.warning__message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 30px auto 0 auto;
+  padding: 10px;
+  border-style: solid;
+  border-color: red;
 }
 
 .mod__ban {
@@ -2294,5 +2322,30 @@ input[type="file"] {
           align-items: center;
   margin: 2rem;
   text-align: center;
+}
+
+#form__report__reason {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  height: 100px;
+  text-align: center;
+}
+
+.mod__warnings {
+  display: -ms-grid;
+  display: grid;
+  text-align: center;
+  margin: auto;
 }
 /*# sourceMappingURL=style.css.map */

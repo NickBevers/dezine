@@ -9,7 +9,7 @@
         "_banner.scss",
         "_blockwithimage.scss",
         "_buttons.scss",
-        "_imagewithtext.scss",
+        "_profilebio.scss",
         "_posts.scss",
         "_singlepost.scss",
         "_centeredtext.scss",
