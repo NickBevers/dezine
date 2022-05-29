@@ -63,20 +63,20 @@
                 $body = [
                     'Messages' => [
                         [
-                        'From' => [
-                        'Email' => "dezine@nickbevers.be",
-                        'Name' => "D-zine"
-                        ],
-                        'To' => [
-                        [
-                            'Email' => $this->email,
-                            'Name' => $result["username"]
-                        ]
-                        ],
-                        'Subject' => "D-zine password reset.",
-                        'TextPart' => "Password reset",
-                        'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
-                        'CustomID' => "PWReset"
+                            'From' => [
+                                'Email' => "dezine@nickbevers.be",
+                                'Name' => "D-zine"
+                            ],
+                            'To' => [
+                                [
+                                    'Email' => $this->email,
+                                    'Name' => $result["username"]
+                                ]
+                            ],
+                            'Subject' => "D-zine password reset.",
+                            'TextPart' => "Password reset",
+                            'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
+                            'CustomID' => "PWReset"
                         ]
                     ]
                 ];

@@ -19,7 +19,7 @@
 
     if (isset($_GET["id"])) {
         $banId = $_GET["id"];
-        $user = User::getUserbyId($banId);
+        $user = Cleaner::xss(User::getUserbyId($banId));
     }
      
     if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
@@ -82,7 +82,7 @@
             <form action="" method="post" class="form form--profile">
                 <h2>Would you like to warn a user?</h2>
                 <div class="form__field" id="form__report__reason">
-                    <input type="hidden" name="uid" value="<?php echo $_GET["warn_uid"] ?>">
+                    <input type="hidden" name="uid" value="<?php echo Cleaner::xss($_GET["warn_uid"]) ?>">
                     <label for="warning_reason" class="form__label">Reason</label>
                     <textarea type="warning_reason" name="warning_reason" class="form-control" id="warning_reason"
                         placeholder="the reason for your report" row="10" cols="60"
@@ -96,17 +96,17 @@
             <?php foreach ($reports as $report): ?>
                 <?php if (intval($report["archived"]) == 0): ?>
                     <div class="report">
-                    <?php $post = Post::getPostbyPostId($report["post_id"]); ?>
+                    <?php $post = Cleaner::xss(Post::getPostbyPostId($report["post_id"])); ?>
                         <?php if (intval($report["post_id"]) !== 0): ?>
                             <a href="detailsPost.php?pid=<?php echo $post["id"];?>">
                                 <img src="<?php echo $post["image"]; ?>" class="reports__post__img" alt="reported post">
                             </a>
                         <?php elseif (intval($report["post_id"]) == 0): ?>
                             <div>
-                                <img src="<?php echo(User::getProfileImagebyId($report["reported_user_id"])["profile_image"]);?>" class="reports__user__img" alt="profile picture <?php echo($report["user_id"]); ?>">
+                                <img src="<?php echo User::getProfileImagebyId($report["reported_user_id"])["profile_image"];?>" class="reports__user__img" alt="profile picture <?php echo $report["user_id"]; ?>">
                                 <p class="reports__user__username"> Username: 
                                     <a href="profile.php?pid=<?php echo $report["user_id"];?>">
-                                        <?php echo(User::getUserNamebyId($report["reported_user_id"])["username"]); ?>
+                                        <?php echo User::getUserNamebyId($report["reported_user_id"])["username"]; ?>
                                     </a> 
                                 </p> 
                             </div>                            
@@ -114,7 +114,7 @@
                         <div class="report__details">
                             <p><strong>Reason for report: </strong><?php echo $report["reason"]; ?></p>
                             <p><strong>Date and time of report: </strong><?php echo $report["timestamp"]; ?></p>
-                            <button href="#" class="archive primary__btn" data-report_id="<?php echo($report["id"]); ?>" >Archive report</button>
+                            <button href="#" class="archive primary__btn" data-report_id="<?php echo $report["id"]; ?>" >Archive report</button>
                         </div>
                     </div>
                 <?php endif; ?> 

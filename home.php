@@ -19,7 +19,7 @@
     if (empty($_GET["page"])) {
         $pageNum = 0;
     } else {
-        $pageNum  = Cleaner::xss($_GET["page"]);
+        $pageNum  = Cleaner::cleanInput($_GET["page"]);
     }
 
     if (isset($_GET['sort'])) {
@@ -45,9 +45,9 @@
         $sorting = 'desc';
     }
     if (!empty($_GET["search"]) && $sorting !== "follow") {
-        $search_term = Cleaner::xss($_GET["search"]);
+        $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) {
-            $pageNum  = Cleaner::xss($_GET["page"]);
+            $pageNum  = Cleaner::cleanInput($_GET["page"]);
             $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
@@ -55,8 +55,8 @@
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } elseif (!empty($_GET["search"]) && $sorting === "follow") {
-        $search_term = Cleaner::xss($_GET["search"]);
-        if (isset($_GET["page"]) && $_GET["page"] > 1) {
+        $search_term = Cleaner::cleanInput($_GET["search"]);
+        if (isset($_GET["page"]) && Cleaner::cleanInput($_GET["page"]) > 1) {
             $pageNum  = $_GET["page"];
             $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
         } else {
@@ -65,10 +65,10 @@
         };
     } else {
         if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow") {
-            $pageNum  = $_GET["page"];
+            $pageNum  = Cleaner::cleanInput($_GET["page"]);
             $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
-        } elseif (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow") {
-            $pageNum  = $_GET["page"];
+        } else if (isset($_GET["page"]) && Cleaner::cleanInput($_GET["page"]) > 1 && $sorting === "follow") {
+            $pageNum  = Cleaner::cleanInput($_GET["page"]);
             $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
@@ -102,7 +102,7 @@
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <div class="search">
         <?php if (isset($_SESSION['id'])): ?>
-            <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
+            <h1> Welcome <?php echo Cleaner::xss(User::getUserNamebyId($_SESSION['id'])["username"]); ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
             <h3>Search in hundreds of projects:</h3>
         <?php endif; ?>
         
@@ -113,9 +113,9 @@
             </form>
 
             <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-                <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-                <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-                <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
+                <option value="date_desc"  <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+                <option value="date_asc" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+                <option value="following" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'following'):?>selected="selected"<?php endif;?>>following</option>
             </select>
 
             <?php if (!empty($_GET["search"])): ?>
@@ -141,20 +141,20 @@
     <section class="posts">
     <?php if (empty($posts)): ?>
         <div class="showcase__empty">
-            <h2 class="showcase__title-h2">There are no posts yet!</h2>
+            <h2 class="showcase__title-h2">There are no posts about this topic yet!</h2>
             <div class="showcase__empty-message">
-                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
+                <a class="btn primary__btn" href="new_post.php">Add the first one</a>  
             </div>
         </div>
     <?php endif; ?>
     <?php foreach ($posts as $post): ?>
         <div class="posts__bkg">                
             <div class="posts__user">
-                <?php $user = User::getUserbyId($post["user_id"]); ?>
+                <?php $user = Cleaner::xss(User::getUserbyId($post["user_id"])); ?>
                 <img src="<?php echo $user["profile_image"]; ?>" class="posts__user__img"  alt="profile image <?php echo $user["username"]; ?>">
                 <a href="profile.php?id=<?php echo $post["user_id"]; ?>" class="posts__user__name">
                     <h3><?php echo $user["username"] ?></h3>
-                    <?php if ($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                    <?php if ($user["user_role"] !== "user" && Cleaner::xss(User::checkUserRole($uid) !== "user")): ?>
                         <img src="assets\icon_check.svg" class="posts__user__verified" alt="verified icon">    
                     <?php endif; ?>
                 </a>
@@ -184,14 +184,14 @@
                         </div>
                     <?php endif; ?>  
                     <?php $pid = $post["id"]; ?>
-                    <?php if (User::checkban($_SESSION["id"]) === "0"): ?>
+                    <?php if (Cleaner::xss(User::checkban($_SESSION["id"])) === "0"): ?>
                         <div class="post__actions">
                             <div>
                                 <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
                                 <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                                     <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                                     <?php if ($uid === $post["user_id"]): ?>
-                                    <?php if (Like::getLikes($pid) === 0): ?>
+                                    <?php if (Cleaner::xss(Like::getLikes($pid)) === 0): ?>
                                         <span class="likes_count">No one likes this yet</span>
                                     <?php else: ?>
                                         <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>

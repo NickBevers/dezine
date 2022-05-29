@@ -17,9 +17,9 @@
         header('Location: home.php');
     }
     
-    Cleaner::xss($comments = Comment::getCommentsByPostId($_GET["pid"]));
+    $comments = Cleaner::xss(Comment::getCommentsByPostId($_GET["pid"]));
     
-    $visitor = Post::getViewsbyId($_SESSION["id"], $_GET["pid"]);
+    $visitor = Cleaner::xss(Post::getViewsbyId($_SESSION["id"], $_GET["pid"]));
 
     if ($_SESSION["id"] !== $post["user_id"]) {
         if ($visitor === false) {
@@ -63,7 +63,7 @@
                         <?php $tags = json_decode($post["tags"]); ?>
                         <div class="post__info__tags">
                             <?php foreach ($tags as $t): ?>
-                                <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                                <p><?php echo "#"; echo Cleaner::xss($t); echo "&nbsp"; ?></p>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>  
@@ -73,7 +73,7 @@
         <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
             <div class="post__comment">
                 <div class="post__comment__form">
-                    <?php $user = User::getUserbyId($_SESSION['id']); ?>
+                    <?php $user = Cleaner::xss(User::getUserbyId($_SESSION['id'])); ?>
                     <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>">
                     <input type="text" placeholder="What are your thoughts?" class="post__comment__form__input">
                     <a class="post__comment__form__btn" 

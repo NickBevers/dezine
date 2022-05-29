@@ -21,9 +21,9 @@
                 $_SESSION['id'] = $usr["id"];
 				$userId = $usr["id"];
 				if(User::checkWarning($userId)){
-				header("Location: profile.php");
+					header("Location: profile.php");
 				} else{
-				header("Location: home.php");
+					header("Location: home.php");
 				}                
             }
         } catch (Exception $e) {
