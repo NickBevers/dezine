@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Auth\Link;
-    use Dezine\Helpers\Validate;
+    use \Dezine\Auth\Link;
+    use \Dezine\Helpers\Validate;
 
     Validate::start();
     

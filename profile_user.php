@@ -1,10 +1,10 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Helpers\Validate;
-    use Dezine\Helpers\Security;
-    use Dezine\Helpers\Cleaner;
-    use Dezine\Auth\User;
-    use Dezine\Content\UploadImage;
+    use \Dezine\Helpers\Validate;
+    use \Dezine\Helpers\Security;
+    use \Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\User;
+    use \Dezine\Content\UploadImage;
 
     Validate::start();
 

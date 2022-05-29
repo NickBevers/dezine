@@ -1,6 +1,6 @@
 <?php 
-    use Dezine\Content\Post;
-use Dezine\Helpers\Cleaner;
+    use \Dezine\Content\Post;
+    use \Dezine\Helpers\Cleaner;
 
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json;charset=utf-8');

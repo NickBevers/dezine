@@ -1,12 +1,9 @@
 <?php
     namespace Dezine\Content;
     use Exception;
-    use Cloudinary\Api\Upload\UploadApi;
-    use Cloudinary\Configuration\Configuration;
-    use Cloudinary\Transformation\Delivery;
-    use Cloudinary\Transformation\Quality;
-    use Cloudinary\Tag\ImageTag;
-    use Dezine\Helpers\Cleaner;
+    use \Cloudinary\Api\Upload\UploadApi;
+    use \Cloudinary\Configuration\Configuration;
+    use \Dezine\Helpers\Cleaner;
 
     $config = parse_ini_file(__DIR__ . "/../../config/config.ini");
     

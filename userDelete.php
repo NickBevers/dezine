@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Auth\User;
-    use Dezine\Helpers\Validate;
+    use \Dezine\Auth\User;
+    use \Dezine\Helpers\Validate;
 
     Validate::start();    
     User::deleteUserContentById($_SESSION["id"]);

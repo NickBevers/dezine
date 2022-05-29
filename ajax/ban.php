@@ -1,7 +1,7 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Auth\User;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\User;
+    use \Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];

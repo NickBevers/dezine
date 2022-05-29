@@ -1,7 +1,7 @@
 <?php  
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Content\Post;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Content\Post;
+    use \Dezine\Helpers\Cleaner;
 
     $posts = POST::getSomePosts("desc", 0, 6);
     $posts = Cleaner::xss($posts);

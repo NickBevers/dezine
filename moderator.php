@@ -1,12 +1,12 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Helpers\Validate;
-    use Dezine\Helpers\Security;
-    use Dezine\Helpers\Cleaner;
-    use Dezine\Auth\User;
-    use Dezine\Actions\Report;
-    use Dezine\Content\Post;
-    use Dezine\Actions\Warning;
+    use \Dezine\Helpers\Validate;
+    use \Dezine\Helpers\Security;
+    use \Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\User;
+    use \Dezine\Actions\Report;
+    use \Dezine\Content\Post;
+    use \Dezine\Actions\Warning;
 
     Validate::start();
     

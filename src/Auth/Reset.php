@@ -1,7 +1,7 @@
 <?php
     namespace Dezine\Auth;
-    use Dezine\Auth\DB;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\DB;
+    use \Dezine\Helpers\Cleaner;
     use \Mailjet\Resources;
     use Exception;
     
