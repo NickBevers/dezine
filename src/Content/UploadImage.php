@@ -47,11 +47,11 @@
             if (!in_array(strtolower($fileType), $allowedFileTypes)) {
                 throw new Exception("This file type is not supported, please upload a jpg, png, gif or webp file.");
             }
-
-            if (!move_uploaded_file(Cleaner::cleanInput($tmpName), $tempPath)) {
+            
+            if (!move_uploaded_file($tmpName, $tempPath)) {
                 throw new Exception("The file could not be uploaded, please try again");
             } else {
                 return $tempPath;
-            }
+            }            
         }
     }

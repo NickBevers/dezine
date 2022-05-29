@@ -60,7 +60,6 @@
         public function getProfileImage(){return $this->profile_image;}
 
         public function setProfileImage($profile_image){
-            $profile_image = Cleaner::cleanInput($profile_image);
             $this->profile_image = $profile_image;
             return $this;
         }

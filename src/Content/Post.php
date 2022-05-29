@@ -6,6 +6,7 @@
     use PDO;
     use Error;
     use PHPColorExtractor\PHPColorExtractor;
+    use Exception;
 
     class Post {
         private $title;
@@ -20,26 +21,38 @@
 
         public function setTitle($title){
             $title = Cleaner::cleanInput($title);
-            $this->title = $title;
-            return $this;
+            if(empty($title)){
+                throw new Exception("Your title seems to be missing, please fill in the field.");
+            }else{
+                $this->title = $title;
+                return $this;
+            }
         }
 
         public function getDescription(){return $this->description;}
 
         public function setDescription($description){
             $description = Cleaner::cleanInput($description);
-            $this->description = $description;
-            return $this;
+            if(empty($description)){
+                throw new Exception("Your description seems to be missing, please fill in the field.");
+            }else{
+                $this->description = $description;
+                return $this;
+            }
         }
 
         public function getTags(){return $this->tags;}
 
         public function setTags($tags){
             $tags = Cleaner::cleanInput($tags);
-            $tags = str_replace(' ', '', $tags);
-            $tags = explode(",", $tags);
-            $this->tags = json_encode($tags);
-            return $this;
+            if(empty($tags)){
+                throw new Exception("Your tags seem to be missing, please fill in the field.");
+            }else{
+                $tags = str_replace(' ', '', $tags);
+                $tags = explode(",", $tags);
+                $this->tags = json_encode($tags);
+                return $this;
+            }
         }
 
         public function getPublic_id(){return $this->public_id;}
@@ -111,6 +124,7 @@
             $statement->bindValue(':tags', $this->tags);
             $statement->bindValue(':creation_date', $this->getDateTime());
             $res = $statement->execute();
+            var_dump($res);
             return $res;
         }
 
