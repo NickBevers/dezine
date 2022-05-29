@@ -148,7 +148,6 @@
             $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-            // var_dump($res);
             return $res;
         }
         
@@ -379,6 +378,16 @@
             $statement = $conn->prepare("select * from posts");
             $statement->execute();
             $res = $statement->fetchAll();
+            return $res;
+        }
+
+        public static function getPostsCountbyId($uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts order by creation_date where user_id = :user_id");
+            $statement->bindValue('user_id', Cleaner::cleanInput($uid));
+            $statement->execute();
+            // $res = $statement->fetchAll();
+            $res = $statement->rowCount();
             return $res;
         }
     }

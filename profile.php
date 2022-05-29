@@ -28,11 +28,11 @@
     if (empty($user)) {header('Location: home.php');}
 
     $postsPerPage = 18;
-    $postCount = Post::getPostsCount();
+    $postCount = Post::getPostsCountbyId($profileUser);
     
     if (isset($_GET["page"]) && $_GET["page"] > 1) {
         $pageNum  = $_GET["page"];
-        $posts = Post::getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
+        $posts = Post::getPostbyId($profileUser, (intval($pageNum) - 1)*$postsPerPage, $postsPerPage);
     } else {
         $pageNum  = 1;
         $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
@@ -307,10 +307,10 @@
     </section>    
     <?php endif; ?>
     <?php if ($postCount > $postsPerPage): ?>
-    <?php if ($pageNum > 1): ?>
-        <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
-    <?php endif; ?>
-        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+        <?php if ($pageNum > 1): ?>
+            <a href="profile.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+        <?php endif; ?>
+            <a href="profile.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>

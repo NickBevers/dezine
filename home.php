@@ -66,10 +66,10 @@
     } else {
         if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow") {
             $pageNum  = $_GET["page"];
-            $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
+            $posts = Post::getSomePosts($sorting, (intval($pageNum) - 1)*$postsPerPage, $postsPerPage);
         } elseif (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow") {
-            $pageNum  = $_GET["page"];
-            $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+            $pageNum  = intval($_GET["page"]) - 1;
+            $posts = Post::getFollowedPosts($uid, $sorting, (intval($pageNum) - 1)*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
             if ($sorting !== "follow") {
@@ -87,7 +87,6 @@
 
     $mostUsedTags = Post::getMostUsedTags();
     $posts = Cleaner::xss($posts);
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +104,6 @@
             <?php if (isset($_SESSION['id'])): ?>
                 <div>                    
                     <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-                    <!-- <h3>Search in hundreds of projects:</h3> -->
                 </div>
             <?php endif; ?>          
                 
@@ -250,14 +248,14 @@
             </div>  
         </div>            
     <?php endforeach; ?>
+    </section>
 
     <?php if ($postCount > $postsPerPage): ?>
         <?php if ($pageNum > 1): ?>
             <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
         <?php endif; ?>
-        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+            <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-    </section>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/feedSort.js"></script>
     <script src="./javascript/flag.js"></script>
