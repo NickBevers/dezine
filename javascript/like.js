@@ -24,7 +24,8 @@ function addRemoveLike(e){
     let parent = e.target.parentElement;
     let data = new FormData();
     data.append("postId", postId);    
-    data.append("userId", userId);       
+    data.append("userId", userId);      
+    // console.log(userId); 
     
     fetch("ajax/save_like.php", {
         method: "POST",

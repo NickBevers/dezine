@@ -43,6 +43,8 @@
     $gid = Cleaner::cleanInput($_GET["id"]);
     $role = $user["user_role"];
 
+    $followCount = Follow::getFollowCount($uid);
+
     if (isset($_POST["moderator"])) {
         if ($_POST["moderator"] === "assign") {
             $role = "moderator";
@@ -53,8 +55,7 @@
         }
         header("Refresh:0");
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -80,17 +81,18 @@
                 <div class="profile__info__details__username">
                     <h1><?php echo $user["username"]; ?></h1>
                     <?php if($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
-                        <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">    
-                    <?php endif; ?> 
-                    <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?> 
-                        <form action="#" method="post">
-                            <?php if($user["user_role"] === "user"): ?>
-                                <button name="moderator" value="assign" type="submit" class="btn moderator__btn">Make moderator</button>
-                            <?php endif; ?>
-                            <?php if($user["user_role"] !== "user"): ?>
-                                <button name="moderator" type="delete" class="btn moderator__btn">Delete moderator role</button>
-                            <?php endif; ?>
-                        </form>
+                    <img src="assets\icon_check.svg" id="profile__verified" alt="verified icon">
+                    <?php endif; ?>
+                    <?php if(intval($user["id"]) !== intval($uid) && User::checkUserRole($uid) === "admin"): ?>
+                    <form action="#" method="post">
+                        <?php if($user["user_role"] === "user"): ?>
+                        <button name="moderator" value="assign" type="submit" class="btn moderator__btn">Make
+                            moderator</button>
+                        <?php endif; ?>
+                        <?php if($user["user_role"] !== "user"): ?>
+                        <button name="moderator" type="delete" class="btn moderator__btn">Delete moderator role</button>
+                        <?php endif; ?>
+                    </form>
                     <?php endif; ?>
                 </div>
                 <h4><?php echo $user["education"]; ?></h4>
@@ -113,9 +115,14 @@
                                     <p>Unfollow</p>
                                 </div>
                             <?php endif; ?>
-                        </div>   
+                        </div>
                     <?php endif; ?>
-                <?php endif; ?>             
+                <?php endif; ?>
+                <div class="profile__info__followers">
+                    <?php if($_GET["id"] == $_SESSION["id"]): ?>   
+                        <p>Followers : <?php echo $followCount ?></p>                    
+                    <?php endif; ?> 
+                </div>
                 <div class="profile__info__btn">
                     <a href="showcase.php?id=<?php echo $gid; ?>" class="btn primary__btn">
                         Showcase user
@@ -125,7 +132,7 @@
                             Report user
                         </a>
                     <?php endif; ?> 
-                </div>   
+                </div>
                 <div class="profile__info__moderator">
                     <?php if (User::checkUserRole($uid) !== "user"): ?>
                         <div class="getRegisterLink">
@@ -135,30 +142,34 @@
                         <?php if(intval($uid) !== intval(Cleaner::xss($gid))): ?>
                         <a href="moderator.php?warn_uid=<?php echo $gid; ?>" class="btn moderator__btn">Warn user</a>
                         <?php endif; ?>
-                    <?php endif; ?>   
+                    <?php endif; ?>
                     <?php if (User::checkModerator($uid)): ?>
                         <a href="moderator.php?id=<?php echo $gid; ?>" class="btn moderator__btn">
                             <?php if (User::checkBan($gid)): ?>
                                 Retract ban
                             <?php else: ?>
-                                Ban user
-                            <?php endif; ?>    
+                            Ban user
+                            <?php endif; ?>
                         </a>
-                    <?php endif; ?>  
-                </div>                              
-            </div>  
+                    <?php endif; ?>
+                </div>
+            </div>
             <div class="profile__info-socials">
                 <?php if(!empty($user["linkedin"])): ?>
-                    <a href="<?php echo $user["linkedin"]; ?>" target="_blank"><img src="./assets/linkedin_icon.svg" alt="linkedin icon"></a>
+                <a href="<?php echo $user["linkedin"]; ?>" target="_blank"><img src="./assets/linkedin_icon.svg"
+                        alt="linkedin icon"></a>
                 <?php endif; ?>
                 <?php if(!empty($user["website"])): ?>
-                    <a href="<?php echo $user["website"]; ?>" target="_blank"><img src="./assets/web_small_icon.svg" alt="website icon"></a>
+                <a href="<?php echo $user["website"]; ?>" target="_blank"><img src="./assets/web_small_icon.svg"
+                        alt="website icon"></a>
                 <?php endif; ?>
                 <?php if(!empty($user["instagram"])): ?>
-                    <a href="<?php echo $user["instagram"]; ?>" target="_blank"><img src="./assets/insta_small_icon.svg" alt="instagram icon"></a>
+                <a href="<?php echo $user["instagram"]; ?>" target="_blank"><img src="./assets/insta_small_icon.svg"
+                        alt="instagram icon"></a>
                 <?php endif; ?>
                 <?php if(!empty($user["github"])): ?>
-                    <a href="<?php echo $user["github"]; ?>" target="_blank"><img src="./assets/github_icon.svg" alt="github icon"></a>
+                <a href="<?php echo $user["github"]; ?>" target="_blank"><img src="./assets/github_icon.svg"
+                        alt="github icon"></a>
                 <?php endif; ?>
             </div>
         </div>
@@ -167,10 +178,21 @@
         <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($gid)): ?>
             <div class="warning_user">
                 <?php foreach ($warnings as $warning):  ?>
-                    <div class="warning_message">
-                        <p><?php echo $warning["warning"] ; ?></p>
-                        <p><a href="community_guidelines.php">link to community guidlines</a>
-                        <div class="btn primary__btn agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement</div>
+                    <div class="warning__message">
+                        <h3>You have received a warning!</h3>
+                        <p>Our content monitors have determined that your behavior at Dzine has been in violation of our 
+                            <a href="terms_of_use.php">Terms of Use</a>.
+                        </p>
+                        <p>Moderator Note: <?php echo $warning["warning"] ; ?></p>
+                        <p>Please abide by the 
+                            <a href="community_guidelines.php">Community Guidlines</a> 
+                            so that Dzine can be a fun place for everyone!
+                        </p>
+                        <p>Close this message by agreeing to our 
+                            <a href="terms_of_use.php">Terms of Use</a> 
+                        </p>
+                        <div class="btn primary__btn agreement_button" data-warning_id="<?php echo Cleaner::cleanInput($warning["id"]); ?>">click for agreement
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -195,21 +217,26 @@
         <div class="showcase__empty">
             <h2 class="showcase__title-h2"><?php echo Cleaner::xss($user["username"]); ?> hasn't yet added any posts!</h2>
         </div>
+    </div>
     <?php else: ?>
     <section class="posts">
         <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post__img">
                 <?php if (Showcase::checkShowcase($post["id"], $uid)): ?>
-                    <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                    <?php endif; ?>
+                <?php if ($uid === $post["user_id"]): ?>
+                <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts hidden"
+                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull"
+                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                <?php endif; ?>
                 <?php else: ?>
-                    <?php if ($uid === $post["user_id"]): ?>
-                        <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                        <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase" class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
-                    <?php endif; ?>
+                <?php if ($uid === $post["user_id"]): ?>
+                <img src="./assets/hearts_icon.svg" alt="showcase icon" id="post__img-showcase" class="hearts"
+                    data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                <img src="./assets/hearts_full_icon.svg" alt="showcase icon" id="post__img-showcase"
+                    class="heartsfull hidden" data-id="<?php echo $post["id"]; ?>" data-uid="<?php echo $uid; ?>">
+                <?php endif; ?>
                 <?php endif; ?>
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
                     <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
@@ -284,12 +311,12 @@
             </div>
         </div>
         <?php endforeach; ?>
-    </section>    
+    </section>
     <?php endif; ?>
     <?php if ($postCount > $postsPerPage): ?>
-    <?php if ($pageNum > 1): ?>
-        <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
-    <?php endif; ?>
+        <?php if ($pageNum > 1): ?>
+            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+        <?php endif; ?>
         <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     <script src="./javascript/like.js"></script>

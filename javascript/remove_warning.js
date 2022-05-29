@@ -12,20 +12,19 @@ if (agreement_button) {
             fetch("ajax/ajax_warning.php", {
                 method: "POST",
                 body: data,
-            }).then(response => response.json())
-            .then(res => {
+            }).then(response => response.json()
+            ).then(res => {
                 if (res.status === "success") {
                     e.target.parentElement.style.display = "none";
                 } else {
                     console.error(`Something has gone wrong: ${res.message}`)
                 }
-            })
-            .catch((error) => {
-                console.error("Error: rfeffefrefefefeferfefe ", error);
+            }).catch((error) => {
+                console.error("Error:Something has gone wrong  ", error);
             });
-        })
-        e.preventDefault();
-    }
+            e.preventDefault();
+        });        
+    }    
 }
 
 
