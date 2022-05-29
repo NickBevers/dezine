@@ -11,8 +11,6 @@ link_button.addEventListener("click", (e) => {
     .then(response => response.json())
     .then(res => {
         if(res.status === "success"){
-            link_input.value = res.link;
-            console.log(res.link);
             navigator.clipboard.writeText(`https://weared-zine.be/register.php?token=${res.link}`);
         } else{
             console.error(`Something has gone wrong: ${res.message}`)
