@@ -2141,8 +2141,21 @@ input[type="file"] {
   margin: 0 0.5rem;
 }
 
+.tags ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .tags__buttons {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background-color: #FCD7F7;
   border-radius: 0.2rem;
   border: none;
@@ -2152,6 +2165,7 @@ input[type="file"] {
 
 .tags__buttons a {
   text-decoration: none;
+  font-size: 1rem;
 }
 
 .tags__buttons a:active {
