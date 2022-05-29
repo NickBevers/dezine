@@ -27,8 +27,12 @@
 
         public function setUsername($username){
             $username = Cleaner::cleanInput($username);
-            $this->username = $username;
-            return $this;
+            if(empty($username)){
+                throw new Exception("Your username seems to be missing, please fill in the field.");
+            } else{
+                $this->username = $username;
+                return $this;
+            }
         }
 
         //emails setters and getters
@@ -36,8 +40,12 @@
         
         public function setEmail($email){
             $email = Cleaner::cleanInput($email);
-            $this->email = $email;
-            return $this;
+            if(empty($email)){
+                throw new Exception("Your email seems to be missing, please fill in the field.");
+            }else{
+                $this->email = $email;
+                return $this;
+            }
         }
 
         public function getSecondEmail(){return $this->second_email;}
@@ -70,11 +78,15 @@
 
         public function setPassword( $password ){
             $password = Cleaner::cleanInput($password);
-            if(strlen($password) < self::PASSWORD_MIN_LENGTH){
+            if(empty($password)){
+                throw new Exception("Your password seems to be missing, please fill in the field.");
+            } else{
+                if(strlen($password) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
-            }
-            $this->password = $password;
-            return $this;
+                }
+                $this->password = $password;
+                return $this;
+            }            
         }
 
         //about getters and setters

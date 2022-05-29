@@ -8,7 +8,7 @@
         header('Location: home.php');
     }
     
-    if (!empty($_POST)) {
+    if (!empty($_POST)){
         $email = $_POST["email"];
         $password = $_POST["password"];
         try {
