@@ -23,24 +23,36 @@ h1 {
   color: #120CFF;
   font-weight: 900;
   font-size: 3.5rem;
+  font-family: museo-sans, sans-serif;
 }
 
 h2 {
   color: #120CFF;
   font-weight: 700;
   font-size: 1.8rem;
+  font-family: museo-sans, sans-serif;
 }
 
 h3 {
   color: #120CFF;
   font-weight: 700;
   font-size: 1.5rem;
+  font-family: museo-sans, sans-serif;
 }
 
 h4 {
   color: #120CFF;
   font-weight: 700;
   font-size: 1.3rem;
+  font-family: museo-sans, sans-serif;
+}
+
+p {
+  font-family: museo-sans, sans-serif;
+}
+
+a {
+  font-family: museo-sans, sans-serif;
 }
 
 .hidden {
@@ -2104,13 +2116,14 @@ input[type="file"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .search_box input {
@@ -2124,7 +2137,6 @@ input[type="file"] {
   border-color: #120CFF;
   border-radius: 0.2rem;
   border-width: 2px;
-  margin-left: 1rem;
   height: 2rem;
   padding: 0rem 0.3rem;
 }
@@ -2160,33 +2172,39 @@ input[type="file"] {
   border-radius: 0.2rem;
   border: none;
   padding: 0.2rem 0.4rem;
-  color: #000000;
 }
 
 .tags__buttons a {
   text-decoration: none;
   font-size: 1rem;
-}
-
-.tags__buttons a:active {
-  color: #120CFF;
+  color: #000000;
 }
 
 .search__cross {
   margin-left: 1rem;
-  background-color: #FCD7F7;
   border-radius: 0.2rem;
   border: none;
   padding: 0.2rem 0.4rem;
   color: #000000;
+  background-color: #FCD7F7;
+  text-decoration: none;
 }
 
 .search__cross a {
   text-decoration: none;
 }
 
-.search__cross a:active {
-  color: #120CFF;
+#color-filter {
+  background-color: #666565;
+}
+
+#color-filter a {
+  color: #fafafa;
+  font-weight: 700;
+}
+
+#color-filter:hover {
+  background-color: #120CFF;
 }
 
 @media (max-width: 950px) {

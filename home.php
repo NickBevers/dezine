@@ -105,24 +105,21 @@
             <?php if (isset($_SESSION['id'])): ?>
                 <div>                    
                     <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-                    <h3>Search in hundreds of projects:</h3>
+                    <!-- <h3>Search in hundreds of projects:</h3> -->
                 </div>
-            <?php endif; ?>        
+            <?php endif; ?>          
+                
             <section class="search_box">
                 <form action="" method="GET">
                     <input type="text" name="search" placeholder="Search here..." required="required" />
-                    <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
-                </form>
+                    <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>                    
+                </form>         
 
                 <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
                     <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
                     <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
                     <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
-                </select>
-
-                <?php if (!empty($_GET["search"])): ?>
-                    <a class="search__cross" href="home.php">X</a>
-                <?php endif; ?>
+                </select>                
             </section>
         </div>        
         <section class="tags">
@@ -131,11 +128,14 @@
                 <?php foreach($mostUsedTags as $key => $tag): ?>
                     <button class="tags__buttons"><a href="home.php?search=<?php echo $key; ?>">#<?php echo $key; ?></a></button>
                 <?php endforeach; ?>
-            </ul>
-        </section>
-        <?php if (isset($_GET["color"])): ?>
-            <a href="home.php">Reset Color filter</a>
-        <?php endif; ?>
+                <?php if (isset($_GET["color"])): ?>
+                    <button class="tags__buttons" id="color-filter"><a href="home.php">Reset color filter X</a></button>
+                <?php endif; ?>
+                <?php if (!empty($_GET["search"])): ?>
+                    <button class="tags__buttons" id="color-filter"><a href="home.php">Reset search X</a></button>
+                <?php endif; ?> 
+            </ul>   
+        </section>     
     </div>
     <section class="posts">
     <?php if (empty($posts)): ?>
@@ -157,7 +157,6 @@
                         <img src="assets\icon_check.svg" class="posts__user__verified" alt="verified icon">    
                     <?php endif; ?>
                 </a>
-
             </div>               
             <div class="post">
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
