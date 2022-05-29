@@ -67,10 +67,10 @@
     } else {
         if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow") {
             $pageNum  = $_GET["page"];
-            $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
+            $posts = Post::getSomePosts($sorting, (intval($pageNum)-1)*$postsPerPage, $postsPerPage);
         } elseif (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow") {
             $pageNum  = $_GET["page"];
-            $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+            $posts = Post::getFollowedPosts($uid, $sorting, (intval($pageNum)-1)*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
             if ($sorting !== "follow") {
@@ -106,7 +106,6 @@
         <div class="welcome-search">
             <?php if (isset($_SESSION['id'])): ?>
                 <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-                <h3>Search in hundreds of projects:</h3>
             <?php endif; ?>
             
             <section class="search_box">
@@ -234,6 +233,7 @@
             </div>  
         </div>            
     <?php endforeach; ?>
+    </section>  
 
     <section class="pager">
         <?php if ($postCount > $postsPerPage): ?>
