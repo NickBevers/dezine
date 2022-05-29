@@ -8,8 +8,8 @@
         $follow = new Follow();
         $follow->setFollower_id($follower_id);
         $follow->setUser_id($user_id);
-        
-        if(count(Follow::isFollowing($follower_id, $user_id)) > 0){
+
+        if(Follow::isFollowing($follower_id, $user_id)){
             if($follow->unfollowUser()){
                 $response = [
                     "status" => "success",
@@ -24,7 +24,7 @@
                 ];
             }
         } else{
-            if($follow->followUser()){
+            if(intval($follow->followUser()) > 0){
                 $response = [
                     "status" => "success",
                     "action" => "follow",
