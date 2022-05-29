@@ -128,10 +128,6 @@
                 </div>   
                 <div class="profile__info__moderator">
                     <?php if (User::checkUserRole($uid) !== "user"): ?>
-                        <div class="getRegisterLink">
-                            <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
-                            <script src="./javascript/getLink.js"></script>
-                        </div>
                         <?php if(intval($uid) !== intval(Cleaner::xss($gid))): ?>
                         <a href="moderator.php?warn_uid=<?php echo $gid; ?>" class="btn moderator__btn">Warn user</a>
                         <?php endif; ?>

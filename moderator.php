@@ -43,7 +43,11 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
-        <h1 class="mod__title">Moderator Overviewpage</h1>
+        <h1 class="mod__title">Moderator Overviewpage</h1>        
+        <div class="getRegisterLink">
+            <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
         <?php if(isset($_GET["id"])): ?>
             <div class="alert alert-success hidden"></div>
             <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
