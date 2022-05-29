@@ -1,8 +1,8 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Auth\Reset;
-    use Dezine\Helpers\Validate;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\Reset;
+    use \Dezine\Helpers\Validate;
+    use \Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         if (Validate::isNotEmpty($_POST['email'])) {
@@ -34,11 +34,11 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
       <main>         
         <?php if (!empty($message)): ?>
-            <div class="alert alert-success"><?php echo Cleaner::xss($message); ?></div>
+            <div class="alert alert-success"><?php echo $message; ?></div>
         <?php endif; ?>
 
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?php echo Cleaner::xss($error); ?></div>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 
         <form action="" method="post" class="form form--profile">

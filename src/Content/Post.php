@@ -1,11 +1,11 @@
 <?php 
     namespace Dezine\Content;
-    use Dezine\Helpers\Cleaner;
-    use Dezine\Auth\DB;
+    use \Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\DB;
+    use \PHPColorExtractor\PHPColorExtractor;
     use DateTime;
     use PDO;
     use Error;
-    use PHPColorExtractor\PHPColorExtractor;
     use Exception;
 
     class Post {

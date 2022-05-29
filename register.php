@@ -1,8 +1,8 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Helpers\Security;
-    use Dezine\Auth\User;
-    use Dezine\Auth\Link;
+    use \Dezine\Helpers\Security;
+    use \Dezine\Auth\User;
+    use \Dezine\Auth\Link;
 
     if (Security::isLoggedIn()) {header('Location: home.php');}
 

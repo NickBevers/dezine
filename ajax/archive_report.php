@@ -1,6 +1,6 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Actions\Report;
+    use \Dezine\Actions\Report;
 
     if (!empty($_POST)) {
         $report_id = $_POST['report_id'];

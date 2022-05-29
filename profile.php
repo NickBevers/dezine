@@ -1,13 +1,13 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Auth\User;
-    use Dezine\Content\Post;
-    use Dezine\Actions\Like;
-    use Dezine\Content\Showcase;
-    use Dezine\Actions\Follow;
-    use Dezine\Helpers\Validate;
-    use Dezine\Helpers\Security;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\User;
+    use \Dezine\Content\Post;
+    use \Dezine\Actions\Like;
+    use \Dezine\Content\Showcase;
+    use \Dezine\Actions\Follow;
+    use \Dezine\Helpers\Validate;
+    use \Dezine\Helpers\Security;
+    use \Dezine\Helpers\Cleaner;
 
     Validate::start();
     if (!Security::isLoggedIn()) {header('Location: login.php');}

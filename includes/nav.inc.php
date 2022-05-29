@@ -1,7 +1,7 @@
 <?php 
   require __DIR__ . '/../vendor/autoload.php';
-  use Dezine\Helpers\Security;
-  use Dezine\Auth\User;
+  use \Dezine\Helpers\Security;
+  use \Dezine\Auth\User;
 ?><nav class="nav--full">
     <div class="nav__element nav--left">
       <?php if(basename($_SERVER['PHP_SELF']) !== "index.php"): ?>

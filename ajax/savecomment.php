@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Actions\Comment;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Actions\Comment;
+    use \Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         try {

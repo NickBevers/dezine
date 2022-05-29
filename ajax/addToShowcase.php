@@ -1,6 +1,6 @@
 <?php
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Content\Showcase;
+    use \Dezine\Content\Showcase;
 
     if (!empty($_POST)) {
         $postId = $_POST['postId'];

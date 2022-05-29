@@ -1,7 +1,7 @@
 <?php
     namespace Dezine\Actions;
-    use Dezine\Auth\DB;
-    use Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\DB;
+    use \Dezine\Helpers\Cleaner;
     use DateTime;
 
     class Report {

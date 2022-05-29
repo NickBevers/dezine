@@ -1,7 +1,7 @@
 <?php
     namespace Dezine\Actions;
-    use Dezine\Helpers\Cleaner;
-    use Dezine\Auth\DB;
+    use \Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\DB;
 
     class Follow{
         private $follower_id;

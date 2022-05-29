@@ -1,6 +1,6 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
-    use Dezine\Auth\User;
+    use \Dezine\Auth\User;
 
     if (!empty($_POST)) {
         $username = $_POST['username'];
