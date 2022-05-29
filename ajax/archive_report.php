@@ -10,7 +10,6 @@
                 "status" => "archived",
                 "message" => "Report has been archived successfully."
             ];
-            echo json_encode($response);
         } else if(intval(Report::checkReport($report_id)) === 1){
             $message = Report::removeArchive($report_id);
             $response = [

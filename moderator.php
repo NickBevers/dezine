@@ -56,8 +56,9 @@
                 <div class="mod__ban">
                     <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
                     <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
-        </div>
-            </div>
+                </div>
+            </div>            
+            <script src="./javascript/add_remove_ban.js"></script>
         <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="warnings">
             <form action="" method="post">
@@ -82,12 +83,14 @@
                                 <img src="<?php echo $post["image"]; ?>" class="reports__post__img" alt="reported post">
                             </a>
                         <?php elseif (intval($report["post_id"]) == 0): ?>
-                            <img src="<?php echo(User::getProfileImagebyId($report["user_id"])["profile_image"]); ?>" class="reports__user__img" alt="profile picture <?php echo($report["user_id"]); ?>">
-                            <p class="reports__user__username"> Username: 
-                                <a href="profile.php?pid=<?php echo $report["user_id"];?>">
-                                    <?php echo(User::getUserNamebyId($report["user_id"])['username']); ?>
-                                </a> 
-                            </p>
+                            <div>
+                                <img src="<?php echo(User::getProfileImagebyId($report["reported_user_id"])["profile_image"]);?>" class="reports__user__img" alt="profile picture <?php echo($report["user_id"]); ?>">
+                                <p class="reports__user__username"> Username: 
+                                    <a href="profile.php?pid=<?php echo $report["user_id"];?>">
+                                        <?php echo(User::getUserNamebyId($report["reported_user_id"])["username"]); ?>
+                                    </a> 
+                                </p> 
+                            </div>                            
                         <?php endif; ?> 
                         <div class="report__details">
                             <p><strong>Reason for report: </strong><?php echo $report["reason"]; ?></p>
@@ -99,7 +102,6 @@
             <?php endforeach; ?>  
         </div>        
         <?php endif; ?>      
-        <script src="./javascript/add_remove_ban.js"></script>
         <script src="./javascript/archive_report.js"></script>
     </main>
 </body>
