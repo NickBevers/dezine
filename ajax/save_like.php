@@ -18,7 +18,7 @@
                 $response = [
                     "status" => "success",
                     "message" => "Like was successfull.",
-                    "data" => Cleaner::xss($likes)
+                    "data" => $likes
                 ];
             }
             else{

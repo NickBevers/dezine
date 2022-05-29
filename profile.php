@@ -257,12 +257,13 @@
                         <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
                             <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                                 <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
-                                <?php if ($uid === $post["user_id"]): ?>
-                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                <?php if($uid === $post["user_id"]): ?>
+                                        <?php var_dump(Like::getLikes($pid)); ?>
+                                        <?php if(Like::getLikes($pid) == 0): ?>
                                             <span class="likes_count">No one likes this yet</span>
                                         <?php elseif (Like::getLikes($pid) > 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
-                                        <?php else: ?>
+                                        <?php elseif (Like::getLikes($pid) == 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
                                         <?php endif; ?>
                                 <?php endif; ?>
@@ -270,11 +271,12 @@
                             <div class="liked" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                                 <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                                 <?php if ($uid === $post["user_id"]): ?>
-                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                        <?php var_dump(Like::getLikes($pid)); ?>
+                                        <?php if (Like::getLikes($pid) == 0): ?>
                                             <span class="likes_count">No one likes this yet</span>
                                         <?php elseif (Like::getLikes($pid) > 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
-                                        <?php else: ?>
+                                        <?php elseif (Like::getLikes($pid) == 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
                                         <?php endif; ?>
                                 <?php endif; ?>
@@ -283,11 +285,12 @@
                             <div class="like" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                                 <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
                                 <?php if ($uid === $post["user_id"]): ?>
-                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                        <?php var_dump(Like::getLikes($pid)); ?>
+                                        <?php if (Like::getLikes($pid) == 0): ?>
                                             <span class="likes_count">No one likes this yet</span>
                                         <?php elseif (Like::getLikes($pid) > 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
-                                        <?php else: ?>
+                                        <?php elseif (Like::getLikes($pid) == 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
                                         <?php endif; ?>
                                 <?php endif; ?>
@@ -295,11 +298,12 @@
                             <div class="liked hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
                                 <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
                                 <?php if ($uid === $post["user_id"]): ?>
-                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                        <?php var_dump(Like::getLikes($pid)); ?>
+                                        <?php if (Like::getLikes($pid) == 0): ?>
                                             <span class="likes_count">No one likes this yet</span>
                                         <?php elseif (Like::getLikes($pid) > 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
-                                        <?php else: ?>
+                                        <?php elseif (Like::getLikes($pid) == 1): ?>
                                             <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
                                         <?php endif; ?>
                                 <?php endif; ?>
@@ -333,12 +337,15 @@
         <?php endforeach; ?>
     </section>
     <?php endif; ?>
-    <?php if ($postCount > $postsPerPage): ?>
-        <?php if ($pageNum > 1): ?>
-            <a href="profile.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+    <section class="pager">
+        <?php if ($postCount > $postsPerPage): ?>
+            <?php if ($pageNum > 1): ?>
+                <a href="profile.php?page=<?php echo $pageNum-1 ?>" class="next_page btn page__btn">Previous page</a>
+            <?php endif; ?>
+            <a href="profile.php?page=<?php echo $pageNum+1 ?>" class="next_page btn page__btn">Next page</a>
         <?php endif; ?>
-        <a href="profile.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
-    <?php endif; ?>
+    </section>
+
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>
     <script src="./javascript/remove_warning.js"></script> 
