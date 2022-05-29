@@ -16,7 +16,7 @@
         if (empty($_SESSION["id"])) {
             header('Location: login.php');
         } else {
-            $id = $_SESSION["id"];
+            $id = Cleaner::xss($_SESSION["id"]);
             $profileUser = intval($_SESSION["id"]);
             header("Location: profile.php?id=$id");
         }
@@ -39,8 +39,8 @@
     }
 
     $posts = Cleaner::xss($posts);
-    $uid = Cleaner::cleanInput($_SESSION["id"]);
-    $gid = Cleaner::cleanInput($_GET["id"]);
+    $uid = Cleaner::xss($_SESSION["id"]);
+    $gid = Cleaner::xss($_GET["id"]);
     $role = $user["user_role"];
 
     $followCount = Follow::getFollowCount($uid);
@@ -119,7 +119,7 @@
                     <?php endif; ?>
                 <?php endif; ?>
                 <div class="profile__info__followers">
-                    <?php if($_GET["id"] == $_SESSION["id"]): ?>   
+                    <?php if($gid == $uid): ?>   
                         <p>Followers : <?php echo $followCount ?></p>                    
                     <?php endif; ?> 
                 </div>
@@ -171,7 +171,7 @@
         </div>
     </section>    
     <section class="warning_messages">    
-        <?php $warnings = User::checkWarning($uid); if($warnings && $uid === Cleaner::xss($gid)): ?>
+        <?php $warnings = Cleaner::xss(User::checkWarning($uid)); if($warnings && $uid === Cleaner::xss($gid)): ?>
             <div class="warning_user">
                 <?php foreach ($warnings as $warning):  ?>
                     <div class="warning__message">
@@ -194,7 +194,7 @@
             </div>
         <?php endif; ?>
     </section>
-    <?php if (intval(User::checkban($uid)) === 1 && $uid === Cleaner::xss($gid)): ?>
+    <?php if (intval(User::checkban($uid)) === 1 && $uid === $gid): ?>
     <section class="ban__message">
         <h3>You have been banned!</h3>
         <p>Your behavior on the platform has not been within community guidelines. As a result your interactions have been limited on the platform.</p>
@@ -337,7 +337,7 @@
         <?php if ($pageNum > 1): ?>
             <a href="profile.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
         <?php endif; ?>
-            <a href="profile.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+        <a href="profile.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>

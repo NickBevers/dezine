@@ -1,6 +1,7 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
     use Dezine\Auth\User;
+    use Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];
@@ -13,7 +14,7 @@
         if(isset($message)){
             $response = [
                 "status" => "success",
-                "message" => $message
+                "message" => Cleaner::xss($message)
             ];
         } else{
             $response = [

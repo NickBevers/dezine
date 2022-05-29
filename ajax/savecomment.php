@@ -1,7 +1,8 @@
 <?php
     require __DIR__ . '/../vendor/autoload.php';
     use Dezine\Actions\Comment;
-    
+    use Dezine\Helpers\Cleaner;
+
     if (!empty($_POST)) {
         try {
             $comment = new Comment();
@@ -11,9 +12,9 @@
             if($comment->save()){
                 $response = [
                     'status' => 'success',
-                    'postId' => $comment->getPostId(),
-                    'text' => $comment->getText(),
-                    'userId' => $comment->getUserId(),
+                    'postId' => Cleaner::xss($comment->getPostId()),
+                    'text' => Cleaner::xss($comment->getText()),
+                    'userId' => Cleaner::xss($comment->getUserId()),
                     'message' => 'comment saved'
                 ];
             } else{

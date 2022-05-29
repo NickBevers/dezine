@@ -2,7 +2,10 @@
     namespace Dezine\Content;
     use Exception;
     use Cloudinary\Api\Upload\UploadApi;
-    use \Cloudinary\Configuration\Configuration;
+    use Cloudinary\Configuration\Configuration;
+    use Cloudinary\Transformation\Delivery;
+    use Cloudinary\Transformation\Quality;
+    use Cloudinary\Tag\ImageTag;
     use Dezine\Helpers\Cleaner;
 
     $config = parse_ini_file(__DIR__ . "/../../config/config.ini");
@@ -19,13 +22,13 @@
     class UploadImage{
         public static function uploadPostPic($file){
             $uApi = new UploadApi();
-            $upload = $uApi->upload($file, ['folder' => 'posts/', 'resource_type' => 'image']);
+            $upload = $uApi->upload($file, ['folder' => 'posts/', 'resource_type' => 'image', 'eager' => ["quality" => 60]]);
             return $upload;
         }
 
         public static function uploadProfilePic($file){
             $uApi = new UploadApi();
-            $upload = $uApi->upload($file, ['folder' => 'profiles/', 'resource_type' => 'image']);
+            $upload = $uApi->upload($file, ['folder' => 'profiles/', 'resource_type' => 'image', 'eager' => ["quality" => 60]]);
             return $upload;
         }
 
@@ -43,7 +46,7 @@
             $fileType = pathinfo(Cleaner::cleanInput($image))["extension"];
             $tempPath = "uploads/" . $fileName;
             $allowedFileTypes = array('jpg', 'png', 'jpeg','gif', 'jfif', 'webp');
-
+            
             if (!in_array(strtolower($fileType), $allowedFileTypes)) {
                 throw new Exception("This file type is not supported, please upload a jpg, png, gif or webp file.");
             }

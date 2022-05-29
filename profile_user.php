@@ -66,7 +66,7 @@
         } catch (Throwable $error) {
             $error = $error->getMessage();
         }             
-        $users = User::getUser($email);
+        $users = Cleaner::xss(User::getUser($email));
     }
 ?><!DOCTYPE html>
 <html lang="en">
