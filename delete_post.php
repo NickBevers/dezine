@@ -6,9 +6,7 @@
     
     Validate::start();
 
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     try {
         Post::deletePostById($_GET["pid"]);

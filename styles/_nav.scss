@@ -37,16 +37,12 @@
 }
 
 @media (max-width: 1500px) and (min-width: 950px) {
-
     .nav--right {
-        width: 80%;
-    
-    }
-    
+        width: 80%;    
+    }    
 }
 
 @media (max-width: 950px) and (min-width: 600px) {
-
     .nav--full {
         display: none;
     }
@@ -80,6 +76,8 @@
         padding: 0;
         text-decoration: none;
         margin: 1.2rem;
+        border: none;
+        color: $accent;
     }
 
     /* menu */

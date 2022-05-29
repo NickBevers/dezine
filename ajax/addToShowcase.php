@@ -11,17 +11,29 @@
             $showcase->setPostId($postId);
             $showcase->setUserId($userId);
             if(Showcase::checkShowcase($postId, $userId)){
-                $showcase->removeFromShowcase();
-                $response = [
-                    "status" => "success",
-                    "message" => "Remove from showcase was successfull."
-                ];
+                if($showcase->removeFromShowcase()){
+                   $response = [
+                        "status" => "success",
+                        "message" => "Remove from showcase was successfull."
+                    ]; 
+                } else{
+                    $response = [
+                        "status" => "error",
+                        "message" => "Something went wrong."
+                    ]; 
+                }                
             }else{
-                $showcase->addToShowcase();
-                $response = [
-                    "status" => "success",
-                    "message" => "Add to showcase was successfull."
-                ];
+                if($showcase->addToShowcase()){
+                     $response = [
+                        "status" => "success",
+                        "message" => "Add to showcase was successfull."
+                    ];
+                }else{
+                    $response = [
+                        "status" => "error",
+                        "message" => "Something went wrong."
+                    ];
+                }               
             }
         } catch (Throwable $t) {
             $response = [
@@ -29,6 +41,5 @@
                 "message" => "Something went wrong."
             ];
         }
-
         echo json_encode($response);
     }

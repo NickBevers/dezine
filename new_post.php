@@ -25,7 +25,7 @@
             $project = new Post();
             $project->setTitle($title);
             $project->setDescription($description);
-            $project->setTags($tags);
+            $project->setTags($tags);                       
             $project->setPublic_id($uploadedFile["public_id"]);
             $project->setImage($uploadedFile["secure_url"]);
             $project->setColors($image);
@@ -38,9 +38,7 @@
         } catch (Throwable $error) {
             $error = $error->getMessage();
         }
-    }
-    
-      
+    } 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,29 +58,33 @@
 
     <form method="post" enctype='multipart/form-data' class="form form--register">
       <h2>New Post</h2>
+
+      <div class="form__field">
+        <label for="image" class="btn secondary__btn-reverse">Add image
+          <input type="file" name="image" class="form__image-input" id="image">
+        </label>
+      </div>
+
       <div class="form__field">
         <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle" required>
+        <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle">
       </div>
 
       <div class="form__field">
         <label for="description" class="form-label">Description</label>
-        <textarea type="text" name="description" class="form-control" id="description" maxlength="250" required style="resize: none;"></textarea>
+        <textarea type="text" name="description" class="form-control" id="description" maxlength="250" style="resize: none;"></textarea>
       </div>
 
       <div class="form__field">
         <label for="tags" class="form-label">Tags</label>
-        <input type="text" name="tags" class="form-control" id="tags" required>
+        <input type="text" name="tags" class="form-control" id="tags">
         <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
       </div>
 
       <div class="form__field">
-        <label for="image" class="btn secondary__btn-reverse">Add image
-          <input type="file" name="image" class="form__image-input" id="image" required>
-        </label>
+        <button type="submit" class="btn secondary__btn secondary__btn-signup">Create new post</button>        
       </div>
       
-      <button type="submit" class="btn secondary__btn secondary__btn-signup">Create new post</button>
     </form> 
   </main>
 </body>

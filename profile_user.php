@@ -8,13 +8,13 @@
 
     Validate::start();
 
-    if (!Security::isLoggedIn()) {
+    if(!Security::isLoggedIn()) {
         header('Location: login.php');
     }
     $email = $_SESSION['email'];
     $user = new User();
-    $user->setEmail($email);
-    $users = $user->getUser();
+    $users = User::getUser($email);    
+    $users = Cleaner::xss($users);
     
     if (!empty($_POST)) {
         $username = $_POST['username'];
@@ -24,51 +24,52 @@
         $website = $_POST['website'];
         $instagram = $_POST['instagram'];
         $github = $_POST['github'];
-        $second_email = $_POST['second_email'];
+        $second_email = $_POST['second_email'];        
         
         try {
-            $user->setEmail($email);
-            $user->setUsername($username);
-            $user->setEducation($education);
-            $user->setBio($bio);
-            $user->setLinkedin($linkedin);
-            $user->setWebsite($website);
-            $user->setInstagram($instagram);
-            $user->setGithub($github);
-            $user->setSecondEmail($second_email);
+            if(empty($username)) {
+                $error = "Username cannot be empty";
+            } else{
+                $user->setEmail($email);
+                $user->setUsername($username);
+                $user->setEducation($education);
+                $user->setBio($bio);
+                $user->setLinkedin($linkedin);
+                $user->setWebsite($website);
+                $user->setInstagram($instagram);
+                $user->setGithub($github);
+                $user->setSecondEmail($second_email);
 
-            $default_image = "assets/default_profile_image.png";
-            if (isset($_POST['checkbox_name'])) {
-                $user->setProfileImage($default_image);
-            } else {
-                if ($_FILES['profile_image']['size'] == 0) {
-                    $profile_image = $users["profile_image"];
-                    $user->setProfileImage($profile_image);
+                $default_image = "assets/default_profile_image.png";
+                if (isset($_POST['checkbox_name'])) {
+                    $user->setProfileImage($default_image);
                 } else {
-                    $image = UploadImage::getImageData($_FILES["profile_image"]["name"], $_FILES["profile_image"]["tmp_name"], $_SESSION["id"]);
-                    $uploadedFile = UploadImage::uploadProfilePic($image);
-                    if($uploadedFile){unlink($image);}
-                    $user->setProfileImage($uploadedFile["secure_url"]);
-                    $user->setProfileImagePublicId($uploadedFile["public_id"]);
+                    if ($_FILES['profile_image']['size'] == 0) {
+                        $profile_image = $users["profile_image"];
+                        $user->setProfileImage($profile_image);
+                    } else {
+                        $image = UploadImage::getImageData($_FILES["profile_image"]["name"], $_FILES["profile_image"]["tmp_name"], $_SESSION["id"]);
+                        $uploadedFile = UploadImage::uploadProfilePic($image);
+                        if($uploadedFile){unlink($image);}
+                        $user->setProfileImage($uploadedFile["secure_url"]);
+                        $user->setProfileImagePublicId($uploadedFile["public_id"]);
+                    }
                 }
-            }
 
-            $users = $user->updateUser();
-            $users = Cleaner::xss($users);
-            if ($users) {
-                // header("Refresh:0");
-                $success = "Your profile was successfully updated";
-            } else {
-                $error = "Something has gone wrong, please try again.";
+                $users = $user->updateUser();
+                if ($users) {
+                    $success = "Your profile was successfully updated";
+                } else {
+                    $error = "Something has gone wrong, please try again.";
+                }
             }
         } catch (Throwable $error) {
             $error = $error->getMessage();
-        }
+        }             
+        $users = User::getUser($email);
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,7 +78,6 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nkx6euf.css">
 </head>
-
 <body class="container">
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
@@ -89,7 +89,7 @@
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> enctype='multipart/form-data' class="form form--profile">
+        <form method="post" action="" enctype='multipart/form-data' class="form form--profile">
             <h2>Update Profile</h2>
             <div class="form__field form__field-image">
                 <div class="form__field">
@@ -108,7 +108,7 @@
 
             <div class="form__field">
                 <label for="username" class="form-label">Username</label>
-                <input type="username" name="username" class="form-control" id="username" required
+                <input type="username" name="username" class="form-control" id="username"
                     value="<?php echo $users["username"]; ?>">
             </div>
 

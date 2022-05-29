@@ -12,18 +12,18 @@
     
     if(!Security::isLoggedIn()) { header('Location: login.php');}
 
-    $uid = Cleaner::xss(Cleaner::cleanInput($_SESSION["id"]));
+    $uid = Cleaner::xss($_SESSION["id"]);
     if (!User::checkModerator($uid)) {
         header('Location: home.php');
     }
 
     if (isset($_GET["id"])) {
-        $banId = Cleaner::cleanInput($_GET["id"]);
+        $banId = $_GET["id"];
         $user = User::getUserbyId($banId);
     }
      
     if (!empty($_GET["warn_uid"]) && !empty($_POST)) {
-        $user_id = Cleaner::cleanInput($_GET["warn_uid"]);
+        $user_id = $_GET["warn_uid"];
         $reason = $_POST["warning_reason"];
 
         try {
@@ -53,6 +53,11 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
+        <h1 class="mod__title">Moderator Overviewpage</h1>        
+        <div class="getRegisterLink">
+            <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
@@ -60,8 +65,7 @@
         <?php if (isset($success)): ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
-
-        <h1 class="mod__title">Moderator Overviewpage</h1>
+      
         <?php if(isset($_GET["id"])): ?>
             <div class="alert alert-success hidden"></div>
             <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
@@ -75,8 +79,8 @@
                     <h2>Would you like to retract the ban against user <?php echo $user["username"]; ?>?</h2>
                     <button href="#"class="btn secondary__btn secondary__btn-signup unban" data-id="<?php echo $banId; ?>">Retract Ban</button>
                 </div>
-            </div>            
-        <script src="./javascript/add_remove_ban.js"></script>
+            </div>    
+            <script src="./javascript/add_remove_ban.js"></script>
         <?php elseif(isset($_GET["warn_uid"])): ?>
         <div class="warnings">
             <form action="" method="post" class="form form--profile">
@@ -102,12 +106,14 @@
                                 <img src="<?php echo $post["image"]; ?>" class="reports__post__img" alt="reported post">
                             </a>
                         <?php elseif (intval($report["post_id"]) == 0): ?>
-                            <img src="<?php echo(User::getProfileImagebyId($report["user_id"])["profile_image"]); ?>" class="reports__user__img" alt="profile picture <?php echo($report["user_id"]); ?>">
-                            <p class="reports__user__username"> Username: 
-                                <a href="profile.php?pid=<?php echo $report["user_id"];?>">
-                                    <?php echo(User::getUserNamebyId($report["user_id"])['username']); ?>
-                                </a> 
-                            </p>
+                            <div>
+                                <img src="<?php echo(User::getProfileImagebyId($report["reported_user_id"])["profile_image"]);?>" class="reports__user__img" alt="profile picture <?php echo($report["user_id"]); ?>">
+                                <p class="reports__user__username"> Username: 
+                                    <a href="profile.php?pid=<?php echo $report["user_id"];?>">
+                                        <?php echo(User::getUserNamebyId($report["reported_user_id"])["username"]); ?>
+                                    </a> 
+                                </p> 
+                            </div>                            
                         <?php endif; ?> 
                         <div class="report__details">
                             <p><strong>Reason for report: </strong><?php echo $report["reason"]; ?></p>

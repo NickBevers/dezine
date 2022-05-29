@@ -9,9 +9,7 @@
 
     Validate::start();
     
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     if (isset($_GET["pid"])) {
         $post = Cleaner::xss(Post::getPostbyPostId($_GET["pid"]));
@@ -42,33 +40,35 @@
 </head>
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    <div class="post--single">                    
-        <div class="post--single__user">
-            <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>" class="posts__user__img">
-            <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
-                <h3><?php echo $user["username"] ?></h3>         
-            </a>
-            <?php if ($_SESSION["id"] === $post["user_id"]): ?>
-                <div class="views">
-                    <img src="./assets/eye_icon.svg" alt="eye icon for views count">
-                    <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
-                </div>
-            <?php endif; ?>
-        </div>
-        <div class="post post--single__content">
-            <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
-            <div class="post__info">
-                <h3 class="post__title"><?php echo $post["title"] ?></h3>
-                <?php if (isset($_SESSION["id"])): ?>
-                    <p><?php echo $post["description"] ?></p>
-                    <?php $tags = json_decode($post["tags"]); ?>
-                    <div class="post__info__tags">
-                        <?php foreach ($tags as $t): ?>
-                            <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
-                        <?php endforeach; ?>
+    <div class="single_post">
+        <div class="post--single-detail">                    
+            <div class="post--single__user">
+                <img src="<?php echo $user["profile_image"]; ?>" alt="profile image <?php echo $user["username"]; ?>" class="posts__user__img">
+                <a href="profile.php?id=<?php echo $post["user_id"]; ?>">
+                    <h3><?php echo $user["username"] ?></h3>         
+                </a>
+                <?php if ($_SESSION["id"] === $post["user_id"]): ?>
+                    <div class="views">
+                        <img src="./assets/eye_icon.svg" alt="eye icon for views count">
+                        <span><?php echo Post::getViewsbyPost($_GET["pid"]); ?></span>
                     </div>
-                <?php endif; ?>  
+                <?php endif; ?>
             </div>
+            <div class="post post--single__content">
+                <img src=<?php echo $post["image"] ?> alt=<?php echo $post["title"] ?>>
+                <div class="post__info">
+                    <h3 class="post__title"><?php echo $post["title"] ?></h3>
+                    <?php if (isset($_SESSION["id"])): ?>
+                        <p><?php echo $post["description"] ?></p>
+                        <?php $tags = json_decode($post["tags"]); ?>
+                        <div class="post__info__tags">
+                            <?php foreach ($tags as $t): ?>
+                                <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>  
+                </div>
+            </div>        
         </div>
         <?php if (intval(User::checkban($_SESSION["id"])) === 0): ?>
             <div class="post__comment">
@@ -94,7 +94,7 @@
                                 </a>
                             </div>
 
-                            <div class="comment--right">
+                            <div class="post__comment--right">
                                 <a href="./profile.php?id=<?php echo $comment["user_id"]; ?>">
                                     <?php echo $comment['username']; ?>
                                 </a>
@@ -105,7 +105,7 @@
                 </ul>
             </div>
         <?php endif; ?>
-    </div>
+    </div>    
     <script src="javascript\comments.js"></script>
 </body>
 </html>

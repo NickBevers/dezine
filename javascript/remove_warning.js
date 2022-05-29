@@ -22,9 +22,9 @@ if (agreement_button) {
             }).catch((error) => {
                 console.error("Error:Something has gone wrong  ", error);
             });
-            e.preventDefault();
-        });        
-    }    
+        })
+        e.preventDefault();
+    }
 }
 
 

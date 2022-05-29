@@ -1,13 +1,13 @@
 <?php
-     require __DIR__ . '/vendor/autoload.php';
-     use Dezine\Helpers\Validate;
-     use Dezine\Helpers\Security;
-     use Dezine\Helpers\Cleaner;
-     use Dezine\Auth\User;
-     use Dezine\Content\Post;
-     use Dezine\Content\Showcase;
+    require __DIR__ . '/vendor/autoload.php';
+    use Dezine\Helpers\Validate;
+    use Dezine\Helpers\Security;
+    use Dezine\Helpers\Cleaner;
+    use Dezine\Auth\User;
+    use Dezine\Content\Post;
+    use Dezine\Content\Showcase;
  
-     Validate::start();
+    Validate::start();
 
     if (!Security::isLoggedIn()) {
         header('Location: login.php');
@@ -31,19 +31,9 @@
         header('Location: home.php');
     }
     
-    $postsPerPage = 18;
-    $postCount = Post::getPostsCount();
-    
-    if (isset($_GET["page"]) && $_GET["page"] > 1) {
-        $pageNum  = Cleaner::xss(Cleaner::cleanInput($_GET["page"]));
-        $posts = Post::getPostbyId($profileUser, $pageNum*$postsPerPage, $postsPerPage);
-    } else {
-        $pageNum  = 1;
-        $posts = Post::getPostbyId($profileUser, 0, $postsPerPage);
-    }
+    $posts = Post::getPostbyId($profileUser, 0, 100);
     $posts = Cleaner::xss($posts);
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -72,7 +62,7 @@
                         title="Share by Email" class="btn primary__btn">
                             Share by mail
                     </a>
-                    <button value="https://weared-zine.be/showcase.php?id=<?php echo Cleaner::cleanInput($_GET["id"]); ?>" class="btn primary__btn share__link">Share by link</button>
+                    <button value="https://weared-zine.be/showcase.php?id=<?php echo $id; ?>" class="btn primary__btn share__link">Share by link</button>
                 </div>
             </div>    
             <div class="profile__info-socials">
@@ -122,10 +112,10 @@
                                             <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                                         <?php endforeach; ?>
                                     </div>
-                                    <?php if ($_SESSION["id"] == $_GET["id"]): ?>
+                                    <?php if ($uid == $id): ?>
                                         <div class="post__actions post__actions-showcase"> 
                                             <div class="post__actions-edit">                                          
-                                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($_SESSION["id"]); ?>">
+                                                <a href="edit_post.php?pid=<?php echo($post['id']); ?>&uid=<?php echo($uid); ?>">
                                                     <img class="edit_icon" src="./assets/icon_edit.svg" alt="edit pencil :sparkle:">
                                                 </a>
                                                 <a href="delete_post.php?pid=<?php echo($post['id']); ?>" onclick="return confirm('Are you sure you want to delete this post?');">
@@ -142,14 +132,6 @@
             </div>  
         <?php endif; ?>  
     </section>
-
-    <?php if ($postCount > $postsPerPage): ?>
-        <?php if ($pageNum > 1): ?>
-            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
-        <?php endif; ?>
-        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
-    <?php endif; ?>
-
     <script src="./javascript/showcase.js"></script>
 </body>
 </html>

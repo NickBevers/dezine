@@ -29,14 +29,12 @@
                     "message" => "Dislike was successfull.",
                     "data" => $likes
                 ];
-            }
-            
+            }            
         } catch (Throwable $t) {
             $response = [
                 "status" => "error",
                 "message" => "Something went wrong."
             ];
         }
-
         echo json_encode($response);
     }

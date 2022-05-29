@@ -6,6 +6,7 @@
     use PDO;
     use Error;
     use PHPColorExtractor\PHPColorExtractor;
+    use Exception;
 
     class Post {
         private $title;
@@ -18,47 +19,54 @@
 
         public function getTitle(){return $this->title;}
 
-        public function setTitle($title)
-        {
+        public function setTitle($title){
             $title = Cleaner::cleanInput($title);
-            $this->title = $title;
-            return $this;
+            if(empty($title)){
+                throw new Exception("Your title seems to be missing, please fill in the field.");
+            }else{
+                $this->title = $title;
+                return $this;
+            }
         }
 
         public function getDescription(){return $this->description;}
 
-        public function setDescription($description)
-        {
+        public function setDescription($description){
             $description = Cleaner::cleanInput($description);
-            $this->description = $description;
-            return $this;
+            if(empty($description)){
+                throw new Exception("Your description seems to be missing, please fill in the field.");
+            }else{
+                $this->description = $description;
+                return $this;
+            }
         }
 
         public function getTags(){return $this->tags;}
 
-        public function setTags($tags)
-        {
+        public function setTags($tags){
             $tags = Cleaner::cleanInput($tags);
-            $tags = str_replace(' ', '', $tags);
-            $tags = explode(",", $tags);
-            $this->tags = json_encode($tags);
-            return $this;
+            if(empty($tags)){
+                throw new Exception("Your tags seem to be missing, please fill in the field.");
+            }else{
+                $tags = str_replace(' ', '', $tags);
+                $tags = explode(",", $tags);
+                $this->tags = json_encode($tags);
+                return $this;
+            }
         }
 
         public function getPublic_id(){return $this->public_id;}
 
-        public function setPublic_id($public_id)
-        {
-            // $public_id = Cleaner::cleanInput($public_id);
+        public function setPublic_id($public_id){
+            $public_id = Cleaner::cleanInput($public_id);
             $this->public_id = $public_id;
             return $this;
         }
 
         public function getImage(){return $this->image;}
 
-        public function setImage($image)
-        {
-            // $image = Cleaner::cleanInput($image);
+        public function setImage($image){
+            $image = Cleaner::cleanInput($image);
             $this->image = $image;
             return $this;
         }
@@ -72,7 +80,7 @@
             $colours = [];
             $color_groups = [];
             
-            foreach($palette as $color) {
+            foreach($palette as $color){
                 $hslVal = $this->hexToHsl($color);
                 $color_group = $this->getColorGroupFromColor($hslVal);
                 array_push($color_groups, $color_group);
@@ -89,6 +97,7 @@
         }
 
         public function setColor_groups($color_groups){
+            $color_groups = Cleaner::cleanInput($color_groups);
             $this->color_groups = $color_groups;
             return $this;
         }
@@ -96,7 +105,7 @@
         public static function getPostbyPostId($id){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where id = :post_id");
-            $statement->bindValue('post_id', $id);
+            $statement->bindValue('post_id', Cleaner::cleanInput($id));
             $statement->execute();
             $res = $statement->fetch();
             return $res;
@@ -106,7 +115,7 @@
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into posts (title, user_id, image, public_id, colors, color_group, description, tags, creation_date) values (:title, :user_id, :image, :public_id, :colors, :color_group, :description, :tags, :creation_date);");
             $statement->bindValue(':title', $this->title);
-            $statement->bindValue(':user_id', $user_id);
+            $statement->bindValue(':user_id', Cleaner::cleanInput($user_id));
             $statement->bindValue(':image', $this->image);
             $statement->bindValue(':public_id', $this->public_id);
             $statement->bindValue(':colors', $this->colors);
@@ -115,6 +124,7 @@
             $statement->bindValue(':tags', $this->tags);
             $statement->bindValue(':creation_date', $this->getDateTime());
             $res = $statement->execute();
+            var_dump($res);
             return $res;
         }
 
@@ -138,14 +148,13 @@
             $statement = $conn->prepare("select * from posts order by creation_date $sorting limit $start, $amount");
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-            // var_dump($res);
             return $res;
         }
         
         public static function getFollowedPosts($uid, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount");
-            $statement->bindValue(":user_id", $uid);
+            $statement->bindValue(":user_id", Cleaner::cleanInput($uid));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -154,7 +163,7 @@
         public static function getPostbyId($id, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date desc limit $start, $amount");
-            $statement->bindValue('user_id', $id);
+            $statement->bindValue('user_id', Cleaner::cleanInput($id));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -163,7 +172,7 @@
         public static function getPostsByColor($color, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where color_group like :color order by creation_date desc limit $start, $amount");
-            $statement->bindValue(':color', "%" . $color . "%", PDO::PARAM_STR);
+            $statement->bindValue(':color', "%" . Cleaner::cleanInput($color) . "%", PDO::PARAM_STR);
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -182,7 +191,7 @@
                     $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search order by creation_date desc limit $start, $amount");
                 break;
             }
-            $statement->bindValue(':search', '%' . $search . '%'); //, PDO::PARAM_STR
+            $statement->bindValue(':search', '%' . Cleaner::cleanInput($search) . '%'); //, PDO::PARAM_STR
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $res;
@@ -191,8 +200,8 @@
         public static function getFollowedSearchPosts($uid, $search, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where title like :search or description like :search or tags like :search and where user_id in (select follower_id from follows where user_id = :user_id) order by creation_date desc limit $start, $amount ");
-            $statement->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
-            $statement->bindValue(':user_id', $uid);
+            $statement->bindValue(':search', '%' . Cleaner::cleanInput($search) . '%' , PDO::PARAM_STR);
+            $statement->bindValue(':user_id', Cleaner::cleanInput($uid));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -201,7 +210,7 @@
         public static function deletePostById($postId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("delete from posts where id = :post_id");
-            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
             $statement->execute();
         }
 
@@ -211,7 +220,7 @@
             $statement->bindValue('title', $this->getTitle());
             $statement->bindValue('description', $this->getDescription());
             $statement->bindValue('tags', $this->getTags());
-            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
             $statement->execute();
         }
 
@@ -337,8 +346,8 @@
         public static function addViewbyPost($postId, $userId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("insert into views (user_id, post_id) values (:user_id,:post_id)");
-            $statement->bindValue('user_id', $userId);
-            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('user_id', Cleaner::cleanInput($userId));
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
             $statement->execute();
             // var_dump($statement->execute());
         }
@@ -346,7 +355,7 @@
         public static function getViewsbyPost($postId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from views where post_id = :post_id");
-            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
             $statement->execute();
             $res = $statement->rowCount();
             // var_dump($res + 1);
@@ -356,8 +365,8 @@
         public static function getViewsbyId($userId, $postId){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from views where user_id = :user_id and post_id = :post_id");
-            $statement->bindValue('post_id', $postId);
-            $statement->bindValue('user_id', $userId);
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
+            $statement->bindValue('user_id', Cleaner::cleanInput($userId));
             $statement->execute();
             $res = $statement->fetch();
             // var_dump($res);
@@ -369,6 +378,16 @@
             $statement = $conn->prepare("select * from posts");
             $statement->execute();
             $res = $statement->fetchAll();
+            return $res;
+        }
+
+        public static function getPostsCountbyId($uid){
+            $conn = DB::getInstance();
+            $statement = $conn->prepare("select * from posts order by creation_date where user_id = :user_id");
+            $statement->bindValue('user_id', Cleaner::cleanInput($uid));
+            $statement->execute();
+            // $res = $statement->fetchAll();
+            $res = $statement->rowCount();
             return $res;
         }
     }

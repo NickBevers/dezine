@@ -58,22 +58,24 @@
 
       <?php if ($returned): ?>
         <form action="" method="post" class="form form--profile">
-          <h2>Reset password</h2>
-          <input type="hidden" name="email" value="<?php echo $returned;?>">
-          <!-- <input type="hidden" name="reset_link_token" value="<//?php echo $tok;?>"> -->
+            <h2>Reset password</h2>
+            <input type="hidden" name="email" value="<?php echo $returned;?>">
+            <!-- <input type="hidden" name="reset_link_token" value="<//?php echo $tok;?>"> -->
 
-          <div class="form__field">
-              <label for="exampleInputPassword1" class="form-label">New Password</label>
-              <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
-              <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
-          </div>
-          <div class="form__field">
-              <label for="password_conf" class="form-label">Password confirmation</label>
-              <input type="password" name="password_conf" class="form-control" id="password_conf">
-              <div id="passwordHelp" class="form-text">Passwords must match password above</div>
-          </div>
-          
-          <button type="submit" class="btn secondary__btn secondary__btn-signup">Reset password</button>
+            <div class="form__field">
+                <label for="password" class="form-label">New Password</label>
+                <input type="password" name="new_password" class="form-control">
+                <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
+            </div>
+            <div class="form__field">
+                <label for="password_conf" class="form-label">Password confirmation</label>
+                <input type="password" name="password_conf" class="form-control" id="password_conf">
+                <div id="passwordHelp" class="form-text">Passwords must match password above</div>
+            </div>
+
+            <div class="form__field">
+                <button type="submit" class="btn secondary__btn secondary__btn-signup">Reset password</button>
+            </div>
         </form>
         <?php endif; ?>
     </main>

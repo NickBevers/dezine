@@ -22,7 +22,6 @@
                 "status" => "error",
                 "message" => "Something went wrong. $t"
             ];
-        }
-    
+        }    
         echo json_encode($response);
     }

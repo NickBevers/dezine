@@ -1,7 +1,6 @@
 let report_input = document.querySelector("#reason");
 
 document.querySelector("#btn__add__Report").addEventListener("click", function () {
-
     let post_id = this.dataset.post_id;
     let user_id = this.dataset.user_id;
     let reported_user_id = this.dataset.reported_user_id;
@@ -18,24 +17,17 @@ document.querySelector("#btn__add__Report").addEventListener("click", function (
     let form__report__message = document.getElementById("form__report__message");
     let btn__add__Report = document.getElementById("btn__add__Report");
     let form__report__reason = document.getElementById("form__report__reason");
+    let report_h2 = document.querySelector(".form--report_h2");
 
     if (document.getElementById('reason').validity.valid) {
-
-       
-
-        console.log("er is een reden megegeven")
-
+        // console.log("er is een reden megegeven")
         fetch("ajax/ajax_report.php", {
-
                 method: "POST",
                 body: formData
-            })
-
-            .then(response => response.json())
+            }).then(response => response.json())
             .then(result => {
-
                 if (result.status === "success") {
-                    console.log(result)
+                    // console.log(result)
                 };
 
                 btn__add__Report.style.display = "none";
@@ -47,23 +39,21 @@ document.querySelector("#btn__add__Report").addEventListener("click", function (
                 document.querySelector("#form__report__reason__body").appendChild(newReason);
                 let homeButton = document.createElement("a");
                 var link = document.createTextNode("back to home");
+                homeButton.classList.add("btn");
+                homeButton.classList.add("secondary__btn");
                 homeButton.appendChild(link);
                 // Set the title.
                 homeButton.title = "Back to Home";
                 // Set the href property.
                 homeButton.href = "home.php";
-
                 document.querySelector("#report__button").appendChild(homeButton);
-
-            })
-
-            .catch(error => {
+                
+                report_h2.style.display = "none";
+                document.querySelector(".form--profile").style.backgroundColor = "#fafafa";
+            }).catch(error => {
                 console.error('Error:', error);
             });
-    } 
-
-    else {
+    } else {
         form__report__error.style.display = "block";
     };
-
 });
