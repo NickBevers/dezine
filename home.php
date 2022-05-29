@@ -101,28 +101,30 @@
 <body>
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <div class="search">
-        <?php if (isset($_SESSION['id'])): ?>
-            <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-            <h3>Search in hundreds of projects:</h3>
-        <?php endif; ?>
-        
-        <section class="search_box">
-            <form action="" method="GET">
-                <input type="text" name="search" placeholder="Search here..." required="required" />
-                <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
-            </form>
+        <div class="welcome-search">
+            <?php if (isset($_SESSION['id'])): ?>
+                <div>                    
+                    <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
+                    <h3>Search in hundreds of projects:</h3>
+                </div>
+            <?php endif; ?>        
+            <section class="search_box">
+                <form action="" method="GET">
+                    <input type="text" name="search" placeholder="Search here..." required="required" />
+                    <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
+                </form>
 
-            <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-                <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-                <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-                <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
-            </select>
+                <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
+                    <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+                    <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+                    <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
+                </select>
 
-            <?php if (!empty($_GET["search"])): ?>
-                <a class="search__cross" href="home.php">X</a>
-            <?php endif; ?>
-        </section>
-
+                <?php if (!empty($_GET["search"])): ?>
+                    <a class="search__cross" href="home.php">X</a>
+                <?php endif; ?>
+            </section>
+        </div>        
         <section class="tags">
             <h3>Most used tags:</h3>
             <ul>
@@ -134,10 +136,7 @@
         <?php if (isset($_GET["color"])): ?>
             <a href="home.php">Reset Color filter</a>
         <?php endif; ?>
-
     </div>
-    
-
     <section class="posts">
     <?php if (empty($posts)): ?>
         <div class="showcase__empty">
