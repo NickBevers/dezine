@@ -7,16 +7,17 @@
     if (!empty($_POST)) {
         if (Validate::isNotEmpty($_POST['email'])) {
             $emailId = $_POST['email'];
-            // echo $emailId;
             try {
                 $reset = new Reset();
                 $reset->setEmail($emailId);
                 $message = $reset->resetMail();
-                $message = Cleaner::xss($message);
+                $message = Cleaner::xss($message);             
             } catch (Throwable $e) {
                 $error = $e->getMessage();
                 $error = Cleaner::xss($error);
             }
+        } else{
+            $error = "Please fill in your email adress to receive a password reset link";
         }
     }
 ?><!DOCTYPE html>

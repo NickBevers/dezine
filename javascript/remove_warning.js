@@ -24,8 +24,8 @@ if (agreement_button) {
                 console.error("Error: rfeffefrefefefeferfefe ", error);
             });
         })
+        e.preventDefault();
     }
-    e.preventDefault();
 }
 
 
