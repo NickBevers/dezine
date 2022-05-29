@@ -15,6 +15,13 @@ footer {
     position: relative;
 }
 
+.pager{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+}
+
 @media (max-height: 768px) {
     footer{
         bottom: 0;

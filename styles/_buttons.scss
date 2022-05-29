@@ -96,6 +96,18 @@
     }
 }
 
+.page__btn{
+    border: 3px solid $accent;
+    padding: 0.4rem 0.6rem;
+    color: $accent;
+    // margin: 0 2rem;
+
+    &:hover{
+        border: 3px solid $primary;
+        color: $primary;
+    }
+}
+
 @media (max-width: 1180px) and (min-width: 950px) {
     .nav--right a {
         padding: 0.5rem;

@@ -1,11 +1,11 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
-    use Dezine\Helpers\Validate;
-    use Dezine\Helpers\Security;
-    use Dezine\Helpers\Cleaner;
-    use Dezine\Auth\User;
-    use Dezine\Content\Post;
-    use Dezine\Actions\Like;
+    use \Dezine\Helpers\Validate;
+    use \Dezine\Helpers\Security;
+    use \Dezine\Helpers\Cleaner;
+    use \Dezine\Auth\User;
+    use \Dezine\Content\Post;
+    use \Dezine\Actions\Like;
 
     Validate::start();
 
@@ -99,25 +99,27 @@
 </head>
 <body>
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    <div class="welcome-search">
-            <?php if (isset($_SESSION['id'])): ?>
-                <div>                    
-                    <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-                </div>
-            <?php endif; ?>
-        
-        <section class="search_box">
-            <form action="" method="GET">
-                <input type="text" name="search" placeholder="Search here..." required="required" />
-                <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
-            </form>
+    <div class="search">
+        <div class="welcome-search">
+                <?php if (isset($_SESSION['id'])): ?>
+                    <div>                    
+                        <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
+                    </div>
+                <?php endif; ?>
+            
+            <section class="search_box">
+                <form action="" method="GET">
+                    <input type="text" name="search" placeholder="Search here..." required="required" />
+                    <button type="submit" ><img src="assets\icon_search.svg" alt="search"></button>
+                </form>
 
-            <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-                <option value="date_desc"  <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-                <option value="date_asc" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-                <option value="following" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'following'):?>selected="selected"<?php endif;?>>following</option>
-            </select>
-        </section> 
+                <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
+                    <option value="date_desc"  <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+                    <option value="date_asc" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+                    <option value="following" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'following'):?>selected="selected"<?php endif;?>>following</option>
+                </select>
+            </section> 
+        </div>
         <section class="tags">
             <h3>Most used tags:</h3>
             <ul>
@@ -248,12 +250,14 @@
     <?php endforeach; ?>
     </section>
 
-    <?php if ($postCount > $postsPerPage): ?>
-        <?php if ($pageNum > 1): ?>
-            <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
+    <section class="pager">
+        <?php if ($postCount > $postsPerPage): ?>
+            <?php if ($pageNum > 1): ?>
+                <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page btn page__btn">Previous page</a>
+            <?php endif; ?>
+                <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page btn page__btn">Next page</a>
         <?php endif; ?>
-            <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
-    <?php endif; ?>
+    </section>    
     <script src="./javascript/like.js"></script>
     <script src="./javascript/feedSort.js"></script>
     <script src="./javascript/flag.js"></script>

@@ -431,6 +431,19 @@ footer {
   position: relative;
 }
 
+.pager {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-bottom: 3rem;
+}
+
 @media (max-height: 768px) {
   footer {
     bottom: 0;
@@ -797,6 +810,17 @@ footer {
   background-color: #120CFF;
   color: #ffffff;
   cursor: pointer;
+}
+
+.page__btn {
+  border: 3px solid #120CFF;
+  padding: 0.4rem 0.6rem;
+  color: #120CFF;
+}
+
+.page__btn:hover {
+  border: 3px solid #FCD7F7;
+  color: #FCD7F7;
 }
 
 @media (max-width: 1180px) and (min-width: 950px) {
