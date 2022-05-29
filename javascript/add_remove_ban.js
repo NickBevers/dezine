@@ -10,6 +10,8 @@ document.querySelector(".unban").addEventListener("click", e => {
 
 function addRemoveBan(e) {
     // console.log("clicked");
+    let id = e.target.dataset.id;
+    // console.log(id);
     let data = new FormData();
     data.append("id", id);
     data.append("ban", "banUser");
