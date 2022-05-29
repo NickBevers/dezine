@@ -190,6 +190,14 @@
     }
 }
 
+.post__info__report{
+    img{
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+}
+
 @media (max-width: 1116px) and (min-width: 768px) {
     .posts{
         grid-template-columns: 1fr 1fr;

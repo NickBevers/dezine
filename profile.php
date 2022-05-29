@@ -271,16 +271,16 @@
                                     <img class="trash_icon" src="./assets/icon_trash.svg" alt="trash can">
                                 </a>      
                             <?php endif; ?>
+                            <?php if ($uid !== $gid): ?>
+                                <div class="post__info__report">
+                                    <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                                        <img src="./assets/report_icon.svg" alt="report user icon" class="report_icon">
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                         </div>          
                     <?php endif; ?>
-                </div>
-                <?php if ($uid !== $gid): ?>
-                <div class="profile__info__report">
-                    <a href="new_report.php?postid=<?php echo $post['id']; ?>">
-                        <h3>Report post</h3>
-                    </a>
-                </div>
-                <?php endif; ?>
+                </div>                
             </div>
         </div>
         <?php endforeach; ?>
@@ -295,6 +295,7 @@
     <script src="./javascript/like.js"></script>
     <script src="./javascript/showcase.js"></script>
     <script src="./javascript/remove_warning.js"></script> 
+    <script src="./javascript/flag.js"></script>
 </body>
 <?php if (!empty($gid) && $gid !== $uid): ?>
     <script src="./javascript/follow_unfollow.js"></script>
