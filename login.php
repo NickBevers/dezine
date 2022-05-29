@@ -6,7 +6,7 @@
 
     if (Security::isLoggedIn()) {header('Location: home.php');}
     
-    if (!empty($_POST)) {
+    if (!empty($_POST)){
         $email = $_POST["email"];
         $password = $_POST["password"];
         try {
@@ -21,9 +21,9 @@
                 $_SESSION['id'] = $usr["id"];
 				$userId = $usr["id"];
 				if(User::checkWarning($userId)){
-				header("Location: profile.php");
+					header("Location: profile.php");
 				} else{
-				header("Location: home.php");
+					header("Location: home.php");
 				}                
             }
         } catch (Exception $e) {
@@ -47,19 +47,19 @@
 		<div class="alert alert-danger"><?php echo $error; ?></div>
 		<?php endif; ?>
 
-		<form method="post" action class="form form--profile">
+		<form method="post" action="" class="form form--profile">
 			<h2>Login</h2>
 			<div class="form__field">
-				<label for="exampleInputEmail1" class="form-label">Email address</label>
-				<input name="email" placeholder="Email" type="email" class="form-control register--email" required />
+				<label for="email" class="form-label">Email address</label>
+				<input name="email" placeholder="Email" type="text" class="form-control register--email" />
 				<div id="passwordHelp" class="form-text">Please login with your Thomas More email</div>
 			</div>
 			<div class="form__field">
-				<label for="exampleInputPassword1" class="form-label">Password</label>
-				<input name="password" placeholder="Password" type="password" class="form-control" required />
+				<label for="password" class="form-label">Password</label>
+				<input name="password" placeholder="Password" type="password" class="form-control" />
 				<div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
 			</div>
-			<div class="form__submit">
+			<div class="form__submit form__field">
 				<button type="submit" class="btn secondary__btn secondary__btn-signup">Login</button>
 				<a href="reset.php" class="btn secondary__btn-reverse secondary__btn-signup">Forgot password?</a>
 			</div>

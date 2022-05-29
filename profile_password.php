@@ -6,9 +6,7 @@
 
     Validate::start();
 
-    if (!Security::isLoggedIn()) {
-        header('Location: login.php');
-    }
+    if (!Security::isLoggedIn()) {header('Location: login.php');}
 
     if (!empty($_POST)) {
         $c_password = $_POST["c_password"];
@@ -36,8 +34,7 @@
             $error = "Please fill in all fields of the form";
         }
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,16 +56,16 @@
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> class="form form--register">
+            <form method="post" action="" class="form form--register">
             <h2>Change password</h2>
                 <div class="form__field">
-                    <label for="exampleInputUsername1" class="form-label">Current Password</label>
-                    <input type="password" name="c_password" class="form-control" id="exampleInputUsername1">
+                    <label for="c_password" class="form-label">Current Password</label>
+                    <input type="password" name="c_password" class="form-control">
                 </div>
 
                 <div class="form__field">
-                    <label for="exampleInputPassword1" class="form-label">New Password</label>
-                    <input type="password" name="new_password" class="form-control" id="exampleInputPassword1">
+                    <label for="password" class="form-label">New Password</label>
+                    <input type="password" name="new_password" class="form-control">
                     <div id="passwordHelp" class="form-text">Passwords must be at least 6 characters long</div>
                 </div>
 
@@ -78,7 +75,9 @@
                     <div id="passwordHelp" class="form-text">Passwords must match password above</div>
                 </div>
                 
-                <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
+                <div class="form__field">
+                    <button type="submit" class="btn secondary__btn secondary__btn-signup">Change password</button>
+                </div>
             </form>
         </main>
     </body>    

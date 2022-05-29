@@ -13,6 +13,7 @@ $black: #000000;
 $grey: rgb(102, 101, 101);
 $lightgrey: #a4a3a3;
 $lightergrey: #d5d5d5;
+$primary-light: #FEEDFB;
 
 $font-weight-thin: 300;
 $font-weight-bold: 700;
@@ -37,24 +38,36 @@ h1{
     color: $accent;
     font-weight: $font-weight-extrabold;
     font-size: $font-size-xxl;
+    font-family: museo-sans, sans-serif;
 }
 
 h2{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-md;
+    font-family: museo-sans, sans-serif;
 }
 
 h3{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-sm;
+    font-family: museo-sans, sans-serif;
 }
 
 h4{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-xs;
+    font-family: museo-sans, sans-serif;
+}
+
+p{
+    font-family: museo-sans, sans-serif;
+}
+
+a{
+    font-family: museo-sans, sans-serif;
 }
 
 .hidden{

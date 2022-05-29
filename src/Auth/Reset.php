@@ -30,7 +30,6 @@
             return $this->token;
         }
 
-
         public function resetMail(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
@@ -63,22 +62,22 @@
                 $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
                 $body = [
                     'Messages' => [
-                    [
-                        'From' => [
-                        'Email' => "dezine@nickbevers.be",
-                        'Name' => "D-zine"
-                        ],
-                        'To' => [
                         [
-                            'Email' => $this->email,
-                            'Name' => $result["username"]
+                            'From' => [
+                                'Email' => "dezine@nickbevers.be",
+                                'Name' => "D-zine"
+                            ],
+                            'To' => [
+                                [
+                                    'Email' => $this->email,
+                                    'Name' => $result["username"]
+                                ]
+                            ],
+                            'Subject' => "D-zine password reset.",
+                            'TextPart' => "Password reset",
+                            'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
+                            'CustomID' => "PWReset"
                         ]
-                        ],
-                        'Subject' => "D-zine password reset.",
-                        'TextPart' => "Password reset",
-                        'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
-                        'CustomID' => "PWReset"
-                    ]
                     ]
                 ];
 
@@ -119,22 +118,20 @@
         }
 
         public static function resetPassword($email, $new_password){
-            if(strlen($new_password) < self::PASSWORD_MIN_LENGTH){
+            if(strlen(Cleaner::cleanInput($new_password)) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             } else{
                 $options = [
                 'cost' => 15
                 ];
-                $n_password = password_hash($new_password, PASSWORD_DEFAULT, $options);
+                $n_password = password_hash(Cleaner::cleanInput($new_password), PASSWORD_DEFAULT, $options);
                 $conn = DB::getInstance();
                 $statement = $conn->prepare("update users set password= :password, reset_token= :reset_token, exp_token= :exp_token where email= :email");
                 $statement->bindValue(':password', $n_password);
                 $statement->bindValue(":reset_token", NULL);
                 $statement->bindValue(":exp_token", NULL);
-                $statement->bindValue(':email', $email);
+                $statement->bindValue(':email', Cleaner::cleanInput($email));
                 $statement->execute();
-
-                // $result = $statement->fetch();
             }
         }
     }

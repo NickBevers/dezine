@@ -1,6 +1,7 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
     use Dezine\Auth\User;
+    use Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         $id = $_POST['id'];
@@ -9,21 +10,17 @@
         }elseif(intval(User::checkBan($id)) === 1){
             $message = User::removeBan($id);
         }
-
         
         if(isset($message)){
             $response = [
                 "status" => "success",
-                "message" => $message
+                "message" => Cleaner::xss($message)
             ];
-            echo json_encode($response);
-
         } else{
             $response = [
                 "status" => "error",
                 "message" => "Something has gone wrong, our apologies."
             ];
-            echo json_encode($response);
-        }
-        
+        }        
+        echo json_encode($response);
     }

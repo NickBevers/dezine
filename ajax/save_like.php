@@ -1,6 +1,7 @@
 <?php
     require __DIR__ . '/../vendor/autoload.php';
     use Dezine\Actions\Like;
+    use Dezine\Helpers\Cleaner;
 
     if (!empty($_POST)) {
         $postId = $_POST['postId'];
@@ -17,7 +18,7 @@
                 $response = [
                     "status" => "success",
                     "message" => "Like was successfull.",
-                    "data" => $likes
+                    "data" => Cleaner::xss($likes)
                 ];
             }
             else{
@@ -29,14 +30,12 @@
                     "message" => "Dislike was successfull.",
                     "data" => $likes
                 ];
-            }
-            
+            }            
         } catch (Throwable $t) {
             $response = [
                 "status" => "error",
                 "message" => "Something went wrong."
             ];
         }
-
         echo json_encode($response);
     }

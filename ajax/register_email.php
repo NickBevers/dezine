@@ -13,13 +13,11 @@
                 "status" => "success",
                 "message" => "this email is available."
             ];
-            echo json_encode($response);
         } else{
             $response = [
                 "status" => "error",
                 "message" => "this email is already in use."
             ];
-            echo json_encode($response);
         }
-        
+        echo json_encode($response);        
     }

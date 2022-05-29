@@ -23,6 +23,7 @@
 
 .post--index{
     margin-top: 2rem;
+    height: 400px;
 }
 
 .post--index__image{
@@ -153,6 +154,10 @@
 .posts__user__name {
     display: flex;
     flex-direction: row;
+
+    h3:hover{
+        text-decoration: underline solid $accent;
+    }
 }
 
 .posts__user__verified {
@@ -181,6 +186,14 @@
     img{
         width: 20px;
         height: 20px;
+        object-fit: contain;
+    }
+}
+
+.post__info__report{
+    img{
+        width: 30px;
+        height: 30px;
         object-fit: contain;
     }
 }

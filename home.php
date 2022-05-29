@@ -19,7 +19,7 @@
     if (empty($_GET["page"])) {
         $pageNum = 0;
     } else {
-        $pageNum  = Cleaner::xss($_GET["page"]);
+        $pageNum  = Cleaner::cleanInput($_GET["page"]);
     }
 
     if (isset($_GET['sort'])) {
@@ -45,19 +45,18 @@
         $sorting = 'desc';
     }
     if (!empty($_GET["search"]) && $sorting !== "follow") {
-        $search_term = Cleaner::xss($_GET["search"]);
+        $search_term = Cleaner::cleanInput($_GET["search"]);
         if (isset($_GET["page"]) && $_GET["page"] > 1) {
-            $pageNum  = Cleaner::xss($_GET["page"]);
+            $pageNum  = Cleaner::cleanInput($_GET["page"]);
             $posts = Post::getSearchPosts($search_term, $sorting, $pageNum*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
-
             $posts = Post::getSearchPosts($search_term, $sorting, 0, $postsPerPage);
             // weet niet of dit de juiste manier is voor melding waneer er geen posts verzonden zijn
         };
     } elseif (!empty($_GET["search"]) && $sorting === "follow") {
-        $search_term = Cleaner::xss($_GET["search"]);
-        if (isset($_GET["page"]) && $_GET["page"] > 1) {
+        $search_term = Cleaner::cleanInput($_GET["search"]);
+        if (isset($_GET["page"]) && Cleaner::cleanInput($_GET["page"]) > 1) {
             $pageNum  = $_GET["page"];
             $posts = Post::getFollowedSearchPosts($uid, $search_term, $pageNum*$postsPerPage, $postsPerPage);
         } else {
@@ -66,11 +65,11 @@
         };
     } else {
         if (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting !== "follow") {
-            $pageNum  = $_GET["page"];
-            $posts = Post::getSomePosts($sorting, $pageNum*$postsPerPage, $postsPerPage);
-        } elseif (isset($_GET["page"]) && $_GET["page"] > 1 && $sorting === "follow") {
-            $pageNum  = $_GET["page"];
-            $posts = Post::getFollowedPosts($uid, $sorting, $pageNum*$postsPerPage, $postsPerPage);
+            $pageNum  = Cleaner::cleanInput($_GET["page"]);
+            $posts = Post::getSomePosts($sorting, (intval($pageNum) - 1)*$postsPerPage, $postsPerPage);
+        } else if (isset($_GET["page"]) && Cleaner::cleanInput($_GET["page"]) > 1 && $sorting === "follow") {
+            $pageNum  = Cleaner::cleanInput($_GET["page"]) - 1;
+            $posts = Post::getFollowedPosts($uid, $sorting, (intval($pageNum) - 1)*$postsPerPage, $postsPerPage);
         } else {
             $pageNum  = 1;
             if ($sorting !== "follow") {
@@ -87,9 +86,7 @@
     }
 
     $mostUsedTags = Post::getMostUsedTags();
-
     $posts = Cleaner::xss($posts);
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,11 +99,12 @@
 </head>
 <body>
 <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
-    <div class="search">
-        <?php if (isset($_SESSION['id'])): ?>
-            <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
-            <h3>Search in hundreds of projects:</h3>
-        <?php endif; ?>
+    <div class="welcome-search">
+            <?php if (isset($_SESSION['id'])): ?>
+                <div>                    
+                    <h1> Welcome <?php echo User::getUserNamebyId($_SESSION['id'])["username"]; ?> <img src="assets\eye_icon.svg" alt="eye icon"></h1>
+                </div>
+            <?php endif; ?>
         
         <section class="search_box">
             <form action="" method="GET">
@@ -115,52 +113,46 @@
             </form>
 
             <select name="sort" id="feedSort" class="feedSort" onchange="sort(this.value)">
-                <option value="date_desc"  <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
-                <option value="date_asc" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
-                <option value="following" <?php if (isset($_GET["sort"]) && $_GET['sort'] === 'following'):?>selected="selected"<?php endif;?>>following</option>
+                <option value="date_desc"  <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_desc'|| !isset($_GET["sort"])):?>selected="selected"<?php endif;?>>Date (newest first)</option>
+                <option value="date_asc" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'date_asc'):?>selected="selected"<?php endif;?>>Date (oldest first)</option>
+                <option value="following" <?php if (isset($_GET["sort"]) && Cleaner::cleanInput($_GET['sort']) === 'following'):?>selected="selected"<?php endif;?>>following</option>
             </select>
-
-            <?php if (!empty($_GET["search"])): ?>
-                <a class="search__cross" href="home.php">X</a>
-            <?php endif; ?>
-        </section>
-
+        </section> 
         <section class="tags">
             <h3>Most used tags:</h3>
             <ul>
                 <?php foreach($mostUsedTags as $key => $tag): ?>
                     <button class="tags__buttons"><a href="home.php?search=<?php echo $key; ?>">#<?php echo $key; ?></a></button>
                 <?php endforeach; ?>
-            </ul>
-        </section>
-        <?php if (isset($_GET["color"])): ?>
-            <a href="home.php">Reset Color filter</a>
-        <?php endif; ?>
-
+                <?php if (isset($_GET["color"])): ?>
+                    <button class="tags__buttons" id="color-filter"><a href="home.php">Reset color filter X</a></button>
+                <?php endif; ?>
+                <?php if (!empty($_GET["search"])): ?>
+                    <button class="tags__buttons" id="color-filter"><a href="home.php">Reset search X</a></button>
+                <?php endif; ?> 
+            </ul>   
+        </section>     
     </div>
-    
-
     <section class="posts">
     <?php if (empty($posts)): ?>
         <div class="showcase__empty">
-            <h2 class="showcase__title-h2">There are no posts yet!</h2>
+            <h2 class="showcase__title-h2">There are no posts about this topic yet!</h2>
             <div class="showcase__empty-message">
-                <a class="btn primary__btn" href="new_post.php">Add posts to your profile</a>  
+                <a class="btn primary__btn" href="new_post.php">Add the first one</a>  
             </div>
         </div>
     <?php endif; ?>
     <?php foreach ($posts as $post): ?>
         <div class="posts__bkg">                
             <div class="posts__user">
-                <?php $user = User::getUserbyId($post["user_id"]); ?>
+                <?php $user = Cleaner::xss(User::getUserbyId($post["user_id"])); ?>
                 <img src="<?php echo $user["profile_image"]; ?>" class="posts__user__img"  alt="profile image <?php echo $user["username"]; ?>">
                 <a href="profile.php?id=<?php echo $post["user_id"]; ?>" class="posts__user__name">
                     <h3><?php echo $user["username"] ?></h3>
-                    <?php if ($user["user_role"] !== "user" && User::checkUserRole($uid) !== "user"): ?>
+                    <?php if ($user["user_role"] !== "user" && Cleaner::xss(User::checkUserRole($uid) !== "user")): ?>
                         <img src="assets\icon_check.svg" class="posts__user__verified" alt="verified icon">    
                     <?php endif; ?>
                 </a>
-
             </div>               
             <div class="post">
                 <a class="post__link" href="detailsPost.php?pid=<?php echo $post["id"];?>">
@@ -184,67 +176,86 @@
                                 <p><?php echo "#"; echo $t; echo "&nbsp"; ?></p>
                             <?php endforeach; ?>
                         </div>
-                  
-                          <?php if ($_SESSION["id"] != $post["user_id"]): ?>
-
-                            <div class="post__info__report">
-                            <a href="new_report.php?postid=<?php echo $post['id']; ?>">
-                            <h3>Report post</h3>
-                            </a>
-                            </div>
-                            <?php endif; ?> 
                     <?php endif; ?>  
                     <?php $pid = $post["id"]; ?>
-                    <?php if (User::checkban($_SESSION["id"]) === "0"): ?>
-                        <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
-                        <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
-                            <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
-                            <?php if ($uid === $post["user_id"]): ?>
-                            <?php if (Like::getLikes($pid) === 0): ?>
-                                <span class="likes_count">No one likes this yet</span>
-                            <?php else: ?>
-                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
-                            <?php endif; ?>
-                            <?php endif; ?>
+                    <?php if (Cleaner::xss(User::checkban($_SESSION["id"])) === "0"): ?>
+                        <div class="post__actions">
+                            <div>
+                                <?php if (Like::getLikesbyPostandUser($pid, $uid)): ?>
+                                <div class="like hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
+                                    <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
+                                    <?php if ($uid === $post["user_id"]): ?>
+                                        <?php if (Cleaner::xss(Like::getLikes($pid)) === 0): ?>
+                                            <span class="likes_count">No one likes this yet</span>
+                                        <?php elseif (Like::getLikes($pid) > 1): ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
+                                        <?php else: ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="liked" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
+                                    <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
+                                    <?php if ($uid === $post["user_id"]): ?>
+                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                            <span class="likes_count">No one likes this yet</span>
+                                        <?php elseif (Like::getLikes($pid) > 1): ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
+                                        <?php else: ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <?php else: ?>
+                                <div class="like" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
+                                    <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
+                                    <?php if ($uid === $post["user_id"]): ?>
+                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                            <span class="likes_count">No one likes this yet</span>
+                                        <?php elseif (Like::getLikes($pid) > 1): ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
+                                        <?php else: ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="liked hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
+                                    <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
+                                    <?php if ($uid === $post["user_id"]): ?>
+                                        <?php if (Like::getLikes($pid) === 0): ?>
+                                            <span class="likes_count">No one likes this yet</span>
+                                        <?php elseif (Like::getLikes($pid) > 1): ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> users like this</span>
+                                        <?php else: ?>
+                                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> user likes this</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
+                            </div>                                          
+                            <?php if ($_SESSION["id"] != $post["user_id"]): ?>
+                                <div class="post__info__report">
+                                    <a href="new_report.php?postid=<?php echo $post['id']; ?>">
+                                        <img src="./assets/report_icon.svg" alt="report user icon" class="report_icon">
+                                    </a>
+                                </div>
+                            <?php endif; ?> 
                         </div>
-                        <div class="liked" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
-                            <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
-                            <?php if ($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
-                            <?php endif; ?>
-                        </div>
-                        <?php else: ?>
-                        <div class="like" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
-                            <p class="like__text"><img src="./assets/like_empty_icon.svg" alt="Like heart"> Like</p>
-                            <?php if ($uid === $post["user_id"]): ?>
-                            <?php if (Like::getLikes($pid) === 0): ?>
-                                <span class="likes_count">No one likes this yet</span>
-                            <?php else: ?>
-                                <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
-                            <?php endif; ?>
-                            <?php endif; ?>
-                        </div>
-                        <div class="liked hidden" data-id="<?php echo $pid; ?>" data-uid="<?php echo $uid; ?>">
-                            <p class="liked__text"><img src="./assets/like_full_icon.svg" alt="Like heart"> Liked</p>
-                            <?php if ($uid === $post["user_id"]): ?>
-                            <span class="likes_count"><?php echo Like::getLikes($pid); ?> people like this</span>
-                            <?php endif; ?>
-                        </div>
-                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>  
         </div>            
     <?php endforeach; ?>
+    </section>
 
     <?php if ($postCount > $postsPerPage): ?>
         <?php if ($pageNum > 1): ?>
             <a href="home.php?page=<?php echo $pageNum-1 ?>" class="next_page">Previous page</a>
         <?php endif; ?>
-        <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
+            <a href="home.php?page=<?php echo $pageNum+1 ?>" class="next_page">Next page</a>
     <?php endif; ?>
-    </section>
     <script src="./javascript/like.js"></script>
     <script src="./javascript/feedSort.js"></script>
+    <script src="./javascript/flag.js"></script>
 </body>
 </html>
