@@ -9,8 +9,7 @@
 
         public function getPostId(){return $this->postId;}
 
-        public function setPostId($postId)
-        {
+        public function setPostId($postId){
             $postId = Cleaner::cleanInput($postId);
             $this->postId = $postId;
             return $this;
@@ -18,8 +17,7 @@
 
         public function getUserId(){return $this->userId;}
 
-        public function setUserId($userId)
-        {
+        public function setUserId($userId){
             $userId = Cleaner::cleanInput($userId);
             $this->userId = $userId;
             return $this;

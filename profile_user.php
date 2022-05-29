@@ -24,48 +24,51 @@
         $website = $_POST['website'];
         $instagram = $_POST['instagram'];
         $github = $_POST['github'];
-        $second_email = $_POST['second_email'];
+        $second_email = $_POST['second_email'];        
         
         try {
-            $user->setEmail($email);
-            $user->setUsername($username);
-            $user->setEducation($education);
-            $user->setBio($bio);
-            $user->setLinkedin($linkedin);
-            $user->setWebsite($website);
-            $user->setInstagram($instagram);
-            $user->setGithub($github);
-            $user->setSecondEmail($second_email);
+            if(empty($username)) {
+                $error = "Username cannot be empty";
+            } else{
+                $user->setEmail($email);
+                $user->setUsername($username);
+                $user->setEducation($education);
+                $user->setBio($bio);
+                $user->setLinkedin($linkedin);
+                $user->setWebsite($website);
+                $user->setInstagram($instagram);
+                $user->setGithub($github);
+                $user->setSecondEmail($second_email);
 
-            $default_image = "assets/default_profile_image.png";
-            if (isset($_POST['checkbox_name'])) {
-                $user->setProfileImage($default_image);
-            } else {
-                if ($_FILES['profile_image']['size'] == 0) {
-                    $profile_image = $users["profile_image"];
-                    $user->setProfileImage($profile_image);
+                $default_image = "assets/default_profile_image.png";
+                if (isset($_POST['checkbox_name'])) {
+                    $user->setProfileImage($default_image);
                 } else {
-                    $image = UploadImage::getImageData($_FILES["profile_image"]["name"], $_FILES["profile_image"]["tmp_name"], $_SESSION["id"]);
-                    $uploadedFile = UploadImage::uploadProfilePic($image);
-                    if($uploadedFile){unlink($image);}
-                    $user->setProfileImage($uploadedFile["secure_url"]);
-                    $user->setProfileImagePublicId($uploadedFile["public_id"]);
+                    if ($_FILES['profile_image']['size'] == 0) {
+                        $profile_image = $users["profile_image"];
+                        $user->setProfileImage($profile_image);
+                    } else {
+                        $image = UploadImage::getImageData($_FILES["profile_image"]["name"], $_FILES["profile_image"]["tmp_name"], $_SESSION["id"]);
+                        $uploadedFile = UploadImage::uploadProfilePic($image);
+                        if($uploadedFile){unlink($image);}
+                        $user->setProfileImage($uploadedFile["secure_url"]);
+                        $user->setProfileImagePublicId($uploadedFile["public_id"]);
+                    }
                 }
-            }
 
-            $users = $user->updateUser();
-            if ($users) {
-                // header("Refresh:0");
-                $success = "Your profile was successfully updated";
-            } else {
-                $error = "Something has gone wrong, please try again.";
+                $users = $user->updateUser();
+                if ($users) {
+                    $success = "Your profile was successfully updated";
+                } else {
+                    $error = "Something has gone wrong, please try again.";
+                }
             }
         } catch (Throwable $error) {
             $error = $error->getMessage();
-        }
+        }             
+        $users = User::getUser($email);
     }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

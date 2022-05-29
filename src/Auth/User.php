@@ -22,32 +22,35 @@
         //second email
         private $second_email;
         const PASSWORD_MIN_LENGTH = 6;
-        //role
-        private $role;
 
         public function getUsername(){return $this->username;}
 
-        public function setUsername($username)
-        {
+        public function setUsername($username){
             $username = Cleaner::cleanInput($username);
-            $this->username = $username;
-            return $this;
+            if(empty($username)){
+                throw new Exception("Your username seems to be missing, please fill in the field.");
+            } else{
+                $this->username = $username;
+                return $this;
+            }
         }
 
         //emails setters and getters
         public function getEmail(){return $this->email;}
         
-        public function setEmail($email)
-        {
+        public function setEmail($email){
             $email = Cleaner::cleanInput($email);
-            $this->email = $email;
-            return $this;
+            if(empty($email)){
+                throw new Exception("Your email seems to be missing, please fill in the field.");
+            }else{
+                $this->email = $email;
+                return $this;
+            }
         }
 
         public function getSecondEmail(){return $this->second_email;}
         
-        public function setSecondEmail($second_email)
-        {
+        public function setSecondEmail($second_email){
             $second_email = Cleaner::cleanInput($second_email);
             $this->second_email = $second_email;
             return $this;
@@ -56,9 +59,7 @@
         //profile_image
         public function getProfileImage(){return $this->profile_image;}
 
-        public function setProfileImage($profile_image)
-        {
-            $profile_image = Cleaner::cleanInput($profile_image);
+        public function setProfileImage($profile_image){
             $this->profile_image = $profile_image;
             return $this;
         }
@@ -74,21 +75,23 @@
         //password
         public function getPassword(){return $this->password;}
 
-        public function setPassword( $password )
-        {
+        public function setPassword( $password ){
             $password = Cleaner::cleanInput($password);
-            if(strlen($password) < self::PASSWORD_MIN_LENGTH){
+            if(empty($password)){
+                throw new Exception("Your password seems to be missing, please fill in the field.");
+            } else{
+                if(strlen($password) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
-            }
-            $this->password = $password;
-            return $this;
+                }
+                $this->password = $password;
+                return $this;
+            }            
         }
 
         //about getters and setters
         public function getBio(){return $this->bio;}
 
-        public function setBio($bio)
-        {
+        public function setBio($bio){
             $bio = Cleaner::cleanInput($bio);
             $this->bio = $bio;
             return $this;
@@ -96,8 +99,7 @@
 
         public function getEducation(){return $this->education;}
 
-        public function setEducation($education)
-        {
+        public function setEducation($education){
             $education = Cleaner::cleanInput($education);
             $this->education = $education;
             return $this;
@@ -106,8 +108,7 @@
         //socials getters and setters
         public function getLinkedin(){return $this->linkedin;}
 
-        public function setLinkedin($linkedin)
-        {
+        public function setLinkedin($linkedin){
             $linkedin = Cleaner::cleanInput($linkedin);
             $this->linkedin = $linkedin;
             return $this;
@@ -115,8 +116,7 @@
 
         public function getWebsite(){return $this->website;}
 
-        public function setWebsite($website)
-        {
+        public function setWebsite($website){
             $website = Cleaner::cleanInput($website);
             $this->website = $website;
             return $this;
@@ -124,8 +124,7 @@
 
         public function getInstagram(){return $this->instagram;}
 
-        public function setInstagram($instagram)
-        {
+        public function setInstagram($instagram){
             $instagram = Cleaner::cleanInput($instagram);
             $this->instagram = $instagram;
             return $this;
@@ -133,26 +132,13 @@
 
         public function getGithub(){return $this->github;}
 
-        public function setGithub($github)
-        {
+        public function setGithub($github){
             $github = Cleaner::cleanInput($github);
             $this->github = $github;
             return $this;
         }
 
-        public function getRole()
-        {
-            return $this->user_role;
-        }
-
-        public function setRole($user_role)
-        {
-            $this->user_role = $user_role;
-
-            return $this;
-        }
-
-        public function canLogin() {
+        public function canLogin(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email OR second_email = :email");
             $statement->bindValue(':email', $this -> email);
@@ -173,7 +159,7 @@
             throw new Exception("This password does not match the given email");
         }
 
-        public function register($referLink = "") {
+        public function register($referLink = ""){
             if(!$this->userExists()){
                 if(strlen(Cleaner::cleanInput($referLink)) === 0){
                     $regex = '/[a-zA-Z0-9_.+-]+@(student\.)?thomasmore\.be/';
@@ -217,7 +203,6 @@
         }
 
         public static function resetPassword($email, $c_password, $new_password){
-
             if(strlen(Cleaner::cleanInput($new_password)) < self::PASSWORD_MIN_LENGTH){
                 throw new Exception("Passwords must be " . self::PASSWORD_MIN_LENGTH . " characters or longer.");
             } else{

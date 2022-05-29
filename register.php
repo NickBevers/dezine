@@ -1,7 +1,6 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
     use Dezine\Helpers\Security;
-    use Dezine\Helpers\Cleaner;
     use Dezine\Auth\User;
     use Dezine\Auth\Link;
 

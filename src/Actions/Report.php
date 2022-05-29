@@ -5,42 +5,35 @@
     use DateTime;
 
     class Report {
-
         private $reported_user_id;
         private $post_id;
         private $reason;
         
-        public function getPostid()
-        {
+        public function getPostid(){
             return $this->post_id;
         }
 
-        public function setPostid($post_id)
-        {
+        public function setPostid($post_id){
             $post_id = Cleaner::cleanInput($post_id);
             $this->post_id = $post_id;
             return $this;
         }
 
-        public function getReportedUserId()
-        {
+        public function getReportedUserId(){
             return $this->reported_user_id;
         }
         
-        public function setReportedUserId($reported_user_id)
-        {
+        public function setReportedUserId($reported_user_id){
             $reported_user_id = Cleaner::cleanInput($reported_user_id);
             $this->reported_user_id = $reported_user_id;
             return $this;
         }
 
-        public function getReason()
-        {
+        public function getReason(){
             return $this->reason;
         }
         
-        public function setReason($reason)
-        {
+        public function setReason($reason){
             $reason = Cleaner::cleanInput($reason);
             $this->reason = $reason;
             return $this;

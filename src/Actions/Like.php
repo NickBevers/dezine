@@ -9,8 +9,7 @@
 
         public function getPostId(){return $this->postId;}
 
-        public function setPostId($postId)
-        {
+        public function setPostId($postId){
             $postId = Cleaner::cleanInput($postId);
             $this->postId = $postId;
             return $this;
@@ -18,8 +17,7 @@
 
         public function getUserId(){return $this->userId;}
 
-        public function setUserId($userId)
-        {
+        public function setUserId($userId){
             $userId = Cleaner::cleanInput($userId);
             $this->userId = $userId;
             return $this;
@@ -46,9 +44,6 @@
             $statement = $conn->prepare("select * from likes where post_id = :post_id");
             $statement->bindValue(":post_id", Cleaner::cleanInput($postId));
             $statement->execute();
-        //     $res = $statement->rowCount();
-        //     var_dump($res);
-        //     var_dump($postId);
             return $statement->rowCount();
         }
 

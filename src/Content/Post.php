@@ -6,6 +6,7 @@
     use PDO;
     use Error;
     use PHPColorExtractor\PHPColorExtractor;
+    use Exception;
 
     class Post {
         private $title;
@@ -18,47 +19,54 @@
 
         public function getTitle(){return $this->title;}
 
-        public function setTitle($title)
-        {
+        public function setTitle($title){
             $title = Cleaner::cleanInput($title);
-            $this->title = $title;
-            return $this;
+            if(empty($title)){
+                throw new Exception("Your title seems to be missing, please fill in the field.");
+            }else{
+                $this->title = $title;
+                return $this;
+            }
         }
 
         public function getDescription(){return $this->description;}
 
-        public function setDescription($description)
-        {
+        public function setDescription($description){
             $description = Cleaner::cleanInput($description);
-            $this->description = $description;
-            return $this;
+            if(empty($description)){
+                throw new Exception("Your description seems to be missing, please fill in the field.");
+            }else{
+                $this->description = $description;
+                return $this;
+            }
         }
 
         public function getTags(){return $this->tags;}
 
-        public function setTags($tags)
-        {
+        public function setTags($tags){
             $tags = Cleaner::cleanInput($tags);
-            $tags = str_replace(' ', '', $tags);
-            $tags = explode(",", $tags);
-            $this->tags = json_encode($tags);
-            return $this;
+            if(empty($tags)){
+                throw new Exception("Your tags seem to be missing, please fill in the field.");
+            }else{
+                $tags = str_replace(' ', '', $tags);
+                $tags = explode(",", $tags);
+                $this->tags = json_encode($tags);
+                return $this;
+            }
         }
 
         public function getPublic_id(){return $this->public_id;}
 
-        public function setPublic_id($public_id)
-        {
-            // $public_id = Cleaner::cleanInput($public_id);
+        public function setPublic_id($public_id){
+            $public_id = Cleaner::cleanInput($public_id);
             $this->public_id = $public_id;
             return $this;
         }
 
         public function getImage(){return $this->image;}
 
-        public function setImage($image)
-        {
-            // $image = Cleaner::cleanInput($image);
+        public function setImage($image){
+            $image = Cleaner::cleanInput($image);
             $this->image = $image;
             return $this;
         }
@@ -72,7 +80,7 @@
             $colours = [];
             $color_groups = [];
             
-            foreach($palette as $color) {
+            foreach($palette as $color){
                 $hslVal = $this->hexToHsl($color);
                 $color_group = $this->getColorGroupFromColor($hslVal);
                 array_push($color_groups, $color_group);
@@ -89,6 +97,7 @@
         }
 
         public function setColor_groups($color_groups){
+            $color_groups = Cleaner::cleanInput($color_groups);
             $this->color_groups = $color_groups;
             return $this;
         }
@@ -115,6 +124,7 @@
             $statement->bindValue(':tags', $this->tags);
             $statement->bindValue(':creation_date', $this->getDateTime());
             $res = $statement->execute();
+            var_dump($res);
             return $res;
         }
 
@@ -154,7 +164,7 @@
         public static function getPostbyId($id, $start, $amount){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from posts where user_id = :user_id order by creation_date desc limit $start, $amount");
-            $statement->bindValue('user_id', $id);
+            $statement->bindValue('user_id', Cleaner::cleanInput($id));
             $statement->execute();
             $res = $statement->fetchAll();
             return $res;
@@ -211,7 +221,7 @@
             $statement->bindValue('title', $this->getTitle());
             $statement->bindValue('description', $this->getDescription());
             $statement->bindValue('tags', $this->getTags());
-            $statement->bindValue('post_id', $postId);
+            $statement->bindValue('post_id', Cleaner::cleanInput($postId));
             $statement->execute();
         }
 

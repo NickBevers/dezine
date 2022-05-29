@@ -25,7 +25,7 @@
             $project = new Post();
             $project->setTitle($title);
             $project->setDescription($description);
-            $project->setTags($tags);
+            $project->setTags($tags);                       
             $project->setPublic_id($uploadedFile["public_id"]);
             $project->setImage($uploadedFile["secure_url"]);
             $project->setColors($image);
@@ -58,6 +58,13 @@
 
     <form method="post" enctype='multipart/form-data' class="form form--register">
       <h2>New Post</h2>
+
+      <div class="form__field">
+        <label for="image" class="btn secondary__btn-reverse">Add image
+          <input type="file" name="image" class="form__image-input" id="image">
+        </label>
+      </div>
+
       <div class="form__field">
         <label for="title" class="form-label">Title</label>
         <input type="text" name="title" class="form-control" id="title" aria-describedby="postTitle">
@@ -72,12 +79,6 @@
         <label for="tags" class="form-label">Tags</label>
         <input type="text" name="tags" class="form-control" id="tags">
         <div id="passwordHelp" class="form-text">Separate multiple tags with a comma between them</div>
-      </div>
-
-      <div class="form__field">
-        <label for="image" class="btn secondary__btn-reverse">Add image
-          <input type="file" name="image" class="form__image-input" id="image">
-        </label>
       </div>
 
       <div class="form__field">

@@ -26,6 +26,5 @@
             $statement = $conn->prepare("delete from warnings where id = :warning_id");
             $statement->bindValue(":warning_id", Cleaner::cleanInput($warning_id));            
             return $statement->execute();
-        }
-        
+        }        
     }
