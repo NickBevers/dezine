@@ -30,7 +30,6 @@
     if (empty($user)) {
         header('Location: home.php');
     }
-
     $posts = Post::getPostbyId($profileUser, 0, 100);
     $posts = Cleaner::xss($posts);
 ?><!DOCTYPE html>

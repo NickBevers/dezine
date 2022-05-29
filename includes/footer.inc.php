@@ -1,4 +1,4 @@
-<?php if ($_SERVER['REQUEST_URI'] !== "/dezine/index.php"): ?>
+<?php if(basename($_SERVER['PHP_SELF']) !== "index.php"): ?>
     <footer>
         <div class="footer__info">
             <img src="./assets/TM.svg" alt="Thomas More logo">

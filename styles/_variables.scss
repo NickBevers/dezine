@@ -38,24 +38,36 @@ h1{
     color: $accent;
     font-weight: $font-weight-extrabold;
     font-size: $font-size-xxl;
+    font-family: museo-sans, sans-serif;
 }
 
 h2{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-md;
+    font-family: museo-sans, sans-serif;
 }
 
 h3{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-sm;
+    font-family: museo-sans, sans-serif;
 }
 
 h4{
     color: $accent;
     font-weight: $font-weight-bold;
     font-size: $font-size-xs;
+    font-family: museo-sans, sans-serif;
+}
+
+p{
+    font-family: museo-sans, sans-serif;
+}
+
+a{
+    font-family: museo-sans, sans-serif;
 }
 
 .hidden{

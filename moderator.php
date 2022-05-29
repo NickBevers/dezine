@@ -53,6 +53,11 @@
 <body>
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
+        <h1 class="mod__title">Moderator Overviewpage</h1>        
+        <div class="getRegisterLink">
+            <button class="getRegisterLinkBtn btn moderator__btn">Get Alumni Link</button>
+            <script src="./javascript/getLink.js"></script>
+        </div>
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
@@ -60,8 +65,6 @@
         <?php if (isset($success)): ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
-
-        <h1 class="mod__title">Moderator Overviewpage</h1>
         <?php if(isset($_GET["id"])): ?>
             <div class="alert alert-success hidden"></div>
             <div class="banning <?php if (User::checkBan($banId)) { echo "hidden"; } ?>">
