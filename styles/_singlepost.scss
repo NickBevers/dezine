@@ -1,5 +1,16 @@
+.single_post{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin: 5% 15%;
+}
+
 .post--single {
+    background-color: $primary;
     margin: 5% 27%;
+}
+
+.post--single-detail{
     background-color: $primary;
 }
 
@@ -32,7 +43,7 @@
 
 .post__comment {
     padding: 1.5rem;
-    background-color: $lighterWhite;
+    background-color: $primary-light;
 }
 
 .post__comment__list  {
@@ -40,21 +51,34 @@
     flex-direction: column;
     padding-right: 2rem;
     padding-bottom: 2rem;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+
+    li {
+        padding-top: 2rem;
+        border-bottom: $grey;
+        display: flex;
+        align-items: center;
+    }
 }
 
-.post__comment__list img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 1rem;
+.post__comment--right{
+    a{
+        text-decoration: none;
+        color: $accent;
+        font-weight: $font-weight-bold;
+
+        &:hover{
+            text-decoration: underline;
+        }
+    }
 }
 
-.post__comment__list li {
-    padding-top: 2rem;
-    border-bottom: $grey;
-    display: flex;
-    align-items: center;
-}
 .post__comment__form{
     display: flex;
     align-items: center;
@@ -123,9 +147,16 @@
 }
 
 @media (max-width: 768px) and (min-width: 600px) {
+    .single_post{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin: 5% 15%;
+    }
+
     .post--single {
-        margin: 5% 20%;
         background-color: $primary;
+        margin: 5% 20%;
     }
 
     .views img{
@@ -144,9 +175,16 @@
 }
 
 @media (max-width: 600px) {
-    .post--single {
+    .single_post{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
         margin: 5% 15%;
+    }
+
+    .post--single {
         background-color: $primary;
+        margin: 5% 15%;
     }
 
     .views img{
