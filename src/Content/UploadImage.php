@@ -16,31 +16,26 @@
           'secure' => true]]);
 
             
-    class UploadImage
-    {
-        public static function uploadPostPic($file)
-        {
+    class UploadImage{
+        public static function uploadPostPic($file){
             $uApi = new UploadApi();
             $upload = $uApi->upload($file, ['folder' => 'posts/', 'resource_type' => 'image']);
             return $upload;
         }
 
-        public static function uploadProfilePic($file)
-        {
+        public static function uploadProfilePic($file){
             $uApi = new UploadApi();
             $upload = $uApi->upload($file, ['folder' => 'profiles/', 'resource_type' => 'image']);
             return $upload;
         }
 
-        public static function remove($public_id)
-        {
+        public static function remove($public_id){
             $rApi = new UploadApi();
             $remove = $rApi->destroy($public_id, ['invalidate' => true]);
             return $remove;
         }
 
-        public static function getImageData($image, $tmpName, $user_id)
-        {
+        public static function getImageData($image, $tmpName, $user_id){
             if (empty($image)) {
                 throw new Exception("Please upload an image before submitting");
             }

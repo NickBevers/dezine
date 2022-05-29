@@ -30,7 +30,6 @@
             return $this->token;
         }
 
-
         public function resetMail(){
             $conn = DB::getInstance();
             $statement = $conn->prepare("select * from users where email = :email");
@@ -63,7 +62,7 @@
                 $mj = new \Mailjet\Client($config["API_KEY"],$config["SECRET_KEY"],true,['version' => 'v3.1']);
                 $body = [
                     'Messages' => [
-                    [
+                        [
                         'From' => [
                         'Email' => "dezine@nickbevers.be",
                         'Name' => "D-zine"
@@ -78,7 +77,7 @@
                         'TextPart' => "Password reset",
                         'HTMLPart' => "<h3>To reset your password, please click the following link: <br /><a href='$link'>Click here to reset your password.</a></h3>",
                         'CustomID' => "PWReset"
-                    ]
+                        ]
                     ]
                 ];
 
@@ -133,7 +132,6 @@
                 $statement->bindValue(":exp_token", NULL);
                 $statement->bindValue(':email', Cleaner::cleanInput($email));
                 $statement->execute();
-                // $result = $statement->fetch();
             }
         }
     }
