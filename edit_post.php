@@ -27,7 +27,7 @@
             $post->setDescription($_POST["description"]);
             $post->setTags($_POST["tags"]);
             $post->updatePostById($_GET["pid"]);
-            // header("Location: profile.php");
+            header("Location: profile.php");
         } catch (Exception $e) {
             $error = $e->getMessage();        
             // $_SESSION['flash_error'] = "Something went wrong, try again later.";

@@ -88,7 +88,7 @@
                     <input type="hidden" name="uid" value="<?php echo Cleaner::xss($_GET["warn_uid"]) ?>">
                     <label for="warning_reason" class="form__label">Reason</label>
                     <textarea type="warning_reason" name="warning_reason" class="form-control" id="warning_reason"
-                        placeholder="the reason for your report" row="10" cols="60"
+                        placeholder="the reason for your report" row="50" cols="100"
                     ></textarea>
                 </div>
                 <button type="submit" class="btn secondary__btn secondary__btn-signup">Send</button>

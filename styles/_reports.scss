@@ -57,6 +57,10 @@
     
 }
 
+#reason {
+    width: calc(max(46vw, 40px))
+}
+
 @media (max-width: 992px){
     .report{
         grid-template-columns: 1fr;

@@ -2072,6 +2072,10 @@ input[type="file"] {
   font-size: 1.2rem;
 }
 
+#reason {
+  width: calc(max(46vw, 40px));
+}
+
 @media (max-width: 992px) {
   .report {
     -ms-grid-columns: 1fr;
