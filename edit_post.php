@@ -9,16 +9,12 @@
     Validate::start();
 
     if (!Security::isLoggedIn()) {header('Location: login.php');}
-
-    if (User::checkban($_SESSION["id"])) {
-        header('Location: home.php');
-    }
+    if (User::checkban($_SESSION["id"])) {header('Location: home.php');}
 
     if (isset($_GET["pid"])) {
         if ($_SESSION["id"] != $_GET["uid"]) {
             header('Location: profile.php');
         }
-
         $post = Post::getPostByPostId($_GET["pid"]);
     } else {
         header("Location: profile.php");
@@ -31,11 +27,13 @@
             $post->setDescription($_POST["description"]);
             $post->setTags($_POST["tags"]);
             $post->updatePostById($_GET["pid"]);
-            header("Location: profile.php");
+            // header("Location: profile.php");
         } catch (Exception $e) {
-            $_SESSION['flash_error'] = "Something went wrong, try again later.";
-        }
-    }
+            $error = $e->getMessage();        
+            // $_SESSION['flash_error'] = "Something went wrong, try again later.";
+        }        
+    } 
+    $post = $post = Post::getPostByPostId($_GET["pid"]);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,13 +48,18 @@
     <?php include_once(__DIR__ . "/includes/nav.inc.php"); ?>
     <main>
         <?php if (isset($_SESSION['flash_error'])): ?>
-            <div class="error">
+            <div class="alert alert-danger">
                 <p><?php echo($_SESSION['flash_error']); ?></p>
             </div>
         <?php
             unset($_SESSION['flash_error']);
             endif;
         ?>
+        
+        <?php if (isset($error)) : ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
+
         <form method="post" enctype='multipart/form-data' class="form form--register">
             <h2>Edit post</h2>
             <div class="form__field">
